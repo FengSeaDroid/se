@@ -36,7 +36,7 @@ public class patientDetailView extends JPanel {
 		JScrollPane allergyFiller = new JScrollPane();
 		//JTable allergyInfo = new JTable();
 		//allergyFiller.getViewport().setView(allergyInfo);
-		allergyFiller.setPreferredSize(new Dimension(this.getMaximumSize().width,200));
+		allergyFiller.setPreferredSize(new Dimension(100,200));
 		allergyView.add(new JLabel("Allergy Information"),"wrap,span 2");
 		allergyView.add(allergyFiller,"wrap,cell 1 0 1");
 		allergyView.add(new JButton("Add allergy")," alignx right");
