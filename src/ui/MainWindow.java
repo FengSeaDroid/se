@@ -42,7 +42,7 @@ public class MainWindow extends JPanel {
         
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.addTab("New Prescription",this.newPrescription());
-        tabbedPane.addTab("Patient Information", this.newPrescription());
+        tabbedPane.addTab("Patient Information", this.patientInformation());
         tabbedPane.addTab("Prescription History", this.newPrescription());
         
         //Add the tabbed pane to this panel.
@@ -56,22 +56,22 @@ public class MainWindow extends JPanel {
 		JPanel newPrescripanel = new JPanel();
 		newPrescripanel.setPreferredSize(new Dimension(800, 600));
 		newPrescripanel.setLayout(new MigLayout("", "[]", "[]20[]50[][][]"));
-		
-		newPrescripanel.add(new PatientSearchPanel(), "cell 0 1,aligny center");
-		
+		newPrescripanel.add(new PatientSearchPanel(), "cell 0 1,aligny center");	
 		newPrescripanel.add(new DrugLinePanel(),"cell 0 2,alignx center");
 		return newPrescripanel;
 	}
 	
 	protected JComponent patientInformation(){
-		
-		return null;
+		JPanel patientInformation = new JPanel();
+		patientInformation.setLayout(new MigLayout("", "[]", "[]20[]50[][][]"));
+		patientInformation.add(new PatientSearchPanel(), "cell 0 1,aligny center");	
+		//show an uneditable patient view
+		patientInformation.add(new patientDetailView(false),"cell 0 2,alignx center");
+		return patientInformation;
 	}
 	
 	protected JComponent prescriptionHistory(){
 		
 		return null;
 	}
-	
-	
 }

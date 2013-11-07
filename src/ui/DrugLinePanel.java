@@ -1,6 +1,5 @@
 package ui;
 
-import java.awt.Component;
 import java.awt.Dimension;
 import java.util.Set;
 
@@ -17,14 +16,14 @@ public class DrugLinePanel extends JPanel {
 		super(new MigLayout());
 		this.add(this.constructFillComponent(),"wrap");
 		this.add(this.uiDrugLine(),"alignx center, wrap");
-		this.add(this.printButton(),"alignx center");
+		this.add(this.buttonView(),"alignx center");
 	}
 
 	public DrugLinePanel(Set<Drug> drugLine) {
 		this.add(this.uiDrugLine());
 	}
 	
-	private Component constructFillComponent(){
+	private JComponent constructFillComponent(){
 		JPanel drugFill = new JPanel(new MigLayout());
 		drugFill.add(new JLabel("Drug Name"),"gap unrelated");
 		drugFill.add(new JTextField(20));
@@ -40,12 +39,12 @@ public class DrugLinePanel extends JPanel {
 		drugFill.add(new JTextField(20),"wrap");
 		drugFill.add(new JLabel("Note"),"gap unrelated");
 		drugFill.add(new JTextField(70),"span, wrap");
-		drugFill.add(new JButton("Add drug"),"gap unrelated, span 3, alignx right");
-		drugFill.add(new JButton("Remove"),"gap unrelated, span 3, alignx left");
+		drugFill.add(new JButton("Add drug"),"span 3, alignx right");
+		drugFill.add(new JButton("Remove drug")," span 3, alignx left");
 		return drugFill;
 	}
 	
-	private Component uiDrugLine(){
+	private JComponent uiDrugLine(){
 		JPanel drugListView = new JPanel(new MigLayout());
 		JScrollPane drugListFiller = new JScrollPane();
 		drugListFiller.getViewport().setView(drugList);
@@ -54,10 +53,9 @@ public class DrugLinePanel extends JPanel {
 		return drugListView;
 	}
 	
-	private Component printButton(){
+	private JComponent buttonView(){
 		JPanel printView = new JPanel(new MigLayout());
 		printView.add(new JButton("Print"));
 		return printView;
 	}
-
 }
