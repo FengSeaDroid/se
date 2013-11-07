@@ -8,18 +8,18 @@ import javax.swing.*;
 import net.miginfocom.swing.MigLayout;
 import domain.Drug;
 
-public class DrugLinePanel extends JPanel {
+public class DrugLineView extends JPanel {
 	
 	private JList<Drug> drugList = new JList<Drug>();
 
-	public DrugLinePanel() {
+	public DrugLineView() {
 		super(new MigLayout());
 		this.add(this.constructFillComponent(),"wrap");
 		this.add(this.uiDrugLine(),"alignx center, wrap");
 		this.add(this.buttonView(),"alignx center");
 	}
 
-	public DrugLinePanel(Set<Drug> drugLine) {
+	public DrugLineView(Set<Drug> drugLine) {
 		this.add(this.uiDrugLine());
 	}
 	

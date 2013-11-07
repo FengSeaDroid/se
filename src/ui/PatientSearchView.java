@@ -4,13 +4,13 @@ import javax.swing.*;
 
 import net.miginfocom.swing.MigLayout;
 
-public class PatientSearchPanel extends JPanel {
+public class PatientSearchView extends JPanel {
 
-	public PatientSearchPanel() {
+	public PatientSearchView() {
 		super(new MigLayout("wrap 8"));
-		this.add(new JLabel("MCP"),"gap unrelated");
-		this.add(new JTextField(20));
 		this.add(new JLabel("Name"),"gap unrelated");
+		this.add(new JTextField(20));
+		this.add(new JLabel("MCP"),"gap unrelated");
 		this.add(new JTextField(20));
 		this.add(new JLabel("DOB"),"gap unrelated");
 		this.add(new JTextField(20));

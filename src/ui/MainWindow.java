@@ -7,9 +7,13 @@ import java.awt.GridLayout;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
+
 import net.miginfocom.swing.MigLayout;
+
 import java.awt.Component;
+
 import javax.swing.Box;
 
 public class MainWindow extends JPanel {
@@ -42,8 +46,7 @@ public class MainWindow extends JPanel {
         
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.addTab("New Prescription",this.newPrescription());
-        tabbedPane.addTab("Patient Information", this.patientInformation());
-        tabbedPane.addTab("Prescription History", this.newPrescription());
+        tabbedPane.addTab("Prescription History", this.prescriptionHistory());
         
         //Add the tabbed pane to this panel.
         this.add(tabbedPane);
@@ -56,22 +59,15 @@ public class MainWindow extends JPanel {
 		JPanel newPrescripanel = new JPanel();
 		newPrescripanel.setPreferredSize(new Dimension(800, 600));
 		newPrescripanel.setLayout(new MigLayout("", "[]", "[]20[]50[][][]"));
-		newPrescripanel.add(new PatientSearchPanel(), "cell 0 1,aligny center");	
-		newPrescripanel.add(new DrugLinePanel(),"cell 0 2,alignx center");
+		//display clinic info
+		newPrescripanel.add(new ClinicInfoView(false),"cell 0 1, aligny center");
+		newPrescripanel.add(new PatientSearchView(), "cell 0 2,aligny center");	
+		newPrescripanel.add(new DrugLineView(),"cell 0 3,alignx center");
 		return newPrescripanel;
 	}
 	
-	protected JComponent patientInformation(){
-		JPanel patientInformation = new JPanel();
-		patientInformation.setLayout(new MigLayout("", "[]", "[]20[]50[][][]"));
-		patientInformation.add(new PatientSearchPanel(), "cell 0 1,aligny center");	
-		//show an uneditable patient view
-		patientInformation.add(new patientDetailView(false),"cell 0 2,alignx center");
-		return patientInformation;
-	}
-	
 	protected JComponent prescriptionHistory(){
-		
-		return null;
+		JSplitPane patientInformation = new JSplitPane();
+		return patientInformation;
 	}
 }
