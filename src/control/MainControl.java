@@ -27,7 +27,7 @@ public class MainControl {
 	 * Launch the application.
 	 */
     public static void main(String[] args) {
-    	setClinicInfo("Coco clinic","7493322","Turkey C");
+    	setClinicInfo("Eastern Clinic","749-3322","Safwan Wang");
         //Schedule a job for the event dispatch thread:
         //creating and showing this application's GUI.
         SwingUtilities.invokeLater(new Runnable() {
