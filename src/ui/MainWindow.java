@@ -1,9 +1,11 @@
 package ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -45,6 +47,8 @@ public class MainWindow extends JPanel {
 		super(new GridLayout(1, 1));
         
         JTabbedPane tabbedPane = new JTabbedPane();
+        tabbedPane.setBorder(BorderFactory.createLineBorder(Color.black));
+        tabbedPane.setPreferredSize(new Dimension(800, 600));
         tabbedPane.addTab("New Prescription",this.newPrescription());
         tabbedPane.addTab("Prescription History", this.prescriptionHistory());
         
@@ -57,7 +61,7 @@ public class MainWindow extends JPanel {
 	
 	protected JComponent newPrescription() {
 		JPanel newPrescripanel = new JPanel();
-		newPrescripanel.setPreferredSize(new Dimension(800, 600));
+		newPrescripanel.setBorder(BorderFactory.createLineBorder(Color.black));
 		newPrescripanel.setLayout(new MigLayout("", "[]", "[]20[]50[][][]"));
 		//display clinic info
 		newPrescripanel.add(new ClinicInfoView(false),"cell 0 1, aligny center");
