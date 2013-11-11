@@ -60,13 +60,17 @@ public class MainWindow extends JPanel {
 	}
 	
 	protected JComponent newPrescription() {
-		JPanel newPrescripanel = new JPanel();
-		newPrescripanel.setBorder(BorderFactory.createLineBorder(Color.black));
-		newPrescripanel.setLayout(new MigLayout("", "[]", "[]20[]50[][][]"));
-		//display clinic info
-		newPrescripanel.add(new ClinicInfoView(false),"cell 0 1, aligny center");
-		newPrescripanel.add(new PatientSearchView(), "cell 0 2,aligny center");	
-		newPrescripanel.add(new DrugLineView(),"cell 0 3,alignx center");
+		JSplitPane upperLeftPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new ClinicInfoView(false),new PatientSearchView());
+		JSplitPane upperPanel = new JSplitPane (JSplitPane.HORIZONTAL_SPLIT, upperLeftPanel,new patientAllergyView());
+		JSplitPane newPrescripanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT,upperPanel, new DrugLineView());
+		
+//		JPanel newPrescripanel = new JPanel();
+//		newPrescripanel.setBorder(BorderFactory.createLineBorder(Color.black));
+//		newPrescripanel.setLayout(new MigLayout("", "[]", "[]20[]50[][][]"));
+//		//display clinic info
+//		newPrescripanel.add(new ClinicInfoView(false),"cell 0 1, aligny center");
+//		newPrescripanel.add(new PatientSearchView(), "cell 0 2,aligny center");	
+//		newPrescripanel.add(new DrugLineView(),"cell 0 3,alignx center");
 		return newPrescripanel;
 	}
 	
