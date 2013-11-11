@@ -46,7 +46,7 @@ public class DrugLineView extends JPanel implements FocusListener {
 	public void focusGained(FocusEvent e) {
 		this.drugLinePanel.add(this.drugFiller(),"wrap");
 		drugLinePanel.revalidate();
-		System.out.println("listened!!!");
+		//System.out.println("listened!!!");
 	}
 
 	@Override
