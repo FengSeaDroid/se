@@ -1,6 +1,8 @@
 package ui;
 
 import java.awt.Dimension;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.Set;
 
 import javax.swing.*;
@@ -8,19 +10,28 @@ import javax.swing.*;
 import net.miginfocom.swing.MigLayout;
 import domain.Drug;
 
-public class DrugLineView extends JPanel {
+public class DrugLineView extends JPanel implements FocusListener {
 	
 	private JList<Drug> drugList = new JList<Drug>();
+	private JScrollPane drugLineScroll;
+	private JPanel drugLinePanel;
 
 	public DrugLineView() {
 		super(new MigLayout());
-		this.add(this.constructFillComponent(),"wrap");
-		this.add(this.buttonView(),"alignx center");
+		drugLinePanel = new JPanel(new MigLayout());
+		drugLineScroll = new JScrollPane(drugLinePanel);
+		drugLineScroll.setPreferredSize(new Dimension(this.getMaximumSize().width,400));
+		this.add(drugLineScroll,"wrap");
+		drugLinePanel.add(this.drugFiller(),"wrap");
+		this.add(this.buttonView(),"center");
 	}
 	
-	private JComponent constructFillComponent(){
+	private JComponent drugFiller(){
 		JPanel drugFill = new JPanel(new MigLayout());
-		drugFill.add(new JTextField(75));
+		JTextField drugLine = new JTextField(55);
+		drugLine.addFocusListener(this);
+		drugFill.add(drugLine);
+		drugFill.add(new JButton("delete"));
 		return drugFill;
 	}
 	
@@ -28,5 +39,19 @@ public class DrugLineView extends JPanel {
 		JPanel printView = new JPanel(new MigLayout());
 		printView.add(new JButton("Print"));
 		return printView;
+		
+	}
+
+	@Override
+	public void focusGained(FocusEvent e) {
+		this.drugLinePanel.add(this.drugFiller(),"wrap");
+		drugLinePanel.revalidate();
+		System.out.println("listened!!!");
+	}
+
+	@Override
+	public void focusLost(FocusEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
