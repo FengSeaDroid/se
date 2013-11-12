@@ -1,7 +1,6 @@
 package domain;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class Formulary {
 	
@@ -11,6 +10,10 @@ public class Formulary {
 		drugList.add("aspirin");
 		drugList.add("penicillin");
 		drugList.add("acetaminophen");
+	}
+	
+	public List<String> getAllDrugArrayList(){
+		return new ArrayList<String>(drugList);
 	}
 	
 	/**
