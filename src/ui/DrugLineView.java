@@ -4,9 +4,7 @@ import java.awt.Dimension;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.Set;
-
 import javax.swing.*;
-
 import net.miginfocom.swing.MigLayout;
 import domain.Drug;
 
@@ -28,7 +26,18 @@ public class DrugLineView extends JPanel implements FocusListener {
 	
 	private JComponent drugFiller(){
 		JPanel drugFill = new JPanel(new MigLayout());
-		JTextField drugLine = new JTextField(55);
+		//JTextField drugLine = new JTextField(55);
+		JComboBox drugLine = new JComboBox();
+		
+		drugLine.setEditable(true);
+		drugLine.setPreferredSize(new Dimension(500,10));
+		//create the model
+		SearchBoxModel sbm = new SearchBoxModel(drugLine);
+		//set the model on the combobox
+		drugLine.setModel(sbm);
+		//set the model as the item listener also
+		drugLine.addItemListener(sbm);
+		
 		drugLine.addFocusListener(this);
 		drugFill.add(drugLine);
 		drugFill.add(new JButton("delete"));
