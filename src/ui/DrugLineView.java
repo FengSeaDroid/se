@@ -1,10 +1,13 @@
 package ui;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.Set;
+
 import javax.swing.*;
+
 import net.miginfocom.swing.MigLayout;
 import domain.Drug;
 
@@ -38,7 +41,9 @@ public class DrugLineView extends JPanel implements FocusListener {
 		//set the model as the item listener also
 		drugLine.addItemListener(sbm);
 		
-		drugLine.addFocusListener(this);
+		
+		drugLine.getEditor().getEditorComponent().addFocusListener(this);
+		
 		drugFill.add(drugLine);
 		drugFill.add(new JButton("delete"));
 		return drugFill;
@@ -55,7 +60,7 @@ public class DrugLineView extends JPanel implements FocusListener {
 	public void focusGained(FocusEvent e) {
 		this.drugLinePanel.add(this.drugFiller(),"wrap");
 		drugLinePanel.revalidate();
-		//System.out.println("listened!!!");
+		System.out.println("listened!!!");
 	}
 
 	@Override
