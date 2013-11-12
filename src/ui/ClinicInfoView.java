@@ -35,9 +35,9 @@ public class ClinicInfoView extends JPanel {
 		JLabel physicianName = new JLabel(clinicInfo.get("physicianName"));
 		//physicianName.setFont (physicianName.getFont ().deriveFont (fontSize));
 
-		this.add(clinicNameLabel,"align right,cell 2 0");
-		this.add(clinicTel,"align right, cell 2 1");
-		this.add(physicianName,"align right, cell 2 2");
+		this.add(clinicNameLabel,"align left,cell 2 0");
+		this.add(clinicTel,"align left, cell 2 1");
+		this.add(physicianName,"align left, cell 2 2");
 	}
 	
 }
