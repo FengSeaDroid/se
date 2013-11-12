@@ -31,17 +31,17 @@ public class SearchBoxModel extends AbstractListModel
         cbe.getEditorComponent().addKeyListener(this);
 
 //set up our "database" of items - in practice you will usuallu have a proper db.
-        db.add("aluminium");
-        db.add("iron");
-        db.add("iron oxide (2+)");
-        db.add("iron oxide (3+)");
-        db.add("sodium");
-        db.add("sodium chloride");
-        db.add("titanium");
-        db.add("selenium");
-        db.add("potassium");
-        db.add("polonium");
-        db.add("aluminium chloride");
+        db.add("Amoxicillin 250 mg tablets TT tablets p.o. T.i.d. x 7 days");
+        db.add("Aspirin 250 mg tablets TT tablets p.o. T.i.d. x 7 days");
+        db.add("Penicillin 250 mg tablets TT tablets p.o. T.i.d. x 7 days");
+        db.add("iron oxide (3+) 250 mg tablets TT tablets p.o. T.i.d. x 7 days");
+        db.add("sodium 250 mg tablets TT tablets p.o. T.i.d. x 7 days");
+        db.add("sodium 250 mg tablets TT tablets p.o. T.i.d. x 7 days");
+        db.add("titanium 250 mg tablets TT tablets p.o. T.i.d. x 7 days");
+        db.add("selenium 250 mg tablets TT tablets p.o. T.i.d. x 7 days");
+        db.add("potassium 250 mg tablets TT tablets p.o. T.i.d. x 7 days");
+        db.add("polonium 250 mg tablets TT tablets p.o. T.i.d. x 7 days");
+        db.add("aluminium chloride 250 mg tablets TT tablets p.o. T.i.d. x 7 days");
     }
 
     public void updateModel(String in)
