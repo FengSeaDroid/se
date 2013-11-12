@@ -17,6 +17,7 @@ import net.miginfocom.swing.MigLayout;
 import java.awt.Component;
 
 import javax.swing.Box;
+import java.awt.FlowLayout;
 
 public class MainWindow extends JPanel {
 
@@ -60,10 +61,17 @@ public class MainWindow extends JPanel {
 	}
 	
 	protected JComponent newPrescription() {
-		JSplitPane upperLeftPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new ClinicInfoView(false),new PatientSearchView());
-		JSplitPane upperPanel = new JSplitPane (JSplitPane.HORIZONTAL_SPLIT, upperLeftPanel,new patientAllergyView());
-		JSplitPane newPrescripanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT,upperPanel, new DrugLineView());
-		return newPrescripanel;
+		
+		JSplitPane upperLeftPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT, 	new ClinicInfoView(false),new PatientSearchView());
+		
+		JSplitPane newPrescripanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT,upperLeftPanel, new DrugLineView());
+		patientAllergyView patientAllergyView_ = new patientAllergyView();
+		FlowLayout flowLayout = (FlowLayout) patientAllergyView_.getLayout();
+		JSplitPane rightPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT ,newPrescripanel,patientAllergyView_);
+		rightPanel.setDividerLocation(500);
+		rightPanel.setSize(500, 500);
+		//return newPrescripanel;
+		return rightPanel;
 	}
 	
 	protected JComponent prescriptionHistory(){
