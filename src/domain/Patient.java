@@ -27,6 +27,31 @@ public class Patient {
 		this.setAddress(addr);
 		this.setTel(tel);
 		this.setAllergy(allergyList.clone());
+		//this.prescriptionHistory = new HashSet<Prescription>();
+	}
+	
+	public Patient(int id, String name,String MCP, String dob, String weight, String addr, String tel, String[] allergyList, Prescription[] prescriptionList){
+		this.setPatientID(id);
+		this.setName(name);
+		this.setMCP(MCP);
+		this.setDateOfBirth(dob);
+		this.setWeight(weight);
+		this.setAddress(addr);
+		this.setTel(tel);
+		this.setAllergy(allergyList.clone());
+		for (Prescription p : prescriptionList){
+			this.addPrescription(p);
+		}
+	}
+	
+	private int patientID;
+	
+	public int getPatientID(){
+		return this.patientID;
+	}
+	
+	public void setPatientID(int id){
+		this.patientID = id;
 	}
 
 	private String name;
@@ -125,5 +150,16 @@ public class Patient {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+	
+	private Set<Prescription> prescriptionHistory = new HashSet<Prescription>();;
+	
+	public Set<Prescription> getPrescriptionHistory(){
+		return new HashSet<Prescription>(this.prescriptionHistory);
+	}
+	
+	public void addPrescription (Prescription prescription){
+		prescriptionHistory.add(prescription);
+		prescription.setOwner(this);
 	}
 }
