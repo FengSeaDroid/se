@@ -1,5 +1,6 @@
 package domain;
 
+import java.sql.Array;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,18 +20,18 @@ public class Patient {
 	 * @param weight
 	 * @param allergyList
 	 */
-	public Patient(String name,String MCP, String dob, String weight, String addr, String tel, String[] allergyList){
+	public Patient(String name,String MCP, String dob, String weight, String addr, String tel, Set<String> allergyList){
 		this.setName(name);
 		this.setMCP(MCP);
 		this.setDateOfBirth(dob);
 		this.setWeight(weight);
 		this.setAddress(addr);
 		this.setTel(tel);
-		this.setAllergy(allergyList.clone());
+		this.setAllergy(allergyList);
 		//this.prescriptionHistory = new HashSet<Prescription>();
 	}
 	
-	public Patient(String id, String name,String MCP, String dob, String weight, String addr, String tel, String[] allergyList, Prescription[] prescriptionList){
+	public Patient(String id, String name,String MCP, String dob, String weight, String addr, String tel,  Set<String> allergyList, Prescription[] prescriptionList){
 		this.setPatientID(id);
 		this.setName(name);
 		this.setMCP(MCP);
@@ -38,7 +39,7 @@ public class Patient {
 		this.setWeight(weight);
 		this.setAddress(addr);
 		this.setTel(tel);
-		this.setAllergy(allergyList.clone());
+		this.setAllergy(allergyList);
 		for (Prescription p : prescriptionList){
 			this.addPrescription(p);
 		}
@@ -100,20 +101,20 @@ public class Patient {
 		this.weight = weight;
 	}
 
-	private String[] allergy;
+	private Set<String> allergy;
 
 	/**
 	 * @return the allergy
 	 */
-	public String[] getAllergy() {
-		return allergy.clone();
+	public Set<String> getAllergy() {
+		return allergy;
 	}
 
 	/**
-	 * @param allergy the allergy to set
+	 * @param array the allergy to set
 	 */
-	public void setAllergy(String[] allergy) {
-		this.allergy = allergy;
+	public void setAllergy(Set<String> set) {
+		this.allergy = set;
 	}
 	
 	private Set<Prescription> prescriptionList = new HashSet<Prescription>();

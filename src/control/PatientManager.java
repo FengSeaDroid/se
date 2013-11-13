@@ -1,6 +1,8 @@
 package control;
 
 import java.sql.ResultSet;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.naming.spi.DirStateFactory.Result;
 
@@ -37,7 +39,11 @@ public class PatientManager {
 			patient.setWeight(result.getString(6));
 			patient.setTel(result.getString(7));
 			
-			result=dbconnection.execQuery("select * from prescription where patient_id="+patient.getPatientID());
+			result=dbconnection.execQuery("select * from allergy where patient_id="+patient.getPatientID());
+			Set<String> set = new HashSet<String>();
+	        while (result.next()){
+				set.add(""+result.getArray(2));
+			}
 			
 		}
 		catch (Exception e){
