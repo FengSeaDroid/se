@@ -1,5 +1,8 @@
 package control;
 
+import java.util.Arrays;
+import java.util.HashSet;
+
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
@@ -115,9 +118,18 @@ public class MainControl {
 	
 	public Patient lookupPatient (String MCP){
     	//this.setCurrentPatient(patientManager.lookupPatient(MCP));
-    	//test patient info
+    	
+		//test patient info
     	String[] allergy = {"I'm","allergy","to","the","cold"};
-		this.setCurrentPatient(new Patient("judy","12345","89/05/08","50","102 Water St.","709 749-3322",allergy));
+    	String[] druglines1 = {"This drug tastes good","this one even better", "this one is the best", "nothing beats this one"};
+    	String[] druglines2 = {"Sleep","Really","Good","Can fix"};
+    	Prescription[] dummyPrescription = new Prescription[2];
+    	Patient testPatient = new Patient("judy","12345","89/05/08","50","102 Water St.","709 749-3322",new HashSet<String>(Arrays.asList(allergy)));
+    	dummyPrescription[0]=new Prescription(null,"Gerard Farrell","11/15/13","11/15/13",new HashSet<String>(Arrays.asList(druglines1)));
+    	dummyPrescription[1]=new Prescription(null,"Gerard Farrell","11/15/13","11/15/13",new HashSet<String>(Arrays.asList(druglines2)));
+    	testPatient.addPrescription(dummyPrescription[0]);
+    	testPatient.addPrescription(dummyPrescription[1]);
+		this.setCurrentPatient(testPatient);
         
 		return getCurrentPatient();
 	}
