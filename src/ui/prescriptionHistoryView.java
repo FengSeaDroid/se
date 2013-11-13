@@ -15,7 +15,7 @@ public class prescriptionHistoryView extends JPanel {
 	public JTable HistoryTable;
 	private static String[] columnNames = {"Date","Medication"};
 	private static Object[][] data ={{" "}};
-	DefaultTableModel model = new DefaultTableModel(data,columnNames);
+	static DefaultTableModel model = new DefaultTableModel(data,columnNames);
 	
 	public prescriptionHistoryView()
 	{

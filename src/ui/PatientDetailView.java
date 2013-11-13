@@ -6,9 +6,9 @@ import javax.swing.*;
 
 import net.miginfocom.swing.MigLayout;
 
-public class patientDetailView extends JPanel {
+public class PatientDetailView extends JPanel {
 	
-	public patientDetailView(boolean editable){
+	public PatientDetailView(boolean editable){
 		this.setLayout(new MigLayout("", "[]", "[]20[]"));
 		this.add(this.patientDetail(), "wrap");
 		this.add(this.allergyView());

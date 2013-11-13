@@ -13,7 +13,7 @@ import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MaximizeAction;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-public class patientAllergyView extends JPanel {
+public class PatientAllergyView extends JPanel {
 	public JTable allergyTable;
 	//private DefaultTableModel tablemodel;
 	//private Map<String,String> patientInfo = new HashMap<String,String>();
@@ -26,7 +26,7 @@ public class patientAllergyView extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public patientAllergyView() {
+	public PatientAllergyView() {
 		
 		allergyTable = new JTable(model);
 		allergyTable.setFillsViewportHeight(true);

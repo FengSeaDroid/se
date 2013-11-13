@@ -2,10 +2,15 @@ package ui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Vector;
 
 import javax.swing.*;
 
 import control.MainControl;
+import domain.Patient;
+import domain.Prescription;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -13,7 +18,8 @@ public class PatientSearchView extends JPanel {
 
 	//private Map<String,String> patientInfo = new HashMap<String,String>();
 	//private patientAllergyView av = new patientAllergyView();
-   
+	Set<Prescription> prescriptionHistory = new HashSet<Prescription>();
+	Set<String>allergy = new HashSet<String>();
 	JTextField mcp = new JTextField(20);
 	JTextField DOB = new JTextField(20);
 	JTextField weight = new JTextField(10);
@@ -65,12 +71,30 @@ public class PatientSearchView extends JPanel {
 
 	        public void actionPerformed(ActionEvent e){
 	        	
-	                DOB.setText(MainControl.getMainControl().getCurrentPatient().getDateOfBirth());
-	                weight.setText(MainControl.getMainControl().getCurrentPatient().getWeight());
-	                address.setText(MainControl.getMainControl().getCurrentPatient().getAddress());
-	                tel.setText(MainControl.getMainControl().getCurrentPatient().getTel());
-	                patientAllergyView.model.addRow(MainControl.getMainControl().getCurrentPatient().getAllergy());
-	                
+	        	Patient patient = MainControl.getMainControl().lookupPatient(mcp.getText());
+        		
+                DOB.setText(patient.getDateOfBirth());
+                weight.setText(patient.getWeight());
+                address.setText(patient.getAddress());
+                tel.setText(patient.getTel());
+                allergy = patient.getAllergy();
+                for(String a: allergy)
+                {
+                String[] data = {a};
+                PatientAllergyView.model.addRow(data);
+                }
+                //take care below
+                prescriptionHistory = patient.getPrescriptionHistory();
+                //for(int i=0; i<prescriptionHistory.size(); i++)
+                for(Prescription p: prescriptionHistory)
+                {
+               // String[] drugs = p.getDrugLines();
+              //  for (int i=0; i< drugs.length; i++)
+              //  {
+                String[] data = {p.getIssueDate(), p.getDrugLines().toString()};
+                prescriptionHistoryView.model.addRow(data);
+              //  }
+                }
 	        }});
 		
 	}
