@@ -27,6 +27,7 @@ public class MainControl {
 		this.setClinicName("Eastern Clinic");
 		this.setClinicTel("749-3322");
 		this.setPhysicianName("Gerard Farrell");
+		this.setClinicAddress("123 Elithebeth Ave");
 //		this.setClinicInfo("Eastern Clinic","749-3322","Gerard Farrell");
 	}
 	
@@ -138,7 +139,7 @@ public class MainControl {
     	String[] allerg = new String[1];
     	allerg[0] = "AMOX";
     	//create test patient
-    	MainControl.getMainControl().setCurrentPatient(new Patient("judy","12345","89/05/08","50",allerg));
+    	MainControl.getMainControl().setCurrentPatient(new Patient("judy","12345","89/05/08","50","102 Water St.","709 749-3322",allerg));
     	//setPatientInfo("judy", "12345", "89/05/08", "50", allerg);
         
     	//create window
@@ -150,4 +151,14 @@ public class MainControl {
             }
         });//create window
     }
+    
+    private String clinicAddress;
+    
+    public void setClinicAddress(String addr){
+    	this.clinicAddress = addr;
+    }
+
+	public String getClinicAddress() {
+		return this.clinicAddress;
+	}
 }

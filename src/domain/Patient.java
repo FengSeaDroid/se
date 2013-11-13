@@ -19,11 +19,13 @@ public class Patient {
 	 * @param weight
 	 * @param allergyList
 	 */
-	public Patient(String name,String MCP, String dob, String weight, String[] allergyList){
+	public Patient(String name,String MCP, String dob, String weight, String addr, String tel, String[] allergyList){
 		this.setName(name);
 		this.setMCP(MCP);
 		this.setDateOfBirth(dob);
 		this.setWeight(weight);
+		this.setAddress(addr);
+		this.setTel(tel);
 		this.setAllergy(allergyList.clone());
 	}
 
@@ -103,5 +105,25 @@ public class Patient {
 	 */
 	public void setPrescriptionList(Set<Prescription> prescriptionList) {
 		this.prescriptionList = prescriptionList;
+	}
+	
+	private String tel;
+
+	public String getTel() {
+		return tel;
+	}
+
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
+
+	private String address;
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 }
