@@ -23,5 +23,4 @@ public class ControlTest {
 		assertEquals(MainControl.getMainControl().getCurrentPatient().getPrescriptionHistory().size(),2);
 		assertEquals(MainControl.getMainControl().getCurrentPatient().getPrescriptionHistory().iterator().next().getDrugLines().size(),4);
 	}
-
 }
