@@ -37,6 +37,14 @@ public class DBConnection {
 		return dbConnection;
 	}
 	
+	
+	/**
+	 * Close connection to the database
+	 */
+	public void closeConnection() throws SQLException{
+		dbConnection.close();
+	}
+	
 	/**
 	 * @param sql query statement
 	 * @return the execution of the SQL statement 
