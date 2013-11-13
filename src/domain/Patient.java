@@ -30,7 +30,7 @@ public class Patient {
 		//this.prescriptionHistory = new HashSet<Prescription>();
 	}
 	
-	public Patient(int id, String name,String MCP, String dob, String weight, String addr, String tel, String[] allergyList, Prescription[] prescriptionList){
+	public Patient(String id, String name,String MCP, String dob, String weight, String addr, String tel, String[] allergyList, Prescription[] prescriptionList){
 		this.setPatientID(id);
 		this.setName(name);
 		this.setMCP(MCP);
@@ -44,13 +44,13 @@ public class Patient {
 		}
 	}
 	
-	private int patientID;
+	private String patientID;
 	
-	public int getPatientID(){
+	public String getPatientID(){
 		return this.patientID;
 	}
 	
-	public void setPatientID(int id){
+	public void setPatientID(String id){
 		this.patientID = id;
 	}
 
