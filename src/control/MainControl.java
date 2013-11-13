@@ -125,8 +125,8 @@ public class MainControl {
     	String[] druglines2 = {"Sleep","Really","Good","Can fix"};
     	Prescription[] dummyPrescription = new Prescription[2];
     	Patient testPatient = new Patient("judy","12345","89/05/08","50","102 Water St.","709 749-3322",new HashSet<String>(Arrays.asList(allergy)));
-    	dummyPrescription[0]=new Prescription(null,"Gerard Farrell","11/15/13","11/15/13",new HashSet<String>(Arrays.asList(druglines1)));
-    	dummyPrescription[1]=new Prescription(null,"Gerard Farrell","11/15/13","11/15/13",new HashSet<String>(Arrays.asList(druglines2)));
+    	dummyPrescription[0]=new Prescription("Gerard Farrell","11/15/13","11/15/13",new HashSet<String>(Arrays.asList(druglines1)));
+    	dummyPrescription[1]=new Prescription("Gerard Farrell","11/15/13","11/15/13",new HashSet<String>(Arrays.asList(druglines2)));
     	testPatient.addPrescription(dummyPrescription[0]);
     	testPatient.addPrescription(dummyPrescription[1]);
 		this.setCurrentPatient(testPatient);
