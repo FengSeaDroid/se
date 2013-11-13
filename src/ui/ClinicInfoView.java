@@ -2,8 +2,6 @@ package ui;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -18,9 +16,9 @@ public class ClinicInfoView extends JPanel {
 	 *  Height of the view
 	 */
 	private final int viewHeight = 200;
-	private final float fontSize = 20;
+	//private final float fontSize = 20;
 	
-	private Map<String,String> clinicInfo = new HashMap<String,String>();
+	//private Map<String,String> clinicInfo = new HashMap<String,String>();
 	
 	public ClinicInfoView(boolean edible){
 		super(new MigLayout("","[grow]","20[]20[]20[]20"));
@@ -33,11 +31,14 @@ public class ClinicInfoView extends JPanel {
 		//clinicTel.setFont (clinicTel.getFont ().deriveFont (fontSize));
 
 		JLabel physicianName = new JLabel(MainControl.getMainControl().getPhysicianName());
+		JLabel clinicAddress = new JLabel(MainControl.getMainControl().getClinicAddress());
+		
 		//physicianName.setFont (physicianName.getFont ().deriveFont (fontSize));
 
-		this.add(clinicNameLabel,"align left,cell 2 0");
-		this.add(clinicTel,"align left, cell 2 1");
-		this.add(physicianName,"align left, cell 2 2");
+		this.add(clinicNameLabel,"align left,cell 2 1");
+		this.add(clinicTel,"align left, cell 2 3");
+		this.add(physicianName,"align left, cell 2 0");
+		this.add(clinicAddress,"align left,cell 2 2");
 	}
 	
 }

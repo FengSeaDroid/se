@@ -39,6 +39,7 @@ public class MainWindow extends JPanel {
         //Display the window.
         mainFrame.pack();
         mainFrame.setVisible(true);
+        mainFrame.setExtendedState(mainFrame.MAXIMIZED_BOTH); 
     }
 
 	/**
@@ -51,7 +52,7 @@ public class MainWindow extends JPanel {
         tabbedPane.setBorder(BorderFactory.createLineBorder(Color.black));
         tabbedPane.setPreferredSize(new Dimension(800, 600));
         tabbedPane.addTab("New Prescription",this.newPrescription());
-        tabbedPane.addTab("Prescription History", this.prescriptionHistory());
+  //      tabbedPane.addTab("Prescription History", this.prescriptionHistory());
         
         //Add the tabbed pane to this panel.
         this.add(tabbedPane);
@@ -67,10 +68,12 @@ public class MainWindow extends JPanel {
 		JSplitPane newPrescripanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT,upperLeftPanel, new DrugLineView());
 		patientAllergyView patientAllergyView_ = new patientAllergyView();
 		FlowLayout flowLayout = (FlowLayout) patientAllergyView_.getLayout();
-		JSplitPane rightPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT ,newPrescripanel,patientAllergyView_);
-		rightPanel.setDividerLocation(500);
-		rightPanel.setSize(500, 500);
-		//return newPrescripanel;
+		JSplitPane rightDownPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT ,patientAllergyView_, new prescriptionHistoryView());
+	//	JSplitPane rightPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT ,newPrescripanel,patientAllergyView_);
+		JSplitPane rightPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT ,newPrescripanel,rightDownPanel);
+	//	JSplitPane rightDownPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT ,patientAllergyView_, new prescriptionHistoryView());
+		rightDownPanel.setDividerLocation(290);
+		rightPanel.setDividerLocation(5000);
 		return rightPanel;
 	}
 	
