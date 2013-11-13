@@ -31,7 +31,7 @@ public class Patient {
 		//this.prescriptionHistory = new HashSet<Prescription>();
 	}
 	
-	public Patient(String id, String name,String MCP, String dob, String weight, String addr, String tel,  Set<String> allergyList, Prescription[] prescriptionList){
+	public Patient(String id, String name,String MCP, String dob, String weight, String addr, String tel,  Set<String> allergyList, Set<Prescription> prescriptionHistory){
 		this.setPatientID(id);
 		this.setName(name);
 		this.setMCP(MCP);
@@ -40,9 +40,7 @@ public class Patient {
 		this.setAddress(addr);
 		this.setTel(tel);
 		this.setAllergy(allergyList);
-		for (Prescription p : prescriptionList){
-			this.addPrescription(p);
-		}
+		this.prescriptionHistory=prescriptionHistory;
 	}
 	
 	private String patientID;

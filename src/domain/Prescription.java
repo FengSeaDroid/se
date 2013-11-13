@@ -61,5 +61,4 @@ public class Prescription {
 	public void setDrugLines(Set<String> drugLines) {
 		this.drugLines = drugLines;
 	}
-
 }

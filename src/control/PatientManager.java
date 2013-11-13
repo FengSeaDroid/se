@@ -4,8 +4,6 @@ import java.sql.ResultSet;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.naming.spi.DirStateFactory.Result;
-
 import mySqlDatabase.DBConnection;
 import domain.Patient;
 import domain.Prescription;
@@ -31,29 +29,40 @@ public class PatientManager {
 	
 	public Patient lookupPatient(String MCP){
 		try{
-			ResultSet result=dbconnection.execQuery("select * from patient");
-			patient.setPatientID((result.getString(1)));
-			patient.setMCP(result.getString(2));
-			patient.setName(result.getString(3));
-			patient.setAddress(result.getString(4));
-			patient.setDateOfBirth(result.getString(5));
-			patient.setWeight(result.getString(6));
-			patient.setTel(result.getString(7));
+			ResultSet patientResult=dbconnection.execQuery("select * from patient");
+			patient.setPatientID((patientResult.getString(1)));
+			patient.setMCP(patientResult.getString(2));
+			patient.setName(patientResult.getString(3));
+			patient.setAddress(patientResult.getString(4));
+			patient.setDateOfBirth(patientResult.getString(5));
+			patient.setWeight(patientResult.getString(6));
+			patient.setTel(patientResult.getString(7));
 			
-			result=dbconnection.execQuery("select * from allergy where patient_id="+patient.getPatientID());
+			ResultSet allergyResult=dbconnection.execQuery("select * from allergy where patient_id="+patient.getPatientID());
 			Set<String> allergySet = new HashSet<String>();
-	        while (result.next()){
-	        	allergySet.add(""+result.getArray(2));
+	        while (allergyResult.next()){
+	        	allergySet.add(""+allergyResult.getArray(2));
 			}
 	        patient.setAllergy(allergySet);
 	        
-	       /* Prescription prescription;
-			result=dbconnection.execQuery("select * from prescription where patient_id="+patient.getPatientID());
-			Set<Prescription> prescriptionSet = new HashSet<String>();
-	        while (result.next()){
-				set.add(""+result.getArray(2));
+	        ResultSet prescriptionResult=dbconnection.execQuery("select ph.name,pr.prescription_id,pr.issue_date,pr.effective_date from prescription pr,physican ph"
+			+"where pr.patient_id="+patient.getPatientID()+" and pr.physicain_id=ph.physicain_id");
+	        
+	        ResultSet prescriptionSpecResult=dbconnection.execQuery("select medicine_name,medicine_spec from prescription_spec where "
+	        		+ "prescription_id="+prescriptionResult.getString(2));
+			
+			Set<Prescription> prescriptionSet;
+			
+	        while (prescriptionResult.next()){
+	        	Set<String> drugLine=new HashSet<String>();
+	        	
+	        	while(prescriptionSpecResult.next())
+	        	{
+	        		drugLine.add(prescriptionSpecResult.getString(1)+prescriptionResult.getString(2)); 
+	        	}
+        		Prescription prescription=new Prescription(prescriptionResult.getString(1),prescriptionResult.getString(3),prescriptionResult.getString(4),drugLine);
+
 			}
-			patient.setPrescriptionList(prescriptionList);*/
 		}
 		catch (Exception e){
 		    System.out.println(e.getMessage());
