@@ -44,6 +44,9 @@ public class PatientManager {
 	        while (result.next()){
 				set.add(""+result.getArray(2));
 			}
+	        patient.setAllergy(set);
+	        
+	        
 			
 		}
 		catch (Exception e){

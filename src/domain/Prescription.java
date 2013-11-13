@@ -1,8 +1,10 @@
 package domain;
 
+import java.util.Set;
+
 public class Prescription {
 	
-	public Prescription(Patient p, String physician, String issueDate, String effectiveDate, String[] drugLines){
+	public Prescription(Patient p, String physician, String issueDate, String effectiveDate, Set<String> drugLines){
 		this.setOwner(p);
 		this.setPhysician(physician);
 		this.setIssueDate(issueDate);
@@ -50,13 +52,13 @@ public class Prescription {
 		this.effectiveDate = effectiveDate;
 	}
 
-	private String[] drugLines;
+	private Set<String> drugLines;
 
-	public String[] getDrugLines() {
+	public Set<String> getDrugLines() {
 		return drugLines;
 	}
 
-	public void setDrugLines(String[] drugLines) {
+	public void setDrugLines(Set<String> drugLines) {
 		this.drugLines = drugLines;
 	}
 
