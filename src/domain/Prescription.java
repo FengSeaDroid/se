@@ -4,15 +4,15 @@ import java.util.Set;
 
 public class Prescription {
 	
-	public Prescription(Patient p, String physician, String issueDate, String effectiveDate, Set<String> drugLines){
-		this.setOwner(p);
+	public Prescription(/*Patient p,*/ String physician, String issueDate, String effectiveDate, Set<String> drugLines){
+		//this.setOwner(p);
 		this.setPhysician(physician);
 		this.setIssueDate(issueDate);
 		this.setEffectiveDate(effectiveDate);
 		this.setDrugLines(drugLines);
 	}
 	
-	private Patient owner;
+	/*private Patient owner;
 	
 	public Patient getOwner() {
 		return owner;
@@ -20,7 +20,7 @@ public class Prescription {
 
 	protected void setOwner(Patient owner) {
 		this.owner = owner;
-	}
+	}*/
 
 	private String physician;
 	

@@ -117,21 +117,21 @@ public class Patient {
 		this.allergy = set;
 	}
 	
-	private Set<Prescription> prescriptionList = new HashSet<Prescription>();
-
-	/**
-	 * @return the prescriptionList
-	 */
-	public Set<Prescription> getPrescriptionList() {
-		return new HashSet<Prescription>(this.prescriptionList);
-	}
-
-	/**
-	 * @param prescriptionList the prescriptionList to set
-	 */
-	public void setPrescriptionList(Set<Prescription> prescriptionList) {
-		this.prescriptionList = prescriptionList;
-	}
+//	private Set<Prescription> prescriptionList = new HashSet<Prescription>();
+//
+//	/**
+//	 * @return the prescriptionList
+//	 */
+//	public Set<Prescription> getPrescriptionList() {
+//		return new HashSet<Prescription>(this.prescriptionList);
+//	}
+//
+//	/**
+//	 * @param prescriptionList the prescriptionList to set
+//	 */
+//	public void setPrescriptionList(Set<Prescription> prescriptionList) {
+//		this.prescriptionList = prescriptionList;
+//	}
 	
 	private String tel;
 
@@ -161,6 +161,6 @@ public class Patient {
 	
 	public void addPrescription (Prescription prescription){
 		prescriptionHistory.add(prescription);
-		prescription.setOwner(this);
+		//prescription.setOwner(this);
 	}
 }

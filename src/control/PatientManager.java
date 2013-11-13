@@ -8,6 +8,7 @@ import javax.naming.spi.DirStateFactory.Result;
 
 import mySqlDatabase.DBConnection;
 import domain.Patient;
+import domain.Prescription;
 
 public class PatientManager {
 	
@@ -40,14 +41,19 @@ public class PatientManager {
 			patient.setTel(result.getString(7));
 			
 			result=dbconnection.execQuery("select * from allergy where patient_id="+patient.getPatientID());
-			Set<String> set = new HashSet<String>();
+			Set<String> allergySet = new HashSet<String>();
+	        while (result.next()){
+	        	allergySet.add(""+result.getArray(2));
+			}
+	        patient.setAllergy(allergySet);
+	        
+	       /* Prescription prescription;
+			result=dbconnection.execQuery("select * from prescription where patient_id="+patient.getPatientID());
+			Set<Prescription> prescriptionSet = new HashSet<String>();
 	        while (result.next()){
 				set.add(""+result.getArray(2));
 			}
-	        patient.setAllergy(set);
-	        
-	        
-			
+			patient.setPrescriptionList(prescriptionList);*/
 		}
 		catch (Exception e){
 		    System.out.println(e.getMessage());
