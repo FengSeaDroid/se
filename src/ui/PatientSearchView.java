@@ -23,7 +23,8 @@ public class PatientSearchView extends JPanel {
 	public PatientSearchView() {
 		
 		super(new MigLayout("wrap 8", "[][][][][][][][][]", "[][][]"));
-		patientInfo = MainControl.getPatientInfo();
+		//patientInfo.put("DOB",);
+		//patientInfo.put("weight", );
 		JLabel label_3 = new JLabel("Name");
 		this.add(label_3,"cell 1 0,alignx right,gapx unrelated");
 		JTextField textField = new JTextField(20);
@@ -43,13 +44,13 @@ public class PatientSearchView extends JPanel {
 		this.add(weight, "cell 4 2");
 		mcp.addActionListener(new ActionListener(){
 
-            public void actionPerformed(ActionEvent e){
-            	
-                    DOB.setText(patientInfo.get("DOB"));
-                    weight.setText(patientInfo.get("Weight"));
-                    patientAllergyView.model.addRow(new Object[]{"Allergy"});
-                    
-            }});
+	        public void actionPerformed(ActionEvent e){
+	        	
+	                DOB.setText(MainControl.getMainControl().getCurrentPatient().getDateOfBirth());
+	                weight.setText(MainControl.getMainControl().getCurrentPatient().getWeight());
+	                patientAllergyView.model.addRow(MainControl.getMainControl().getCurrentPatient().getAllergy());
+	                
+	        }});
 		
 	}
 }

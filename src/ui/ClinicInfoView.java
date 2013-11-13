@@ -26,13 +26,13 @@ public class ClinicInfoView extends JPanel {
 		super(new MigLayout("","[grow]","20[]20[]20[]20"));
 		this.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 		this.setPreferredSize(new Dimension(getMaximumSize().width,this.viewHeight));
-		clinicInfo = MainControl.getClinicInfo();
-		JLabel clinicNameLabel = new JLabel(clinicInfo.get("clinicName"));
+		//clinicInfo = MainControl.getMainControl().getClinicInfo();
+		JLabel clinicNameLabel = new JLabel(MainControl.getMainControl().getClinicName());
 		//clinicNameLabel.setFont (clinicNameLabel.getFont ().deriveFont (fontSize));
-		JLabel clinicTel = new JLabel(clinicInfo.get("clinicTel"));
+		JLabel clinicTel = new JLabel(MainControl.getMainControl().getClinicTel());
 		//clinicTel.setFont (clinicTel.getFont ().deriveFont (fontSize));
 
-		JLabel physicianName = new JLabel(clinicInfo.get("physicianName"));
+		JLabel physicianName = new JLabel(MainControl.getMainControl().getPhysicianName());
 		//physicianName.setFont (physicianName.getFont ().deriveFont (fontSize));
 
 		this.add(clinicNameLabel,"align left,cell 2 0");
