@@ -19,7 +19,7 @@ public class MainControl {
 	 * The static attribute where the singleton lives
 	 */
 	private static MainControl singletonMainControl = new MainControl();
-	
+		
 	/**
 	 * The private constructor for this singleton.
 	 */

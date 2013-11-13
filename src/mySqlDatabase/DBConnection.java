@@ -1,4 +1,4 @@
-package MySqlDatabase;
+package mySqlDatabase;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -20,13 +20,6 @@ public class DBConnection {
 		return dbConnection;
 	}
 	
-	/*public void setDbConnection(String serverUrl,String userName,String password) throws Exception{
-		
-		Class.forName("com.mysql.jdbc.Driver");
-		dbConnection=DriverManager.getConnection(serverUrl,userName,password);	
-	}*/
-	
-
 	public ResultSet execQuery(String sql) throws Exception {
 		
 		PreparedStatement sqlStat=(PreparedStatement) dbConnection.prepareStatement(sql);
