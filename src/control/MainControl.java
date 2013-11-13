@@ -1,11 +1,10 @@
 package control;
 
-import java.util.*;
-
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import domain.Patient;
+import domain.Prescription;
 import ui.MainWindow;
 
 /**
@@ -38,6 +37,21 @@ public class MainControl {
 	 */
 	public static MainControl getMainControl(){
 		return singletonMainControl;
+	}
+	
+	private PatientManager patientManager = PatientManager.getPatientManager();
+	
+	/**
+	 * The prescription this process is working on.
+	 */
+	private Prescription currentPrescription;
+	
+	public void setPrescription (Prescription prescription){
+		this.currentPrescription = prescription;
+	}
+	
+	public Prescription getPrescription(){
+		return this.currentPrescription;
 	}
 	
 	/**
@@ -131,28 +145,7 @@ public class MainControl {
 	
 
 
-	/**
-	 * Launch the application.
-	 */
-    public static void main(String[] args) {
-    	//test patient info
-    	String[] allerg = new String[1];
-    	allerg[0] = "AMOX";
-    	//create test patient
-    	MainControl.getMainControl().setCurrentPatient(new Patient("judy","12345","89/05/08","50","102 Water St.","709 749-3322",allerg));
-    	//setPatientInfo("judy", "12345", "89/05/08", "50", allerg);
-        
-    	//create window
-    	SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                //Turn off metal's use of bold fonts
-        UIManager.put("swing.boldMetal", Boolean.FALSE);
-        MainWindow.createAndShowGUI();
-            }
-        });//create window
-    }
-    
-    private String clinicAddress;
+	private String clinicAddress;
     
     public void setClinicAddress(String addr){
     	this.clinicAddress = addr;
@@ -161,4 +154,73 @@ public class MainControl {
 	public String getClinicAddress() {
 		return this.clinicAddress;
 	}
+	
+	public Patient lookupPatient (String MCP){
+    	this.setCurrentPatient(patientManager.lookupPatient(MCP));
+    	
+		return getCurrentPatient();
+	}
+
+	//	
+	//	/**
+	//	 * The information of the clinic.
+	//	 */
+	//	private Map<String,String> clinicInfo = new HashMap<String,String>();
+	//	
+	//	/**
+	//	 * Setter for the clinic info.
+	//	 * @param clinicName
+	//	 * @param clinicTel
+	//	 * @param physicianName
+	//	 */
+	//	public void setClinicInfo(String clinicName,String clinicTel, String physicianName){
+	//		this.clinicInfo.put("clinicName",clinicName);
+	//		this.clinicInfo.put("clinicTel", clinicTel);
+	//		this.clinicInfo.put("physicianName", physicianName);
+	//	}//setter
+	//
+	//	/**
+	//	 * Getter for the clinic info.
+	//	 * @return
+	//	 */
+	//	public Map<String,String> getClinicInfo(){
+	//		return new HashMap<String,String>(this.clinicInfo);
+	//	}//getter
+	//
+	//	private static Map<String,String> patientInfo = new HashMap<String,String>();
+	//	public static void setPatientInfo(String name,String mcp, String dob, String weight,String[] allergy){
+	//		patientInfo.put("Name",name);
+	//		patientInfo.put("MCP", mcp);
+	//		patientInfo.put("DOB", dob);
+	//		patientInfo.put("Weight", weight);
+	//		patientInfo.put("Allergy", allergy[0]);
+	//	}
+	//	
+	//	public static Map<String,String> getPatientInfo(){
+	//		Map<String,String> tempClinicInf = new HashMap<String,String>();
+	//		tempClinicInf.putAll(patientInfo);
+	//		return tempClinicInf;
+	//	}
+		
+	
+	
+		/**
+		 * Launch the application.
+		 */
+	    public static void main(String[] args) {
+	    	//test patient info
+	    	String[] allerg = new String[1];
+	    	allerg[0] = "AMOX";
+	    	//create test patient
+	    	//setPatientInfo("judy", "12345", "89/05/08", "50", allerg);
+	        
+	    	//create window
+	    	SwingUtilities.invokeLater(new Runnable() {
+	            public void run() {
+	                //Turn off metal's use of bold fonts
+	        UIManager.put("swing.boldMetal", Boolean.FALSE);
+	        MainWindow.createAndShowGUI();
+	            }
+	        });//create window
+	    }
 }
