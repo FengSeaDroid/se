@@ -6,6 +6,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import domain.Patient;
+
 public class PatientManagerTest {
 
 	@BeforeClass
@@ -18,7 +20,8 @@ public class PatientManagerTest {
 
 	@Test
 	public void test() {
-		fail("Not yet implemented");
+		assertTrue(PatientManager.getPatientManager().lookupPatient("123") instanceof Patient);
+		assertEquals(PatientManager.getPatientManager().lookupPatient("123").getPatientID(),2);
 	}
 
 }
