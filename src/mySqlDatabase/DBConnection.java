@@ -7,19 +7,40 @@ import java.sql.SQLException;
 
 import com.mysql.jdbc.PreparedStatement;
 
+/**
+ * @author safwan
+ *
+ */
 public class DBConnection {
 	
+	/**
+	 * Connection Class to maintain main DB operations 
+	 */
 	private Connection dbConnection;
 	
+	/**
+	 * @param serverUrl
+	 * @param userName
+	 * @param password
+	 * Constructor initiate the connection to the database
+	 */
 	public DBConnection(String serverUrl,String userName,String password) throws Exception{
 		Class.forName("com.mysql.jdbc.Driver");
 		dbConnection=DriverManager.getConnection(serverUrl,userName,password);	
 	}
 	
+	
+	/**
+	 * @return connection to the database
+	 */
 	public Connection getDbConnection() {
 		return dbConnection;
 	}
 	
+	/**
+	 * @param sql query statement
+	 * @return the execution of the SQL statement 
+	 */
 	public ResultSet execQuery(String sql) throws Exception {
 		
 		PreparedStatement sqlStat=(PreparedStatement) dbConnection.prepareStatement(sql);
@@ -27,35 +48,12 @@ public class DBConnection {
 		return result;
 	}
 	
+	/**
+	 * @param sql insert/delete/update statement
+	 * this method used to manipulate data in the database
+	 */
 	public void manipulateData(String sql) throws Exception{
 		PreparedStatement sqlStat=(PreparedStatement) dbConnection.prepareStatement(sql);
 		sqlStat.executeUpdate();
 	}
-
-	
-	
-	
-	/*public static void main(String[] args) throws Exception
-	{
-		//Accessing driver from the JAR file
-		//Class.forName("com.mysql.jdbc.Driver");
-		
-		//Create variable for connection
-		//Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/prescriptionsys","root","System");
-		
-		//create the query
-		//PreparedStatement sqlStat=(PreparedStatement) con.prepareStatement("select * from formulary");
-		//PreparedStatement sqlStat=(PreparedStatement) con.prepareStatement("insert into formulary (medicine_id,medicine_spec) values(6,'kkkkk') ");
-		//sqlStat.executeUpdate();
-		//create a variable to execute the query
-		//ResultSet result=sqlStat.executeQuery();
-		
-		while(result.next())
-		{
-			System.out.println(result.getString(1)+" "+result.getString(2));
-			
-			
-		}
-	}*/
-
 }
