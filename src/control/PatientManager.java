@@ -29,7 +29,7 @@ public class PatientManager {
 	
 	public Patient lookupPatient(String MCP){
 		try{
-			ResultSet patientResult=dbconnection.execQuery("select * from patient");
+			ResultSet patientResult=dbconnection.execQuery("select * from patient where patient_id="+MCP);
 			patient.setPatientID((patientResult.getString(1)));
 			patient.setMCP(patientResult.getString(2));
 			patient.setName(patientResult.getString(3));
