@@ -24,6 +24,9 @@ public class DrugLineView extends JPanel implements FocusListener {
 		drugLineScroll.setPreferredSize(new Dimension(this.getMaximumSize().width,400));
 		this.add(drugLineScroll,"wrap");
 		drugLinePanel.add(this.drugFiller(),"wrap");
+		
+		this.add(refillAndSig(),"wrap,align right");
+		
 		this.add(this.buttonView(),"center");
 	}
 	
@@ -54,6 +57,24 @@ public class DrugLineView extends JPanel implements FocusListener {
 		printView.add(new JButton("Print"));
 		return printView;
 		
+	}
+	
+	private JComponent refillAndSig(){
+		JPanel ras= new JPanel(new MigLayout());
+		
+		JPanel jp1 = new JPanel();
+		jp1.add(new JLabel("Refill:"));
+		JTextField jt5=new JTextField(5);
+		jp1.add(jt5);
+		ras.add(jp1,"align left");
+		
+		JPanel jp2 = new JPanel();
+		jp2.add(new JLabel("Signature"));
+		JTextField jt6=new JTextField(15);
+		jp2.add(jt6);
+		ras.add(jp2,"span 3,align right");
+		
+		return ras;
 	}
 
 	@Override
