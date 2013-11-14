@@ -20,6 +20,7 @@ public class PatientSearchView extends JPanel {
 	//private patientAllergyView av = new patientAllergyView();
 	Set<Prescription> prescriptionHistory = new HashSet<Prescription>();
 	Set<String>allergy = new HashSet<String>();
+	JTextField nameField = new JTextField(20);
 	JTextField mcp = new JTextField(20);
 	JTextField DOB = new JTextField(20);
 	JTextField weight = new JTextField(10);
@@ -34,8 +35,8 @@ public class PatientSearchView extends JPanel {
 		//patientInfo.put("weight", );
 		JLabel label_3 = new JLabel("Name");
 		this.add(label_3,"cell 1 0,alignx right,gapx unrelated");
-		JTextField textField = new JTextField(20);
-		this.add(textField, "cell 2 0");
+		
+		this.add(nameField, "cell 2 0");
 		
 		JLabel label = new JLabel("MCP");
 		this.add(label,"cell 1 1,alignx right,gapx unrelated");
@@ -75,6 +76,7 @@ public class PatientSearchView extends JPanel {
 	        	
 	        	Patient patient = MainControl.getMainControl().lookupPatient(mcp.getText());
 	        	//patient_ID = patient.getPatientID();
+	        	nameField.setText(patient.getName());
                 DOB.setText(patient.getDateOfBirth());
                 weight.setText(patient.getWeight());
                 address.setText(patient.getAddress());
