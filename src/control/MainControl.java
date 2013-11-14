@@ -7,6 +7,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import domain.Patient;
+import domain.PatientManager;
 import domain.Prescription;
 import ui.MainWindow;
 
@@ -42,7 +43,10 @@ public class MainControl {
 		return singletonMainControl;
 	}
 	
-	private PatientManager patientManager = PatientManager.getPatientManager();
+	/**
+	 * It will connect to database here
+	 */
+	//private PatientManager patientManager = PatientManager.getPatientManager();
 	
 	/**
 	 * The prescription this process is working on.
@@ -120,9 +124,9 @@ public class MainControl {
 //    	this.setCurrentPatient(patientManager.lookupPatient(MCP));
     	
 		//test patient info
-    	String[] allergy = {"I'm","allergy","to","the","cold"};
-    	String[] druglines1 = {"This drug tastes good","this one even better", "this one is the best", "nothing beats this one"};
-    	String[] druglines2 = {"Sleep","Really","Good","Can fix"};
+    	String[] allergy = {"Potato","Aspirin","Broccoli","Exam","Penicillin"};
+    	String[] druglines1 = {"Aspirin","Penicillin", "Abelcet ", "Acarbose"};
+    	String[] druglines2 = {"Ibuprofen","Macrobid","Sabril","Sancuso"};
     	Prescription[] dummyPrescription = new Prescription[2];
     	Patient testPatient = new Patient("judy","12345","89/05/08","50","102 Water St.","709 749-3322",new HashSet<String>(Arrays.asList(allergy)));
     	dummyPrescription[0]=new Prescription("Gerard Farrell","11/15/13","11/15/13",new HashSet<String>(Arrays.asList(druglines1)));
@@ -131,8 +135,11 @@ public class MainControl {
     	testPatient.addPrescription(dummyPrescription[1]);
 		//
     	
-    	this.setCurrentPatient(testPatient);
-        
+    	if (MCP.equals("12345")){
+    		this.setCurrentPatient(testPatient);
+    	}
+    	else
+    		this.setCurrentPatient(new Patient());
 		return getCurrentPatient();
 	}
 	

@@ -43,6 +43,10 @@ public class Patient {
 		this.prescriptionHistory=prescriptionHistory;
 	}
 	
+	public Patient() {
+		// TODO Auto-generated constructor stub
+	}
+
 	private String patientID;
 	
 	public String getPatientID(){

@@ -1,12 +1,10 @@
-package control;
+package domain;
 
 import java.sql.ResultSet;
 import java.util.HashSet;
 import java.util.Set;
 
 import mySqlDatabase.DBConnection;
-import domain.Patient;
-import domain.Prescription;
 
 public class PatientManager {
 	
