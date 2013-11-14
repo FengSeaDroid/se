@@ -25,6 +25,8 @@ public class PatientSearchView extends JPanel {
 	JTextField weight = new JTextField(10);
 	JTextField address = new JTextField(20);
 	JTextField tel = new JTextField(10);
+	
+	static String patient_ID;
 	public PatientSearchView() {
 		
 		super(new MigLayout("wrap 8", "[][grow][][][grow][][][][]", "[][][][][][][]"));
@@ -72,7 +74,7 @@ public class PatientSearchView extends JPanel {
 	        public void actionPerformed(ActionEvent e){
 	        	
 	        	Patient patient = MainControl.getMainControl().lookupPatient(mcp.getText());
-        		
+	        	//patient_ID = patient.getPatientID();
                 DOB.setText(patient.getDateOfBirth());
                 weight.setText(patient.getWeight());
                 address.setText(patient.getAddress());

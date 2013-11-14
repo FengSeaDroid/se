@@ -30,8 +30,9 @@ public class PatientAllergyView extends JPanel {
 		
 		allergyTable = new JTable(model);
 		allergyTable.setFillsViewportHeight(true);
-		allergyTable.setPreferredSize(new Dimension(100,200));
+		allergyTable.setPreferredSize(new Dimension(500,250));
 		allergyTable.setPreferredScrollableViewportSize(allergyTable.getPreferredSize());
+		allergyTable.setEnabled(false);
 		JScrollPane scrollPane = new JScrollPane(allergyTable); 
 		Dimension maximumSize = new Dimension(1, 1000);
 		scrollPane.setMaximumSize(maximumSize);
