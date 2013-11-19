@@ -138,8 +138,15 @@ public class PatientManager {
 					+ "VALUES (NULL ,"+prescription.getIssueDate()+","+prescription.getEffectiveDate()+","+MainControl.getMainControl().getPhysicianID()+","
 					+MainControl.getMainControl().getCurrentPatient().getPatientID()+");");
 			
+			ResultSet maxPrescriptionID=dbconnection.execQuery("SELECT max(prescription_id) FROM prescription");
+			maxPrescriptionID.next();
+			String maxID=maxPrescriptionID.getString(1);
+			Set<String> drugs=prescription.getDrugLines();
 			
-			//dbconnection.manipulateData("insert into prescription_spec(prescription_id,medicine_name,medicine_spec) values ("+
+			for (String s : drugs) {
+				String[] medicine=s.split(" ");
+				dbconnection.manipulateData("insert into prescription_spec(prescription_id,medicine_name,medicine_spec) values ("+maxID+","+medicine[0]+","+medicine[1]+")");
+			}
 		
 		}
 		catch (Exception e){
