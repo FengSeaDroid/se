@@ -145,7 +145,7 @@ public class PatientManager {
 			
 			for (String s : drugs) {
 				String[] medicine=s.split(" ");
-				dbconnection.manipulateData("insert into prescription_spec(prescription_id,medicine_name,medicine_spec) values ("+maxID+","+medicine[0]+","+medicine[1]+")");
+				dbconnection.manipulateData("insert into prescription_spec(prescription_id,medicine_name,medicine_spec) values ("+maxID+","+medicine[0]+","+medicine[1]+medicine[2]+")");
 			}
 		
 		}
