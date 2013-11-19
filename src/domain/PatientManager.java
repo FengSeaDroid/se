@@ -32,7 +32,7 @@ public class PatientManager {
 			System.out.println("not enter quesry statement");
 			System.out.println(MCP);
 			ResultSet patientResult=dbconnection.execQuery("select patient_id,MCP,name,address,dob,"
-					+ "weight,phone from patient where patient_id=1");
+					+ "weight,phone from patient where MCp="+MCP);
 			System.out.println("affter second stat quesry statement");
 			
 			patientResult.next();
@@ -57,7 +57,7 @@ public class PatientManager {
 			System.out.println("DDDDDDDdone");
 
 			//patient_id	allergy_agent
-			ResultSet allergyResult=dbconnection.execQuery("select * from allergy where patient_id=1");
+			ResultSet allergyResult=dbconnection.execQuery("select * from allergy where patient_id="+p_id);
 			System.out.println("DDDDDDDdone11111");
 
 			Set<String> allergySet = new HashSet<String>();
@@ -73,11 +73,11 @@ public class PatientManager {
 			
 			//prescription_id	issue_date	effective_date	physician_id	patient_id
 	        ResultSet prescriptionResult=dbconnection.execQuery("select ph.name,pr.prescription_id,pr.issue_date,pr.effective_date from prescription pr,physician ph"+
-			" where pr.patient_id=1 and pr.physician_id=ph.physician_id and pr.physician_id=1");
+			" where pr.patient_id="+p_id+" and pr.physician_id=ph.physician_id");
 	        
 	        //prescription_id	medicine_name	medicine_spec
-	        ResultSet prescriptionSpecResult=dbconnection.execQuery("select medicine_name,medicine_spec from prescription_spec where "
-	        		+ "prescription_id=1");
+	        //ResultSet prescriptionSpecResult=dbconnection.execQuery("select medicine_name,medicine_spec from prescription_spec where "
+	        	//	+ "prescription_id=1");
 			
 			Set<Prescription> prescriptionSet=new HashSet<Prescription>();
 			
@@ -85,11 +85,14 @@ public class PatientManager {
 	        	
 	        	System.out.println("second while");
 	        	Set<String> drugLine=new HashSet<String>();
-	        	
+        		String presc_id=prescriptionResult.getString("prescription_id");
+        		
+        		ResultSet prescriptionSpecResult=dbconnection.execQuery("select medicine_name,medicine_spec from prescription_spec where "
+    	        		+ "prescription_id="+presc_id);
+
 	        	while(prescriptionSpecResult.next())
 	        	{
 		        	System.out.println("third while");
-
 	        		drugLine.add(prescriptionSpecResult.getString("medicine_name")+" "+prescriptionSpecResult.getString("medicine_spec")); 
 	        	}
         		Prescription prescription=new Prescription(prescriptionResult.getString(1),prescriptionResult.getString("issue_date")
