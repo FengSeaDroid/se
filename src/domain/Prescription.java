@@ -2,6 +2,7 @@ package domain;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.Set;
 
 import control.MainControl;
@@ -15,6 +16,12 @@ public class Prescription {
 		this.setEffectiveDate(effectiveDate);
 		this.setDrugLines(drugLines);
 		this.active = activeState;
+	}
+	
+	public Prescription(String physician){
+		this.setPhysician(physician);
+		this.active = true;
+		this.drugLines = new HashSet<String>();
 	}
 	
 	/*private Patient owner;
@@ -73,11 +80,15 @@ public class Prescription {
 	private Set<String> drugLines;
 
 	public Set<String> getDrugLines() {
-		return drugLines;
+		return new HashSet<String>(drugLines);
 	}
 
 	public void setDrugLines(Set<String> drugLines) {
 		this.drugLines = drugLines;
+	}
+	
+	public void addDrugLine(String drugLine){
+		this.drugLines.add(drugLine);
 	}
 	
 	public void save(){

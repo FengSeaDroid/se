@@ -38,6 +38,14 @@ public class MainControl {
 	}
 	
 	/**
+	 * 
+	 * @return
+	 */
+	public String getPhysicianID(){
+		return "1";
+	}
+	
+	/**
 	 * When the controller is needed, call this to get it.
 	 * 
 	 * @return this singleton controller.
@@ -142,6 +150,7 @@ public class MainControl {
 	
 	public Patient lookupPatient (String MCP){
     	this.setCurrentPatient(patientManager.lookupPatient(MCP));
+    	this.setPrescription(new Prescription(this.getPhysicianName()));
    		return getCurrentPatient();
 	}
 	
@@ -150,8 +159,12 @@ public class MainControl {
 	 * @param drugLines
 	 * @param effectiveDate
 	 */
-	public void print(Set<String> drugLines, Date effectiveDate){
-		
+	public void print(Set<String> drugLines, String effectiveDate){
+		this.getPrescription().setEffectiveDate(effectiveDate);
+		for (String s: drugLines){
+			this.getPrescription().addDrugLine(s);
+		}
+		this.getPrescription().save();
 	}
 	
 		/**
