@@ -95,8 +95,8 @@ public class Prescription {
 		this.drugLines.add(drugLine);
 	}
 	
-	public void save(){
-		assert this.isActive()==true;
+	public void save() throws IllegalArgumentException{
+		if (this.isActive() != true) throw new IllegalArgumentException();
 		this.achieve();
 		this.issue();
 		MainControl.getMainControl().getPatientManager().savePrescription(this);

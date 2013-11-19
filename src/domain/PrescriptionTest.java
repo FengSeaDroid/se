@@ -2,6 +2,10 @@ package domain;
 
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -58,6 +62,16 @@ public class PrescriptionTest {
 		assertTrue(testPrescription.getEffectiveDate().equals("2014-05-31"));
 		testPrescription.save();
 		assertFalse(testPrescription.isActive());
+	}
+	
+	/*
+	 * test if I can save an already achieved prescription.
+	 */
+	@Test (expected=IllegalArgumentException.class)
+	public void testSaveFailCase(){
+		Prescription testP = new Prescription("physician","1999-9-9","1999-9-9",new HashSet<String>(Arrays.asList("Viagra 312 mg","testDrug 12 mg")),false);
+		assertFalse(testP.isActive());
+		testP.save();
 	}
 
 }
