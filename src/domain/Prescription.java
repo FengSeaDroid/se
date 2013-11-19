@@ -66,6 +66,10 @@ public class Prescription {
 	public void setIssueDate(String issueDate) {
 		this.issueDate = issueDate;
 	}
+	
+	public void issue(){
+		this.setIssueDate(new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()));
+	}
 
 	private String effectiveDate;
 	
@@ -94,7 +98,7 @@ public class Prescription {
 	public void save(){
 		assert this.isActive()==true;
 		this.achieve();
-		this.setIssueDate(new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()));
+		this.issue();
 		MainControl.getMainControl().getPatientManager().savePrescription(this);
 	}
 }
