@@ -51,6 +51,10 @@ public class MainControl {
 	 */
 	private PatientManager patientManager = PatientManager.getPatientManager();
 	
+	public PatientManager getPatientManager(){
+		return this.patientManager;
+	}
+	
 	/**
 	 * The prescription this process is working on.
 	 */

@@ -1,6 +1,10 @@
 package domain;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Set;
+
+import control.MainControl;
 
 public class Prescription {
 	
@@ -74,5 +78,12 @@ public class Prescription {
 
 	public void setDrugLines(Set<String> drugLines) {
 		this.drugLines = drugLines;
+	}
+	
+	public void save(){
+		assert this.isActive()==true;
+		this.achieve();
+		this.setIssueDate(new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()));
+		MainControl.getMainControl().getPatientManager().savePrescription(this);
 	}
 }

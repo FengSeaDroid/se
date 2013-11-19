@@ -10,7 +10,7 @@ import org.junit.Test;
 import domain.Patient;
 import domain.Prescription;
 
-public class ControlTest {
+public class MainControlTest {
 
 	@Before
 	public void setUp() throws Exception {
