@@ -2,6 +2,8 @@ package ui;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.Set;
@@ -48,7 +50,27 @@ public class DrugLineView extends JPanel implements FocusListener {
 		drugLine.getEditor().getEditorComponent().addFocusListener(this);
 		
 		drugFill.add(drugLine);
-		drugFill.add(new JButton("delete"));
+		
+		//add function of delete button
+		JButton deletebutton=new JButton("delete");
+		drugFill.add(deletebutton);
+		
+		deletebutton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				JButton thebutton=(JButton) e.getSource();
+				
+				JPanel fatherpanel=(JPanel) thebutton.getParent().getParent();
+				JPanel sonpanel=(JPanel) thebutton.getParent();
+				fatherpanel.remove(sonpanel);
+				fatherpanel.revalidate();
+				fatherpanel.repaint();
+			}
+		});
+		//function ends here
+		
 		return drugFill;
 	}
 	
