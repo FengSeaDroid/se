@@ -15,14 +15,25 @@ public class ClinicInfoView extends JPanel {
 	/**
 	 *  Height of the view
 	 */
-	private final int viewHeight = 200;
+	//private final int viewHeight = 200;
 	//private final float fontSize = 20;
+	
+	//SOME DIFFERENT SETTING HERE
+	private final int viewHeight = 100;
+	
 	
 	//private Map<String,String> clinicInfo = new HashMap<String,String>();
 	
 	public ClinicInfoView(boolean edible){
-		super(new MigLayout("","[grow]","20[]20[]20[]20"));
-		this.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		//super(new MigLayout("","[grow]","20[]20[]20[]20"));
+		//this.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		
+		//try some different setting here.
+		super(new MigLayout("","[grow]","[][][]"));
+		this.setBorder(BorderFactory.createEmptyBorder());
+		//
+		
+		
 		this.setPreferredSize(new Dimension(getMaximumSize().width,this.viewHeight));
 		//clinicInfo = MainControl.getMainControl().getClinicInfo();
 		JLabel clinicNameLabel = new JLabel(MainControl.getMainControl().getClinicName());
