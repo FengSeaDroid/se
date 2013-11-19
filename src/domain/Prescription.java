@@ -4,12 +4,13 @@ import java.util.Set;
 
 public class Prescription {
 	
-	public Prescription(/*Patient p,*/ String physician, String issueDate, String effectiveDate, Set<String> drugLines){
+	public Prescription(/*Patient p,*/ String physician, String issueDate, String effectiveDate, Set<String> drugLines, boolean activeState){
 		//this.setOwner(p);
 		this.setPhysician(physician);
 		this.setIssueDate(issueDate);
 		this.setEffectiveDate(effectiveDate);
 		this.setDrugLines(drugLines);
+		this.active = activeState;
 	}
 	
 	/*private Patient owner;
@@ -21,6 +22,19 @@ public class Prescription {
 	protected void setOwner(Patient owner) {
 		this.owner = owner;
 	}*/
+	
+	/**
+	 * flag for the state of the prescription. when created it is active and when saved it is achieved.
+	 */
+	private boolean active;
+	
+	public boolean isActive(){
+		return this.active;
+	}
+	
+	public void achieve(){
+		this.active = false;
+	}
 
 	private String physician;
 	

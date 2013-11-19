@@ -141,6 +141,11 @@ public class MainControl {
    		return getCurrentPatient();
 	}
 	
+	/**
+	 * 
+	 * @param drugLines
+	 * @param effectiveDate
+	 */
 	public void print(Set<String> drugLines, Date effectiveDate){
 		
 	}
