@@ -3,6 +3,7 @@ import java.sql.ResultSet;
 import java.util.HashSet;
 import java.util.Set;
 
+import control.MainControl;
 import mySqlDatabase.DBConnection;
 import domain.Patient;
 import domain.Prescription;
@@ -132,7 +133,14 @@ public class PatientManager {
 	
 	public void savePrescription(Prescription prescription){
 		try{
-			dbconnection.manipulateData("insert into formulary values ('1','2')");
+			
+			dbconnection.manipulateData("insert into prescription (prescription_id,issue_date,effective_date,physician_id,patient_id)"
+					+ "VALUES (NULL ,"+prescription.getIssueDate()+","+prescription.getEffectiveDate()+","+MainControl.getMainControl().getPhysicianID()+","
+					+MainControl.getMainControl().getCurrentPatient().getPatientID()+");");
+			
+			
+			//dbconnection.manipulateData("insert into prescription_spec(prescription_id,medicine_name,medicine_spec) values ("+
+		
 		}
 		catch (Exception e){
 			System.out.println(e.getMessage());
