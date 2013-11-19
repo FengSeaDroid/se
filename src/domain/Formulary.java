@@ -12,8 +12,12 @@ public class Formulary {
 		drugList.add("acetaminophen");
 	}
 	
-	public List<String> getAllDrugArrayList(){
-		return new ArrayList<String>(drugList);
+	public Formulary(Set<String> formularySet){
+		drugList=formularySet;
+	}
+	
+	public Set<String> getAllDrugSet(){
+		return new HashSet<String>(drugList);
 	}
 	
 	/**

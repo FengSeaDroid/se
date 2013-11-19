@@ -31,7 +31,7 @@ public class FormularyTest {
 	
 	@Test
 	public void testAllList() {
-		results = testFormulary.getAllDrugArrayList();
+		results = testFormulary.getAllDrugSet();
 		assertTrue (results instanceof ArrayList<?>);
 		assertEquals (results.size(),3);
 	}

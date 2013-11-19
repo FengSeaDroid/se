@@ -5,6 +5,9 @@ import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxEditor;
 import javax.swing.ComboBoxModel;
@@ -12,10 +15,13 @@ import javax.swing.JComboBox;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 
+import domain.Formulary;
+import domain.PatientManager;
+
 public class SearchBoxModel extends AbstractListModel
                 implements ComboBoxModel, KeyListener, ItemListener
 {
-    ArrayList<String> db = new ArrayList<String>();
+    Set<String> db = new HashSet<String>();
     ArrayList<String> data = new ArrayList<String>();
     String selection;
     JComboBox cb;
@@ -31,17 +37,19 @@ public class SearchBoxModel extends AbstractListModel
         cbe.getEditorComponent().addKeyListener(this);
 
 //set up our "database" of items - in practice you will usuallu have a proper db.
-        db.add("Amoxicillin 250 mg tablets TT tablets p.o. T.i.d. x 7 days");
-        db.add("Aspirin 250 mg tablets TT tablets p.o. T.i.d. x 7 days");
-        db.add("Penicillin 250 mg tablets TT tablets p.o. T.i.d. x 7 days");
-        db.add("iron oxide (3+) 250 mg tablets TT tablets p.o. T.i.d. x 7 days");
-        db.add("sodium 250 mg tablets TT tablets p.o. T.i.d. x 7 days");
-        db.add("sodium 250 mg tablets TT tablets p.o. T.i.d. x 7 days");
-        db.add("titanium 250 mg tablets TT tablets p.o. T.i.d. x 7 days");
-        db.add("selenium 250 mg tablets TT tablets p.o. T.i.d. x 7 days");
-        db.add("potassium 250 mg tablets TT tablets p.o. T.i.d. x 7 days");
-        db.add("polonium 250 mg tablets TT tablets p.o. T.i.d. x 7 days");
-        db.add("aluminium chloride 250 mg tablets TT tablets p.o. T.i.d. x 7 days");
+//        db.add("Amoxicillin 250 mg tablets TT tablets p.o. T.i.d. x 7 days");
+//        db.add("Aspirin 250 mg tablets TT tablets p.o. T.i.d. x 7 days");
+//        db.add("Penicillin 250 mg tablets TT tablets p.o. T.i.d. x 7 days");
+//        db.add("iron oxide (3+) 250 mg tablets TT tablets p.o. T.i.d. x 7 days");
+//        db.add("sodium 250 mg tablets TT tablets p.o. T.i.d. x 7 days");
+//        db.add("sodium 250 mg tablets TT tablets p.o. T.i.d. x 7 days");
+//        db.add("titanium 250 mg tablets TT tablets p.o. T.i.d. x 7 days");
+//        db.add("selenium 250 mg tablets TT tablets p.o. T.i.d. x 7 days");
+//        db.add("potassium 250 mg tablets TT tablets p.o. T.i.d. x 7 days");
+//        db.add("polonium 250 mg tablets TT tablets p.o. T.i.d. x 7 days");
+//        db.add("aluminium chloride 250 mg tablets TT tablets p.o. T.i.d. x 7 days");
+        Formulary formulary=PatientManager.getPatientManager().lookupFormulary();
+        db.addAll(formulary.getAllDrugSet());
     }
 
     public void updateModel(String in)
