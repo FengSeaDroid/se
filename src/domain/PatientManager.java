@@ -129,4 +129,16 @@ public class PatientManager {
 		Formulary formulary=new Formulary(formularySet);
 		return formulary;
 	}
+	
+	public void savePrescription(Prescription prescription){
+		try{
+			dbconnection.manipulateData("insert into formulary values ('1','2')");
+		}
+		catch (Exception e){
+			System.out.println(e.getMessage());
+		}
+		//INSERT INTO COMMENTS values (default, 'lars', 'myemail@gmail.com','http://www.vogella.com', '2009-09-14 10:33:11', 'Summary','My first comment'); 
+
+	}
+	
 }
