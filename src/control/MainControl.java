@@ -2,10 +2,12 @@ package control;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Set;
 
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
+import domain.Formulary;
 import domain.Patient;
 import domain.PatientManager;
 import domain.Prescription;
@@ -80,6 +82,19 @@ public class MainControl {
 		this.currentPatient = currentPatient;
 	}
 
+	/**
+	 * 
+	 */
+	private final Formulary currentFormulary = this.patientManager.lookupFormulary();
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Formulary getFormulary(){
+		return this.currentFormulary;
+	}
+	
 	private String clinicName;
 	
 	public String getClinicName() {
@@ -122,25 +137,11 @@ public class MainControl {
 	
 	public Patient lookupPatient (String MCP){
     	this.setCurrentPatient(patientManager.lookupPatient(MCP));
-    	
-//		//test patient info
-//    	String[] allergy = {"Potato","Aspirin","Broccoli","Exam","Penicillin"};
-//    	String[] druglines1 = {"Aspirin","Penicillin", "Abelcet ", "Acarbose"};
-//    	String[] druglines2 = {"Ibuprofen","Macrobid","Sabril","Sancuso"};
-//    	Prescription[] dummyPrescription = new Prescription[2];
-//    	Patient testPatient = new Patient("judy","12345","89/05/08","50","102 Water St.","709 749-3322",new HashSet<String>(Arrays.asList(allergy)));
-//    	dummyPrescription[0]=new Prescription("Gerard Farrell","11/15/13","11/15/13",new HashSet<String>(Arrays.asList(druglines1)));
-//    	dummyPrescription[1]=new Prescription("Gerard Farrell","11/15/13","11/15/13",new HashSet<String>(Arrays.asList(druglines2)));
-//    	testPatient.addPrescription(dummyPrescription[0]);
-//    	testPatient.addPrescription(dummyPrescription[1]);
-//		//
-//    	
-//    	if (MCP.equals("12345")){
-//    		this.setCurrentPatient(testPatient);
-//    	}
-//    	else
-//    		this.setCurrentPatient(new Patient());
-		return getCurrentPatient();
+   		return getCurrentPatient();
+	}
+	
+	public void print(Set<String> drugLines){
+		
 	}
 	
 		/**
