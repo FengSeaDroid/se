@@ -1,6 +1,7 @@
 package control;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -140,7 +141,7 @@ public class MainControl {
    		return getCurrentPatient();
 	}
 	
-	public void print(Set<String> drugLines){
+	public void print(Set<String> drugLines, Date effectiveDate){
 		
 	}
 	
