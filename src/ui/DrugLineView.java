@@ -3,6 +3,8 @@ package ui;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -13,7 +15,6 @@ import java.util.Set;
 import javax.swing.*;
 
 import control.MainControl;
-
 import net.miginfocom.swing.MigLayout;
 import domain.Drug;
 
@@ -145,8 +146,17 @@ public class DrugLineView extends JPanel implements FocusListener {
 
 		JPanel jp2 = new JPanel();
 		jp2.add(new JLabel("Signature"));
-		JTextField jt6=new JTextField(15);
-		jp2.add(jt6);
+		
+		Image image;
+		image=this.getToolkit().createImage(MainControl.getMainControl().getPatientManager().getSignature(MainControl.getMainControl().getPhysicianID()));
+		ImageIcon icon=new ImageIcon(image);
+		icon.setImage(image.getScaledInstance(100, 30,Image.SCALE_DEFAULT));
+		JLabel imageLable=new JLabel();
+		imageLable.setIcon(icon);
+		
+		//JTextField jt6=new JTextField(15);
+		//jp2.add(jt6);
+		jp2.add(imageLable);
 		ras.add(jp2,"span 3,align right");
 
 		return ras;

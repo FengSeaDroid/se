@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import control.MainControl;
@@ -191,24 +192,25 @@ public class PatientManager {
 		}
 	}
 	
-	public void getSignature(String physicianID)
+	public byte[] getSignature(String physicianID)
 	{
 		try
 		{
-			Image image;
 			byte[] imageBytes;
 			ResultSet signatureResult=dbconnection.execQuery("select signature from physician where physician_id="+physicianID);
 			signatureResult.next();
-			imageBytes=signatureResult.getBytes("columnLabel");
+			imageBytes=signatureResult.getBytes("signature");
+			//Image image=null;
 			//image=getToolkit().creatImage(imageBytes);
-			//ImageIcon icon=new Icon(image);
+			//ImageIcon icon=new ImageIcon(image);
 			//JLabel x;
 			//x.setIcon(icon);
+			return imageBytes;
 		}
 		catch (Exception e){
 			System.out.println(e.getMessage());
 		}
-		
+		return null;
 	}
 	
 }
