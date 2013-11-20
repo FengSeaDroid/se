@@ -221,10 +221,11 @@ public class PatientManager {
 		try
 		{
 			//patient table description on the DB (name,address,MCP)
-			ResultSet signatureResult=dbconnection.execQuery("select name,address,MCP FROM patient WHERE where name like("+name+"%)");
+			ResultSet signatureResult=dbconnection.execQuery("select name,address,MCP FROM patient");
 			Set<String> patientSet=new HashSet<String>();
 			while (signatureResult.next())
 			{
+				System.out.println(signatureResult.getString("name")+","+signatureResult.getString("address")+","+signatureResult.getString("MCP"));
 				patientSet.add(signatureResult.getString("name")+","+signatureResult.getString("address")+","+signatureResult.getString("MCP"));
 			}
 			return patientSet;
