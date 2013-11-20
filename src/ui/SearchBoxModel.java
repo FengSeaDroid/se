@@ -18,50 +18,59 @@ import javax.swing.JTextField;
 import control.MainControl;
 
 public class SearchBoxModel extends AbstractListModel
-                implements ComboBoxModel, KeyListener, ItemListener
-{
-    Set<String> db = new HashSet<String>();
-    ArrayList<String> data = new ArrayList<String>();
-    String selection;
-    JComboBox cb;
-    ComboBoxEditor cbe;
-    int currPos = 0;
+                implements ComboBoxModel, KeyListener, ItemListener{
+    private Set<String> db = new HashSet<String>();
+    private ArrayList<String> data = new ArrayList<String>();
+    private String selection;
+    private JComboBox cb;
+    private ComboBoxEditor cbe;
+    private int currPos = 0;
 
-    public SearchBoxModel(JComboBox jcb)
-    {
+    public SearchBoxModel(JComboBox jcb, Set<String> textList) {
 
         cb = jcb;
         cbe = jcb.getEditor();
-//here we add the key listener to the text field that the combobox is wrapped around
+        //here we add the key listener to the text field that the combobox is wrapped around
         cbe.getEditorComponent().addKeyListener(this);
 
-//set up our "database" of items - in practice you will usuallu have a proper db.
-        db.addAll(MainControl.getMainControl().getFormulary().getAllDrugSet());
+        //set up our "database" of items - in practice you will usuallu have a proper db.
+//        db.addAll(MainControl.getMainControl().getFormulary().getAllDrugSet());
+        db.addAll(textList);
     }
 
-    public void updateModel(String in)
-    {
+    public void updateModel(String in){
         data.clear();
-//lets find any items which start with the string the user typed, and add it to the popup list
-//here you would usually get your items from a database, or some other storage...
+        //lets find any items which start with the string the user typed, and add it to the popup list
+        //here you would usually get your items from a database, or some other storage...
         for(String s:db)
             if(s.startsWith(in))
                 data.add(s);
 
         super.fireContentsChanged(this, 0, data.size());
 
-//this is a hack to get around redraw problems when changing the list length of the displayed popups
+        //this is a hack to get around redraw problems when changing the list length of the displayed popups
         cb.hidePopup();
         cb.showPopup();
         if(data.size() != 0)
             cb.setSelectedIndex(0);
     }
 
-    public int getSize(){return data.size();}
-    public Object getElementAt(int index){return data.get(index);}
-    public void setSelectedItem(Object anItem)
-                                 {selection = (String) anItem;}
-    public Object getSelectedItem(){return selection;}
+    public int getSize(){
+    	return data.size();
+    }
+    
+    public Object getElementAt(int index){
+    	return data.get(index);
+    }
+    
+    public void setSelectedItem(Object anItem){
+    	selection = (String) anItem;
+    }
+    
+    public Object getSelectedItem(){
+    	return selection;
+    }
+    
     public void keyTyped(KeyEvent e){}
     public void keyPressed(KeyEvent e){}
 

@@ -49,7 +49,7 @@ public class DrugLineView extends JPanel implements FocusListener {
 		drugLine.setEditable(true);
 		drugLine.setPreferredSize(new Dimension(500,10));
 		//create the model
-		SearchBoxModel sbm = new SearchBoxModel(drugLine);
+		SearchBoxModel sbm = new SearchBoxModel(drugLine,MainControl.getMainControl().getFormulary().getAllDrugSet());
 		//set the model on the combobox
 		drugLine.setModel(sbm);
 		//set the model as the item listener also
