@@ -69,7 +69,7 @@ public class PrescriptionTest {
 	 */
 	@Test (expected=IllegalArgumentException.class)
 	public void testSaveFailCase(){
-		Prescription testP = new Prescription("physician","1999-9-9","1999-9-9",new HashSet<String>(Arrays.asList("Viagra 312 mg","testDrug 12 mg")),false);
+		Prescription testP = new Prescription("physician","1999-9-9","1999-9-9",new HashSet<String>(Arrays.asList("Viagra 312 mg","testDrug 12 mg")));
 		assertFalse(testP.isActive());
 		testP.save();
 	}

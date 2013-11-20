@@ -131,7 +131,7 @@ public class PatientManager {
 					drugLine.add(prescriptionSpecResult.getString("medicine_name")+" "+prescriptionSpecResult.getString("medicine_spec")); 
 				}
 				Prescription prescription=new Prescription(prescriptionResult.getString(1),prescriptionResult.getString("issue_date")
-						,prescriptionResult.getString("effective_date"),drugLine,false);
+						,prescriptionResult.getString("effective_date"),drugLine);
 
 				prescriptionSet.add(prescription);
 

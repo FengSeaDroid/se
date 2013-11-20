@@ -9,15 +9,28 @@ import control.MainControl;
 
 public class Prescription {
 	
-	public Prescription(/*Patient p,*/ String physician, String issueDate, String effectiveDate, Set<String> drugLines, boolean activeState){
+	/**
+	 * create Prescription object which is in achieved state.
+	 * 		Used for read history prescription from database.
+	 * @param physician
+	 * @param issueDate
+	 * @param effectiveDate
+	 * @param drugLines
+	 * @param activeState
+	 */
+	public Prescription(/*Patient p,*/ String physician, String issueDate, String effectiveDate, Set<String> drugLines){
 		//this.setOwner(p);
 		this.setPhysician(physician);
 		this.setIssueDate(issueDate);
 		this.setEffectiveDate(effectiveDate);
 		this.setDrugLines(drugLines);
-		this.active = activeState;
+		this.active = false;
 	}
 	
+	/**
+	 * Create Prescription object which is in active state.
+	 * @param physician
+	 */
 	public Prescription(String physician){
 		this.setPhysician(physician);
 		this.active = true;
@@ -96,7 +109,7 @@ public class Prescription {
 	}
 	
 	public void save() throws IllegalArgumentException{
-		if (this.isActive() != true) throw new IllegalArgumentException();
+		if (this.isActive() == false) throw new IllegalArgumentException();
 		this.achieve();
 		this.issue();
 		MainControl.getMainControl().getPatientManager().savePrescription(this);
