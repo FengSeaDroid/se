@@ -217,7 +217,7 @@ public class PatientManager {
 	 * return set of patients the information will be formated such that
 	 * each element in this set will contain name,address,MCP
 	 */
-	public Set<String> getPatientList(String name){
+	public Set<String> getPatientList(){
 		try
 		{
 			//patient table description on the DB (name,address,MCP)
@@ -225,8 +225,8 @@ public class PatientManager {
 			Set<String> patientSet=new HashSet<String>();
 			while (signatureResult.next())
 			{
-				System.out.println(signatureResult.getString("name")+","+signatureResult.getString("address")+","+signatureResult.getString("MCP"));
-				patientSet.add(signatureResult.getString("name")+","+signatureResult.getString("address")+","+signatureResult.getString("MCP"));
+//				System.out.println(signatureResult.getString("name")+";"+signatureResult.getString("address")+";"+signatureResult.getString("MCP"));
+				patientSet.add(signatureResult.getString("name")+";"+signatureResult.getString("address")+";"+signatureResult.getString("MCP"));
 			}
 			return patientSet;
 		}

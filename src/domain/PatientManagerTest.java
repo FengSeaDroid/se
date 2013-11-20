@@ -19,9 +19,14 @@ public class PatientManagerTest {
 	}
 
 	@Test
-	public void test() {
+	public void testLookupPatient() {
 		assertTrue(PatientManager.getPatientManager().lookupPatient("123") instanceof Patient);
-		assertEquals(PatientManager.getPatientManager().lookupPatient("123").getPatientID(),2);
+		assertTrue(PatientManager.getPatientManager().lookupPatient("123").getPatientID().equals("2"));
+	}
+	
+	@Test
+	public void testLookupPatientList(){
+		assertEquals(PatientManager.getPatientManager().getPatientList().size(),2);
 	}
 
 }
