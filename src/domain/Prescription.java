@@ -63,11 +63,11 @@ public class Prescription {
 		return issueDate;
 	}
 
-	public void setIssueDate(String issueDate) {
+	private void setIssueDate(String issueDate) {
 		this.issueDate = issueDate;
 	}
 	
-	public void issue(){
+	private void issue(){
 		this.setIssueDate(new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()));
 	}
 
