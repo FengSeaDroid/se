@@ -20,9 +20,9 @@ public class Prescription {
 	 */
 	public Prescription(/*Patient p,*/ String physician, String issueDate, String effectiveDate, Set<String> drugLines){
 		//this.setOwner(p);
-		this.setPhysician(physician);
-		this.setIssueDate(issueDate);
-		this.setEffectiveDate(effectiveDate);
+		this.physician=physician;
+		this.issueDate=issueDate;
+		this.effectiveDate=effectiveDate;
 		this.setDrugLines(drugLines);
 		this.active = false;
 	}
@@ -32,8 +32,8 @@ public class Prescription {
 	 * @param physician
 	 */
 	public Prescription(String physician){
-		this.setPhysician(physician);
 		this.active = true;
+		this.setPhysician(physician);
 		this.drugLines = new HashSet<String>();
 	}
 	
