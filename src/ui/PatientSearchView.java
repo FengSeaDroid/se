@@ -3,8 +3,10 @@ package ui;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.StringTokenizer;
 import java.util.Vector;
 
 import javax.swing.*;
@@ -28,7 +30,7 @@ public class PatientSearchView extends JPanel implements ActionListener, Filler{
 	JTextField weight = new JTextField(10);
 	JTextField address = new JTextField(20);
 	JTextField tel = new JTextField(10);
-	
+	static ArrayList<String> DrugsInHistory;
 	static String patient_ID;
 	public PatientSearchView() {
 		
@@ -166,12 +168,18 @@ public class PatientSearchView extends JPanel implements ActionListener, Filler{
 		//take care below
 		prescriptionHistory = patient.getPrescriptionHistory();
 		//for(int i=0; i<prescriptionHistory.size(); i++)
-	    
-		for(Prescription p: prescriptionHistory) {
-			for (String s:p.getDrugLines()){
-				String[] data = {p.getIssueDate(), s};
-				prescriptionHistoryView.model.addRow(data);
-			}
+	    DrugsInHistory = new ArrayList<String>();
+		for(Prescription p: prescriptionHistory)
+        	
+        {
+         for(String s:p.getDrugLines()) {
+        	 DrugsInHistory.add(s);
+        	 StringTokenizer st = new StringTokenizer(s, " "); 
+        		 String key = st.nextToken(); 
+        	 String[] data = {p.getIssueDate(),key};
+        	prescriptionHistoryView.model.addRow(data);
+        	}
+        }
 	    }
 	}
-}
+
