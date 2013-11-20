@@ -56,7 +56,7 @@ public class Prescription {
 		return this.active;
 	}
 	
-	public void achieve(){
+	private void achieve(){
 		this.active = false;
 	}
 
@@ -66,7 +66,8 @@ public class Prescription {
 		return physician;
 	}
 
-	public void setPhysician(String physician) {
+	public void setPhysician(String physician) throws IllegalStateException{
+		if (this.isActive() == false) throw new IllegalArgumentException();
 		this.physician = physician;
 	}
 
@@ -90,7 +91,8 @@ public class Prescription {
 		return effectiveDate;
 	}
 
-	public void setEffectiveDate(String effectiveDate) {
+	public void setEffectiveDate(String effectiveDate) throws IllegalStateException{
+		if (this.isActive() == false) throw new IllegalArgumentException();
 		this.effectiveDate = effectiveDate;
 	}
 
@@ -100,16 +102,17 @@ public class Prescription {
 		return new HashSet<String>(drugLines);
 	}
 
-	public void setDrugLines(Set<String> drugLines) {
+	protected void setDrugLines(Set<String> drugLines) {
 		this.drugLines = drugLines;
 	}
 	
-	public void addDrugLine(String drugLine){
+	public void addDrugLine (String drugLine) throws IllegalStateException{
+		if (this.isActive() == false) throw new IllegalArgumentException();
 		this.drugLines.add(drugLine);
 	}
 	
-	public void save() throws IllegalArgumentException{
-		if (this.isActive() == false) throw new IllegalArgumentException();
+	public void save() throws IllegalStateException{
+		if (this.isActive() == false) throw new IllegalStateException();
 		this.achieve();
 		this.issue();
 		MainControl.getMainControl().getPatientManager().savePrescription(this);
