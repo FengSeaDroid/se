@@ -213,4 +213,28 @@ public class PatientManager {
 		return null;
 	}
 	
+	/**
+	 * return set of patients the information will be formated such that
+	 * each element in this set will contain name,address,MCP
+	 */
+	public Set<String> getPatientList(String name){
+		try
+		{
+			//patient table description on the DB (name,address,MCP)
+			ResultSet signatureResult=dbconnection.execQuery("select name,address,MCP FROM patient WHERE where name like("+name+"%)");
+			Set<String> patientSet=new HashSet<String>();
+			while (signatureResult.next())
+			{
+				patientSet.add(signatureResult.getString("name")+","+signatureResult.getString("address")+","+signatureResult.getString("MCP"));
+			}
+			return patientSet;
+		}
+		catch (Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+		return null;
+
+	}
+	
 }
