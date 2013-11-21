@@ -15,8 +15,6 @@ import javax.swing.table.TableModel;
 
 public class PatientAllergyView extends JPanel {
 	public JTable allergyTable;
-	//private DefaultTableModel tablemodel;
-	//private Map<String,String> patientInfo = new HashMap<String,String>();
 	 
 	private static String[] columnNames = {"Drug Allergy"};
 	
@@ -27,18 +25,11 @@ public class PatientAllergyView extends JPanel {
 	 * Create the panel.
 	 */
 	public PatientAllergyView() {
-		
 		allergyTable = new JTable(model);
 		allergyTable.setFillsViewportHeight(true);
-		allergyTable.setPreferredSize(new Dimension(500,250));
-		allergyTable.setPreferredScrollableViewportSize(allergyTable.getPreferredSize());
-		allergyTable.setEnabled(false);
+		allergyTable.setEnabled(true);
 		JScrollPane scrollPane = new JScrollPane(allergyTable); 
-		Dimension maximumSize = new Dimension(1, 1000);
-		scrollPane.setMaximumSize(maximumSize);
+		scrollPane.setPreferredSize(new Dimension(500,250));
 	 	this.add(scrollPane);
-		
 	}
-	
-
 }
