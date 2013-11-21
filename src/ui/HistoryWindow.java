@@ -1,9 +1,11 @@
 package ui;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
@@ -23,6 +25,7 @@ public class HistoryWindow extends JPanel {
 
 	public HistoryWindow(Prescription currentPrescription)
 	{
+		super.setLayout(new MigLayout("","[]","[][][]"));
 		clinicInfoView=new ClinicInfoView(false);
 		patientSearchView=new PatientSearchView();
 		patientSearchView.fill(MainControl.getMainControl().getCurrentPatient().getMCP());
@@ -33,9 +36,11 @@ public class HistoryWindow extends JPanel {
 		jt.setText(MainControl.getMainControl().getCurrentPatient().getName());
 //		patientSearchView.nameField.setEditable(false);
 		jt.setEditable(false);
-		this.add(clinicInfoView);
-		this.add(patientSearchView);
-		this.add(drugLineView);
+		this.add(clinicInfoView,"cell 0 0, center, wrap");
+		this.add(patientSearchView, "cell 0 1, center, wrap");
+		this.add(drugLineView, "cell 0 2,  center, wrap");
+		drugLineView.setBorder(BorderFactory.createLineBorder(Color.red));
+		drugLineView.renewToDrugLineView("jofewjofiewjofiew");
 	}
 }
 

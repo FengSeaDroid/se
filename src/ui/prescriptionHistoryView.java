@@ -22,8 +22,8 @@ import domain.Patient;
 import domain.Prescription;
 
 public class prescriptionHistoryView extends JPanel {
-	
-	
+
+
 	Set<Prescription> prescriptionHistory = new HashSet<Prescription>();
 	Set<Prescription> prescriptionRenew = new HashSet<Prescription>();
 
@@ -34,91 +34,91 @@ public class prescriptionHistoryView extends JPanel {
 	String physician;
 	static DefaultTableModel model = new DefaultTableModel(data,columnNames) {
 		@Override
-	public boolean isCellEditable(int row, int column) {
-        return false;
-       }
-    };
-	
-	
-    Prescription clickedPrescription;
+		public boolean isCellEditable(int row, int column) {
+			return false;
+		}
+	};
+
+
+	Prescription clickedPrescription;
 	public prescriptionHistoryView()
 	{
-	 
-			HistoryTable = new JTable(model);
-			HistoryTable.setFillsViewportHeight(true);
-			HistoryTable.setPreferredSize(new Dimension(500,200));
-			HistoryTable.getColumnModel().getColumn(1).setPreferredWidth(300);
-			HistoryTable.setPreferredScrollableViewportSize(HistoryTable.getPreferredSize());
-			//HistoryTable.setEnabled(false);
-			
-			JScrollPane scrollPane = new JScrollPane(HistoryTable); 
-			Dimension maximumSize = new Dimension(1, 1000);
-			scrollPane.setMaximumSize(maximumSize);
-		 	this.add(scrollPane);
-		 	
-		 	HistoryTable.addMouseListener(new java.awt.event.MouseAdapter() {
-		 		
-				 @Override
-			 public void  mousePressed(MouseEvent e) {
-					 patient = MainControl.getMainControl().getCurrentPatient();
-					 physician = MainControl.getMainControl().getPhysicianName();
-					 if(e.getClickCount()== 2 ){
-					 
-					 JTable target = (JTable)e.getSource();
-					 int selectedRow = target.getSelectedRow();
-			         selectedRow =  HistoryTable.convertRowIndexToModel(selectedRow);
-					 String date = (String)HistoryTable.getModel().getValueAt(selectedRow, 0);
+
+		HistoryTable = new JTable(model);
+		HistoryTable.setFillsViewportHeight(true);
+		HistoryTable.setPreferredSize(new Dimension(500,200));
+		HistoryTable.getColumnModel().getColumn(1).setPreferredWidth(300);
+		HistoryTable.setPreferredScrollableViewportSize(HistoryTable.getPreferredSize());
+		//HistoryTable.setEnabled(false);
+
+		JScrollPane scrollPane = new JScrollPane(HistoryTable); 
+		Dimension maximumSize = new Dimension(1, 1000);
+		scrollPane.setMaximumSize(maximumSize);
+		this.add(scrollPane);
+
+		HistoryTable.addMouseListener(new java.awt.event.MouseAdapter() {
+
+			@Override
+			public void  mousePressed(MouseEvent e) {
+				patient = MainControl.getMainControl().getCurrentPatient();
+				physician = MainControl.getMainControl().getPhysicianName();
+				if(e.getClickCount()== 2 ){
+
+					JTable target = (JTable)e.getSource();
+					int selectedRow = target.getSelectedRow();
+					selectedRow =  HistoryTable.convertRowIndexToModel(selectedRow);
+					String date = (String)HistoryTable.getModel().getValueAt(selectedRow, 0);
 					// String med =  (String)HistoryTable.getModel().getValueAt(selectedRow, 1);
-					 prescriptionHistory = patient.getPrescriptionHistory();
-					 
-					 for(Prescription p: prescriptionHistory)
-						 {
-							if(p.getIssueDate() == date)
-							{
-								prescriptionRenew.add(p);
-								clickedPrescription = p;
-							}
-						 }
-					    
-					    JFrame HistoryFrame = new JFrame("Prescription History");
-						// HistoryFrame .getContentPane().add(new HistoryWindow(temp.getPhysician(),temp.getIssueDate()), BorderLayout.CENTER);
-					    HistoryFrame .getContentPane().add(new HistoryWindow(clickedPrescription), BorderLayout.CENTER);
-						 HistoryFrame .pack(); 
-						 HistoryFrame .setVisible(true);
-						 HistoryFrame.setSize(new Dimension(500,500));
-			         
-					 }
-					// int[] columns = HistoryTable.getSelectedColumns();
-					// int rowcount = model.getRowCount();
-					 ArrayList<String> drugSpec;
-					if(e.getClickCount()== 1){
-					 
-						 JTable target = (JTable)e.getSource();
-					//	 HistoryTable target = (HistoryTable)e.getSource();
-						// int selectedRow = HistoryTable.getSelectedRow();
-						 int selectedRow = target.getSelectedRow();
-						 selectedRow = HistoryTable.convertRowIndexToModel(selectedRow);
-						 String date = (String)HistoryTable.getModel().getValueAt(selectedRow, 0);
-						 String med = (String)HistoryTable.getModel().getValueAt(selectedRow, 1);
-						// Patient patient = MainControl.getMainControl().getCurrentPatient(); 
-						 drugSpec = PatientSearchView.DrugsInHistory;
-						for(String s:drugSpec)
+					prescriptionHistory = patient.getPrescriptionHistory();
+
+					for(Prescription p: prescriptionHistory)
+					{
+						if(p.getIssueDate() == date)
 						{
-							if(s.contains(med))
-							{
-								DrugLineView.getDrugLineview().renewToDrugLineView(s);
-							System.out.println(s);
-							}
+							prescriptionRenew.add(p);
+							clickedPrescription = p;
 						}
-					
-					 }
-					 
-				    }
-				 
-				});
-		 	
-		 	
-		
-	}
+					}
+
+					JFrame HistoryFrame = new JFrame("Prescription History");
+					// HistoryFrame .getContentPane().add(new HistoryWindow(temp.getPhysician(),temp.getIssueDate()), BorderLayout.CENTER);
+					HistoryFrame .getContentPane().add(new HistoryWindow(clickedPrescription), BorderLayout.CENTER);
+					HistoryFrame .pack(); 
+					HistoryFrame .setVisible(true);
+					HistoryFrame.setSize(new Dimension(500,500));
+
+				}
+				// int[] columns = HistoryTable.getSelectedColumns();
+				// int rowcount = model.getRowCount();
+				ArrayList<String> drugSpec;
+//				if(e.getClickCount()== 1){
+//
+//					JTable target = (JTable)e.getSource();
+//					//	 HistoryTable target = (HistoryTable)e.getSource();
+//					// int selectedRow = HistoryTable.getSelectedRow();
+//					int selectedRow = target.getSelectedRow();
+//					selectedRow = HistoryTable.convertRowIndexToModel(selectedRow);
+//					String date = (String)HistoryTable.getModel().getValueAt(selectedRow, 0);
+//					String med = (String)HistoryTable.getModel().getValueAt(selectedRow, 1);
+//					// Patient patient = MainControl.getMainControl().getCurrentPatient(); 
+//					drugSpec = PatientSearchView.DrugsInHistory;
+//					for(String s:drugSpec)
+//					{
+//						if(s.contains(med))
+//						{
+//							DrugLineView.getDrugLineview().renewToDrugLineView(s);
+//							System.out.println(s);
+//						}
+//					}
+//
+//				}
+
+			}
+
+		});
+
+
 
 	}
+
+}
