@@ -18,9 +18,14 @@ public class PrintButtonCreateWindow implements ActionListener {
 		jf.setLocationRelativeTo(null);
 		
 		jf.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		//lock this window and stop user from modifying main window.
+		jf.setAlwaysOnTop(true);
+		
 		jf.setVisible(true);
 		
 		jf.add(new PinView().drawPinView());
+		
 	}
 
 }

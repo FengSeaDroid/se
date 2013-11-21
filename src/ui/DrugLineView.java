@@ -24,6 +24,7 @@ import javax.swing.JTextField;
 
 
 import ui.listener.PrintButtonCreateWindow;
+import ui.listener.PrintButtonSubmit;
 
 import net.miginfocom.swing.MigLayout;
 import control.MainControl;
@@ -148,6 +149,7 @@ public class DrugLineView extends JPanel implements FocusListener {
 		JPanel printView = new JPanel(new MigLayout());
 
 		JButton printbutton=new JButton("Print");
+		printbutton.addActionListener(new PrintButtonSubmit());
 		printbutton.addActionListener(new PrintButtonCreateWindow());
 /*		printbutton.addActionListener(new ActionListener() {
 
@@ -196,7 +198,6 @@ public class DrugLineView extends JPanel implements FocusListener {
 			}
 		});
 */
-
 		printView.add(printbutton);
 		return printView;
 
