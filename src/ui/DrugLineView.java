@@ -41,6 +41,7 @@ public class DrugLineView extends JPanel implements FocusListener {
 	private  JList<Drug> drugList = new JList<Drug>();
 	private  JScrollPane drugLineScroll;
 	private  JPanel drugLinePanel;
+	public JButton printbutton;
 	
 	public void renewToDrugLineView(String drug){
 		
@@ -148,7 +149,7 @@ public class DrugLineView extends JPanel implements FocusListener {
 	private JComponent buttonView(){
 		JPanel printView = new JPanel(new MigLayout());
 
-		JButton printbutton=new JButton("Print");
+		printbutton=new JButton("Print");
 		printbutton.addActionListener(new PrintButtonSubmit());
 		printbutton.addActionListener(new PrintButtonCreateWindow());
 /*		printbutton.addActionListener(new ActionListener() {

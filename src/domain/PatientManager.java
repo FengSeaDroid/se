@@ -29,9 +29,9 @@ public class PatientManager {
 		try 
 		{
 			//Connection to University DB server
-			dbconnection=new DBConnection("jdbc:mysql://mysql.cs.mun.ca:3306/cs6713","cs6713","3176sc!");
+			//dbconnection=new DBConnection("jdbc:mysql://mysql.cs.mun.ca:3306/cs6713","cs6713","3176sc!");
 			//local connection to my DB server
-			//dbconnection=new DBConnection("jdbc:mysql://localhost:3306/prescriptionsys","root","System");
+			dbconnection=new DBConnection("jdbc:mysql://localhost:3306/prescriptionsys","root","System");
 		}
 		catch ( Exception e ) {
 	    System.out.println(e.getMessage());

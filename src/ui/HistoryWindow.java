@@ -31,6 +31,7 @@ public class HistoryWindow extends JPanel {
 		patientSearchView.fill(MainControl.getMainControl().getCurrentPatient().getMCP());
 		drugLineView=new DrugLineView();
 		patientSearchView.mcpField.setEditable(false);
+		drugLineView.printbutton.setVisible(false);
 
 		JTextField jt =(JTextField)patientSearchView.nameField.getEditor().getEditorComponent();
 		jt.setText(MainControl.getMainControl().getCurrentPatient().getName());
