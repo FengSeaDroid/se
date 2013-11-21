@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -10,6 +11,7 @@ import java.awt.event.FocusListener;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -19,6 +21,8 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+
+import ui.listener.PrintButtonCreateWindow;
 
 import net.miginfocom.swing.MigLayout;
 import control.MainControl;
@@ -61,7 +65,7 @@ public class DrugLineView extends JPanel implements FocusListener {
 	}
 	
 	public DrugLineView() {
-		super(new MigLayout("wrap 3","[][][]","[][][][]"));
+		super(new MigLayout("wrap 3","[grow][grow][grow]","[][][][]"));
 		drugLinePanel = new JPanel(new MigLayout());
 		drugLineScroll = new JScrollPane(drugLinePanel);
 		drugLineScroll.setPreferredSize(new Dimension(this.getMaximumSize().width,400));
@@ -72,8 +76,9 @@ public class DrugLineView extends JPanel implements FocusListener {
 		this.add(drugLineScroll,"span 3,wrap,align center");
 		drugLinePanel.add(this.drugFiller(),"wrap");
 		
-		this.add(this.refill(),"wrap,,span 3,align left");
-		this.add(this.refillAndSig(),",wrap,span 3,align right");
+		//this.add(this.refill(),"align left");
+		//this.add(this.refillAndSig(),"span 3,align right");
+		this.add(drawReSigAndDate(),"wrap");
 
 		this.add(this.buttonView(),"wrap,span 3,center");
 		
@@ -142,7 +147,8 @@ public class DrugLineView extends JPanel implements FocusListener {
 		JPanel printView = new JPanel(new MigLayout());
 
 		JButton printbutton=new JButton("Print");
-		printbutton.addActionListener(new ActionListener() {
+		printbutton.addActionListener(new PrintButtonCreateWindow());
+/*		printbutton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -188,14 +194,14 @@ public class DrugLineView extends JPanel implements FocusListener {
 			
 			}
 		});
-
+*/
 
 		printView.add(printbutton);
 		return printView;
 
 	}
 
-	private JComponent refill(){
+/*	private JComponent refill(){
 		
 		JPanel jp1 = new JPanel(new MigLayout("wrap 2","[]","[][]"));
 		jp1.add(new JLabel("Refill:"),"align left");
@@ -205,9 +211,48 @@ public class DrugLineView extends JPanel implements FocusListener {
 		//jp1.setBorder(BorderFactory.createLineBorder(Color.red));
 		return jp1;
 	}
+*/	
+	private JPanel drawReSigAndDate(){
+		JPanel jp=new JPanel(new MigLayout("wrap 2","[grow][grow]","[][]"));
+		jp.setPreferredSize(new Dimension(this.getMaximumSize().width, 100));
+		//jp.setBorder(BorderFactory.createLineBorder(Color.red));
+		
+		JPanel jp1 = new JPanel(new MigLayout("wrap 2","[]","[][]"));
+		jp1.add(new JLabel("Refill:"),"align left");
+		JTextField jt5=new JTextField(3);
+		jp1.add(jt5,"align left");
+		
+		jp.add(jp1,"align left");
+		
+		JPanel jp2 = new JPanel(new MigLayout("wrap 2","[]","[][]"));
+		jp2.add(new JLabel("Date:"),"align left");
+		JTextField jt55=new JTextField(9);
+		jp2.add(jt55,"align left");
+		
+		jp.add(jp2,"align right,wrap");
+		
+		JPanel jp3 = new JPanel();
+		jp3.add(new JLabel("Signature"));
+		
+		Image image;
+		image=this.getToolkit().createImage(MainControl.getMainControl().getPatientManager().getSignature(MainControl.getMainControl().getPhysicianID()));
+		ImageIcon icon=new ImageIcon(image);
+		icon.setImage(image.getScaledInstance(100, 30,Image.SCALE_DEFAULT));
+		JLabel imageLable=new JLabel();
+		imageLable.setIcon(icon);
+		
+		//JTextField jt6=new JTextField(15);
+		//jp2.add(jt6);
+		jp3.add(imageLable);
+		
+		
+		//jp.add(jp2,"span 2,align right,wrap");
+		jp.add(jp3,"span 2,align right");
+		
+		return jp;
+	}
 	
-	
-	private JComponent refillAndSig(){
+/*	private JComponent refillAndSig(){
 		JPanel ras= new JPanel(new MigLayout("wrap 3","[][][]","[]"));
 
 		JPanel jp1 = new JPanel();
@@ -233,6 +278,7 @@ public class DrugLineView extends JPanel implements FocusListener {
 		
 		return ras;
 	}
+	*/
 
 	@Override
 	public void focusGained(FocusEvent e) {

@@ -1,10 +1,19 @@
 package ui;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Image;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
+import control.MainControl;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -14,12 +23,12 @@ public class PinView extends JPanel {
 		// TODO Auto-generated constructor stub
 		JPanel jp=new JPanel(new MigLayout("wrap 3","[grow][grow][grow]","[][][][]"));
 		
-		JLabel msg=new JLabel("Please type in your pin number :");
+		JLabel msg=new JLabel("Please type in your pin number:");
 		
 		jp.add(msg,"span 4,align center");
 		jp.add(drawPin(),"span 4,align center");
 		
-		JButton bt_ok=new JButton("ok");
+		JButton bt_ok=new JButton("print");
 		JButton bt_cancel=new JButton("cancel");
 		
 		jp.add(bt_ok,"span 2,align center");
