@@ -1,11 +1,8 @@
 package ui;
 
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Image;
-import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -13,20 +10,33 @@ import java.awt.event.FocusListener;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.swing.*;
-import javax.xml.datatype.Duration;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 
-import control.MainControl;
 import net.miginfocom.swing.MigLayout;
+import control.MainControl;
 import domain.Drug;
 
 public class DrugLineView extends JPanel implements FocusListener {
 
+	public  static DrugLineView getDrugLineview(){
+		return dlv;
+	}
+	
+	private static DrugLineView dlv=new DrugLineView();
+	
 	private  JList<Drug> drugList = new JList<Drug>();
 	private  JScrollPane drugLineScroll;
 	private  JPanel drugLinePanel;
 	
-	private void renewToDrugLineView(String drug){
+	public void renewToDrugLineView(String drug){
 		
 		JComponent add = drugFiller();
 		JComboBox box=null;
@@ -68,7 +78,7 @@ public class DrugLineView extends JPanel implements FocusListener {
 		this.add(this.buttonView(),"wrap,span 3,center");
 		
 		//test renewtoDruglineview
-		JButton bt=new JButton("clickme");
+/*		JButton bt=new JButton("clickme");
 		this.add(bt);
 		bt.addActionListener(new ActionListener() {
 			
@@ -78,7 +88,7 @@ public class DrugLineView extends JPanel implements FocusListener {
 				renewToDrugLineView("hello");
 			}
 		});
-		
+		*/
 	}
 
 	private JComponent drugFiller(){
