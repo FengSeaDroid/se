@@ -49,6 +49,7 @@ public class generatePDF {
       //addMetaData(document);
       generatePrescriptionInformarmation();
       createTable();
+      createSignature();
       document.close();
       Desktop.getDesktop().open(new File(FILE));
    
@@ -72,6 +73,8 @@ public class generatePDF {
     addEmptyLine(prescriptionParagraph, 1);
     // Lets write a big header
     Paragraph prescriptionTitle=new Paragraph("Gerard Farrell\n Clinic Name \n Clinic Address\n ClinicTell", catFont);
+    addEmptyLine(prescriptionTitle, 2);
+
     prescriptionTitle.setAlignment(Element.ALIGN_CENTER);
     prescriptionParagraph.add(prescriptionTitle);
 
@@ -79,14 +82,15 @@ public class generatePDF {
     // Start a new page
     //document.newPage();
     
-    Paragraph patientParagraph=new Paragraph("Name:"+patient.getName()+"     MCP:"+
-    patient.getMCP()+"       Address:"+patient.getAddress(), smallBold);
-    document.add(patientParagraph);
-    createTable();
+    Paragraph patientParagraph=new Paragraph("Name:"+patient.getName()+"                    MCP:"+
+    patient.getMCP()+"                      Address:"+patient.getAddress(), smallBold);
+    addEmptyLine(patientParagraph, 1);
 
+    document.add(patientParagraph);
+   
   }
   
-  private static void createTable() throws BadElementException {
+  private static void createTable() throws DocumentException {
 
    Paragraph tableParagraph=new Paragraph();
     PdfPTable table = new PdfPTable(2);
@@ -116,9 +120,15 @@ public class generatePDF {
     	}
         table.addCell(medicine_spec);
     }
+    
     tableParagraph.add(table);
+    document.add(tableParagraph);
   }
 
+  private static void createSignature() throws DocumentException{
+	  Paragraph dateSignature=new Paragraph("Date: "+MainControl.getMainControl().getPrescription().getEffectiveDate());
+	  document.add(dateSignature);
+  }
   private static void addEmptyLine(Paragraph paragraph, int number) {
     for (int i = 0; i < number; i++) {
       paragraph.add(new Paragraph(" "));
