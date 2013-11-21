@@ -40,7 +40,7 @@ public class prescriptionHistoryView extends JPanel {
     };
 	
 	
-    Prescription temp;
+    Prescription clickedPrescription;
 	public prescriptionHistoryView()
 	{
 	 
@@ -70,18 +70,19 @@ public class prescriptionHistoryView extends JPanel {
 					 String date = (String)HistoryTable.getModel().getValueAt(selectedRow, 0);
 					// String med =  (String)HistoryTable.getModel().getValueAt(selectedRow, 1);
 					 prescriptionHistory = patient.getPrescriptionHistory();
+					 
 					 for(Prescription p: prescriptionHistory)
 						 {
 							if(p.getIssueDate() == date)
 							{
 								prescriptionRenew.add(p);
-								temp = p;
+								clickedPrescription = p;
 							}
 						 }
 					    
 					    JFrame HistoryFrame = new JFrame("Prescription History");
 						// HistoryFrame .getContentPane().add(new HistoryWindow(temp.getPhysician(),temp.getIssueDate()), BorderLayout.CENTER);
-					    HistoryFrame .getContentPane().add(new HistoryWindow(temp.getPhysician(),temp.getIssueDate()), BorderLayout.CENTER);
+					    HistoryFrame .getContentPane().add(new HistoryWindow(clickedPrescription), BorderLayout.CENTER);
 						 HistoryFrame .pack(); 
 						 HistoryFrame .setVisible(true);
 						 HistoryFrame.setSize(new Dimension(500,500));

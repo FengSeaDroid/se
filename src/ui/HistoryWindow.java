@@ -9,24 +9,33 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
 import net.miginfocom.swing.MigLayout;
+
 import javax.swing.JTextField;
 
 import control.MainControl;
+import domain.PatientManager;
+import domain.Prescription;
 
 public class HistoryWindow extends JPanel {
-	private JTextField textField;
-	private JTextField textField_1;
+	private ClinicInfoView clinicInfoView;
+	private PatientSearchView patientSearchView;
+	private DrugLineView drugLineView;
 
-	public HistoryWindow(String physicianName,String issueDate)
+	public HistoryWindow(Prescription currentPrescription)
 	{
-		//super(new MigLayout("","[grow]","20[]10[]10[]10"));
-		super(new MigLayout());
-		HeaderView hv = new HeaderView(false);
-		footerView fv = new footerView(false);
-		
-		JSplitPane upperLeftPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT, 	hv,fv);
-		hv.setPhysicianName(physicianName);
-		hv.setPhysicianName(physicianName);
+		clinicInfoView=new ClinicInfoView(false);
+		patientSearchView=new PatientSearchView();
+		patientSearchView.fill(MainControl.getMainControl().getCurrentPatient().getMCP());
+		drugLineView=new DrugLineView();
+		patientSearchView.mcpField.setEditable(false);
+
+		JTextField jt =(JTextField)patientSearchView.nameField.getEditor().getEditorComponent();
+		jt.setText(MainControl.getMainControl().getCurrentPatient().getName());
+//		patientSearchView.nameField.setEditable(false);
+		jt.setEditable(false);
+		this.add(clinicInfoView);
+		this.add(patientSearchView);
+		this.add(drugLineView);
 	}
 }
 
