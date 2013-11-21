@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+
 import ui.listener.PrintButtonCreateWindow;
 
 import net.miginfocom.swing.MigLayout;
@@ -226,7 +227,14 @@ public class DrugLineView extends JPanel implements FocusListener {
 		
 		JPanel jp2 = new JPanel(new MigLayout("wrap 2","[]","[][]"));
 		jp2.add(new JLabel("Date:"),"align left");
+		
+		
 		JTextField jt55=new JTextField(9);
+		//datechooser here
+		DateChooser dateChooser = DateChooser.getInstance("yyyy-MM-dd");
+		dateChooser.register(jt55);
+		
+		//
 		jp2.add(jt55,"align left");
 		
 		jp.add(jp2,"align right,wrap");
