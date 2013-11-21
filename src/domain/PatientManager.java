@@ -169,7 +169,7 @@ public class PatientManager {
 	/**
 	 * save prescription for specific user and add it to the database
 	 */
-	public void savePrescription(Prescription prescription){
+	protected void savePrescription (Prescription prescription) {
 		try{
 			
 			dbconnection.manipulateData("insert into prescription (prescription_id,issue_date,effective_date,physician_id,patient_id)"
@@ -183,7 +183,18 @@ public class PatientManager {
 			
 			for (String s : drugs) {
 				String[] medicine=s.split(" ");
-				dbconnection.manipulateData("insert into prescription_spec(prescription_id,medicine_name,medicine_spec) values ("+maxID+","+medicine[0]+","+medicine[1]+medicine[2]+")");
+				String spec ="";
+				if (medicine.length<2){
+					throw new IllegalArgumentException("Drug specification not exists.");
+				}
+				for (int i=1;i<medicine.length;i++){
+					spec = spec + medicine[i];
+				}
+//				dbconnection.manipulateData("insert into prescription_spec(prescription_id,medicine_name,medicine_spec) values ("+maxID+","+medicine[0]+","+spec+")");
+				
+				String t1 = "lalalefowdrug";
+				String t2 = "drug spec";
+				dbconnection.manipulateData("insert into prescription_spec(prescription_id,medicine_name,medicine_spec) values ('7','drugText','lafewlalala')");
 			}
 		
 		}

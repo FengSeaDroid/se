@@ -93,8 +93,10 @@ public class SearchNameModel extends AbstractListModel
             cb.setSelectedIndex(cb.getSelectedIndex());
             JTextField jt = (JTextField)cb.getEditor().getEditorComponent();
             System.out.println(jt.getText());
-            mcp=jt.getText().split(";")[2];
-        	filler.fill(mcp);
+            if (jt.getText().split(";").length==3){
+                mcp=jt.getText().split(";")[2];
+            	filler.fill(mcp);
+            }
         }
         else {
             updateModel(cb.getEditor().getItem().toString());
