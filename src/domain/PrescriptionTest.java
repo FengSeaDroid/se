@@ -45,15 +45,17 @@ public class PrescriptionTest {
 	
 	@Test
 	public void testEffectiveDate(){
-		testPrescription.setEffectiveDate("2014-05-31");
-		assertTrue(testPrescription.getEffectiveDate().equals("2014-05-31"));
+		Prescription pre = new Prescription("New physician");
+		pre.setEffectiveDate("2014-05-31");
+		assertTrue(pre.getEffectiveDate().equals("2014-05-31"));
 	}
 	
-//	@Test
-//	public void testIssue(){
-//		testPrescription.issue();
-//		assertTrue(testPrescription.getIssueDate().equals("2013-11-19"));
-//	}
+	@Test
+	public void testIssue(){
+		testPrescription.issue();
+//		System.out.println(testPrescription.getIssueDate().split(" ")[1]);
+		assertTrue(testPrescription.getIssueDate().split(" ")[0].equals("2013-11-20"));
+	}
 	
 	@Test 
 	public void testSave(){
@@ -67,7 +69,7 @@ public class PrescriptionTest {
 	/*
 	 * test if I can save an already achieved prescription.
 	 */
-	@Test (expected=IllegalArgumentException.class)
+	@Test (expected=IllegalStateException.class)
 	public void testSaveFailCase(){
 		Prescription testP = new Prescription("physician","1999-9-9","1999-9-9",new HashSet<String>(Arrays.asList("Viagra 312 mg","testDrug 12 mg")));
 		assertFalse(testP.isActive());

@@ -173,8 +173,8 @@ public class PatientManager {
 		try{
 			
 			dbconnection.manipulateData("insert into prescription (prescription_id,issue_date,effective_date,physician_id,patient_id)"
-					+ "VALUES (NULL ,"+prescription.getIssueDate()+","+prescription.getEffectiveDate()+","+MainControl.getMainControl().getPhysicianID()+","
-					+MainControl.getMainControl().getCurrentPatient().getPatientID()+");");
+					+ "VALUES (NULL ,'"+prescription.getIssueDate()+"','"+prescription.getEffectiveDate()+"','"+MainControl.getMainControl().getPhysicianID()+"','"
+					+MainControl.getMainControl().getCurrentPatient().getPatientID()+"');");
 			
 			ResultSet maxPrescriptionID=dbconnection.execQuery("SELECT max(prescription_id) FROM prescription");
 			maxPrescriptionID.next();

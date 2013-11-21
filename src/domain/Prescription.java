@@ -67,7 +67,7 @@ public class Prescription {
 	}
 
 	public void setPhysician(String physician) throws IllegalStateException{
-		if (this.isActive() == false) throw new IllegalArgumentException();
+		if (this.isActive() == false) throw new IllegalStateException();
 		this.physician = physician;
 	}
 
@@ -81,8 +81,8 @@ public class Prescription {
 		this.issueDate = issueDate;
 	}
 	
-	private void issue(){
-		this.setIssueDate(new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()));
+	void issue(){
+		this.setIssueDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime()));
 	}
 
 	private String effectiveDate;
@@ -92,7 +92,7 @@ public class Prescription {
 	}
 
 	public void setEffectiveDate(String effectiveDate) throws IllegalStateException{
-		if (this.isActive() == false) throw new IllegalArgumentException();
+		if (this.isActive() == false) throw new IllegalStateException();
 		this.effectiveDate = effectiveDate;
 	}
 
@@ -107,7 +107,7 @@ public class Prescription {
 	}
 	
 	public void addDrugLine (String drugLine) throws IllegalStateException{
-		if (this.isActive() == false) throw new IllegalArgumentException();
+		if (this.isActive() == false) throw new IllegalStateException();
 		this.drugLines.add(drugLine);
 	}
 	
