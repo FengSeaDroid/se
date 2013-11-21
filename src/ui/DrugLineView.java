@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.swing.*;
+import javax.xml.datatype.Duration;
 
 import control.MainControl;
 import net.miginfocom.swing.MigLayout;
@@ -21,9 +22,33 @@ import domain.Drug;
 
 public class DrugLineView extends JPanel implements FocusListener {
 
-	private JList<Drug> drugList = new JList<Drug>();
-	private JScrollPane drugLineScroll;
-	private JPanel drugLinePanel;
+	private  JList<Drug> drugList = new JList<Drug>();
+	private  JScrollPane drugLineScroll;
+	private  JPanel drugLinePanel;
+	
+	private void renewToDrugLineView(String drug){
+		
+		JComponent add = drugFiller();
+		JComboBox box=null;
+		
+		System.out.println(add.getComponentCount());
+		
+		for (int i=0;i<add.getComponentCount();i++)
+		{
+		
+			if(add.getComponent(i).getClass()==JComboBox.class){
+				box= (JComboBox) add.getComponent(i);
+			}
+		}
+
+		if(box!=null){
+		JTextField text = (JTextField) box.getEditor().getEditorComponent();
+		text.setText(drug);
+		}
+		
+		drugLinePanel.add(add,"wrap");
+		drugLinePanel.revalidate();
+	}
 	
 	public DrugLineView() {
 		super(new MigLayout("wrap 3","[][][]","[][][][]"));
@@ -41,12 +66,28 @@ public class DrugLineView extends JPanel implements FocusListener {
 		this.add(this.refillAndSig(),",wrap,span 3,align right");
 
 		this.add(this.buttonView(),"wrap,span 3,center");
+		
+		//test renewtoDruglineview
+		JButton bt=new JButton("clickme");
+		this.add(bt);
+		bt.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				renewToDrugLineView("hello");
+			}
+		});
+		
 	}
 
 	private JComponent drugFiller(){
 		JPanel drugFill = new JPanel(new MigLayout());
 		//JTextField drugLine = new JTextField(55);
 		JComboBox drugLine = new JComboBox();
+		
+		//give it a name;
+		drugLine.setName("CBOX");
 
 		drugLine.setEditable(true);
 		drugLine.setPreferredSize(new Dimension(500,10));
