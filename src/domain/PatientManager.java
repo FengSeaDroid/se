@@ -190,11 +190,8 @@ public class PatientManager {
 				for (int i=1;i<medicine.length;i++){
 					spec = spec + medicine[i];
 				}
-//				dbconnection.manipulateData("insert into prescription_spec(prescription_id,medicine_name,medicine_spec) values ("+maxID+","+medicine[0]+","+spec+")");
+				dbconnection.manipulateData("insert into prescription_spec(prescription_id,medicine_name,medicine_spec) values ('"+maxID+"','"+medicine[0]+"','"+spec+"')");
 				
-				String t1 = "lalalefowdrug";
-				String t2 = "drug spec";
-				dbconnection.manipulateData("insert into prescription_spec(prescription_id,medicine_name,medicine_spec) values ('7','drugText','lafewlalala')");
 			}
 		
 		}
