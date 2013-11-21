@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
+import mySqlDatabase.generatePDF;
 import domain.Formulary;
 import domain.Patient;
 import domain.PatientManager;
@@ -158,13 +159,15 @@ public class MainControl {
 	 * 
 	 * @param drugLines
 	 * @param effectiveDate
+	 * @throws Exception 
 	 */
-	public void print(Set<String> drugLines, String effectiveDate){
+	public void print(Set<String> drugLines, String effectiveDate) throws Exception{
 		this.getPrescription().setEffectiveDate(effectiveDate);
 		for (String s: drugLines){
 			this.getPrescription().addDrugLine(s);
 		}
 		this.getPrescription().save();
+		generatePDF.generateReport();
 	}
 	
 		/**

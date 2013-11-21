@@ -177,6 +177,13 @@ public class DrugLineView extends JPanel implements FocusListener {
 					System.out.println(jc.getSelectedItem().toString());
 					}
 				}
+				
+				try {
+					MainControl.getMainControl().print(send,"2222-22-22");
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 
 			
 			}
