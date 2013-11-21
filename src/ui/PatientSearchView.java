@@ -167,7 +167,6 @@ public class PatientSearchView extends JPanel implements ActionListener, Filler{
 		}
 		//take care below
 		prescriptionHistory = patient.getPrescriptionHistory();
-		//for(int i=0; i<prescriptionHistory.size(); i++)
 	    DrugsInHistory = new ArrayList<String>();
 		for(Prescription p: prescriptionHistory)
         	
