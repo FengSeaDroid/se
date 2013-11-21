@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -23,9 +24,9 @@ public class DrugLineView extends JPanel implements FocusListener {
 	private JList<Drug> drugList = new JList<Drug>();
 	private JScrollPane drugLineScroll;
 	private JPanel drugLinePanel;
-
+	
 	public DrugLineView() {
-		super(new MigLayout());
+		super(new MigLayout("wrap 3","[][][]","[][][][]"));
 		drugLinePanel = new JPanel(new MigLayout());
 		drugLineScroll = new JScrollPane(drugLinePanel);
 		drugLineScroll.setPreferredSize(new Dimension(this.getMaximumSize().width,400));
@@ -33,12 +34,13 @@ public class DrugLineView extends JPanel implements FocusListener {
 		drugLinePanel.setName("drugInfoAll");
 		//
 		
-		this.add(drugLineScroll,"wrap");
+		this.add(drugLineScroll,"span 3,wrap,align center");
 		drugLinePanel.add(this.drugFiller(),"wrap");
+		
+		this.add(this.refill(),"wrap,,span 3,align left");
+		this.add(this.refillAndSig(),",wrap,span 3,align right");
 
-		this.add(refillAndSig(),"wrap,align right");
-
-		this.add(this.buttonView(),"center");
+		this.add(this.buttonView(),"wrap,span 3,center");
 	}
 
 	private JComponent drugFiller(){
@@ -135,14 +137,26 @@ public class DrugLineView extends JPanel implements FocusListener {
 
 	}
 
+	private JComponent refill(){
+		
+		JPanel jp1 = new JPanel(new MigLayout("wrap 2","[]","[][]"));
+		jp1.add(new JLabel("Refill:"),"align left");
+		JTextField jt5=new JTextField(5);
+		jp1.add(jt5,"align left");
+		
+		//jp1.setBorder(BorderFactory.createLineBorder(Color.red));
+		return jp1;
+	}
+	
+	
 	private JComponent refillAndSig(){
-		JPanel ras= new JPanel(new MigLayout());
+		JPanel ras= new JPanel(new MigLayout("wrap 3","[][][]","[]"));
 
 		JPanel jp1 = new JPanel();
-		jp1.add(new JLabel("Refill:"));
+		jp1.add(new JLabel("Date:"));
 		JTextField jt5=new JTextField(5);
 		jp1.add(jt5);
-		ras.add(jp1,"align left");
+		ras.add(jp1,"align left,span 2");
 
 		JPanel jp2 = new JPanel();
 		jp2.add(new JLabel("Signature"));
@@ -157,8 +171,8 @@ public class DrugLineView extends JPanel implements FocusListener {
 		//JTextField jt6=new JTextField(15);
 		//jp2.add(jt6);
 		jp2.add(imageLable);
-		ras.add(jp2,"span 3,align right");
-
+		ras.add(jp2,"align right");
+		
 		return ras;
 	}
 
