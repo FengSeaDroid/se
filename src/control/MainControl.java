@@ -7,6 +7,8 @@ import java.util.Set;
 
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import domain.Formulary;
 import domain.Patient;
@@ -21,12 +23,12 @@ import ui.MainWindow;
  *
  */
 public class MainControl {
-	
+
 	/**
 	 * The static attribute where the singleton lives
 	 */
 	private static MainControl singletonMainControl = new MainControl();
-		
+
 	/**
 	 * The private constructor for this singleton.
 	 */
@@ -35,9 +37,9 @@ public class MainControl {
 		this.setClinicTel("749-3322");
 		this.setPhysicianName("Gerard Farrell");
 		this.setClinicAddress("123 Elithebeth Ave");
-//		this.setClinicInfo("Eastern Clinic","749-3322","Gerard Farrell");
+		//		this.setClinicInfo("Eastern Clinic","749-3322","Gerard Farrell");
 	}
-	
+
 	/**
 	 * 
 	 * @return
@@ -45,7 +47,7 @@ public class MainControl {
 	public String getPhysicianID(){
 		return "1";
 	}
-	
+
 	/**
 	 * When the controller is needed, call this to get it.
 	 * 
@@ -54,34 +56,34 @@ public class MainControl {
 	public static MainControl getMainControl(){
 		return singletonMainControl;
 	}
-	
+
 	/**
 	 * It will connect to database here
 	 */
 	private PatientManager patientManager = PatientManager.getPatientManager();
-	
+
 	public PatientManager getPatientManager(){
 		return this.patientManager;
 	}
-	
+
 	/**
 	 * The prescription this process is working on.
 	 */
 	private Prescription currentPrescription;
-	
+
 	public void setPrescription (Prescription prescription){
 		this.currentPrescription = prescription;
 	}
-	
+
 	public Prescription getPrescription(){
 		return this.currentPrescription;
 	}
-	
+
 	/**
 	 * The patient who is going to be prescribed.
 	 */
 	private Patient currentPatient;
-	
+
 	/**
 	 * @return the currentPatient
 	 */
@@ -100,7 +102,7 @@ public class MainControl {
 	 * 
 	 */
 	private final Formulary currentFormulary = this.patientManager.lookupFormulary();
-	
+
 	/**
 	 * 
 	 * @return
@@ -108,9 +110,9 @@ public class MainControl {
 	public Formulary getFormulary(){
 		return this.currentFormulary;
 	}
-	
+
 	private String clinicName;
-	
+
 	public String getClinicName() {
 		return clinicName;
 	}
@@ -120,7 +122,7 @@ public class MainControl {
 	}
 
 	private String clinicTel;
-	
+
 	public String getClinicTel() {
 		return clinicTel;
 	}
@@ -130,7 +132,7 @@ public class MainControl {
 	}
 
 	private String physicianName;
-	
+
 	public String getPhysicianName() {
 		return physicianName;
 	}
@@ -140,21 +142,21 @@ public class MainControl {
 	}
 
 	private String clinicAddress;
-    
-    public void setClinicAddress(String addr){
-    	this.clinicAddress = addr;
-    }
+
+	public void setClinicAddress(String addr){
+		this.clinicAddress = addr;
+	}
 
 	public String getClinicAddress() {
 		return this.clinicAddress;
 	}
-	
+
 	public Patient lookupPatient (String MCP){
-    	this.setCurrentPatient(patientManager.lookupPatient(MCP));
-    	this.setPrescription(new Prescription(this.getPhysicianName()));
-   		return getCurrentPatient();
+		this.setCurrentPatient(patientManager.lookupPatient(MCP));
+		this.setPrescription(new Prescription(this.getPhysicianName()));
+		return getCurrentPatient();
 	}
-	
+
 	/**
 	 * 
 	 * @param drugLines
@@ -169,17 +171,33 @@ public class MainControl {
 		this.getPrescription().save();
 		generatePDF.generateReport();
 	}
-	
-		/**
-		 * Launch the application.
-		 */
-	    public static void main(String[] args) {
-	    	SwingUtilities.invokeLater(new Runnable() {
-	            public void run() {
-	                //Turn off metal's use of bold fonts
-	        UIManager.put("swing.boldMetal", Boolean.FALSE);
-	        MainWindow.createAndShowGUI();
-	            }
-	        });//create window
-	    }
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		try {
+			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+				if ("Nimbus".equals(info.getName())) {
+					UIManager.setLookAndFeel(info.getClassName());
+					break;
+				}
+			}
+		} catch (UnsupportedLookAndFeelException e) {
+			// handle exception
+		} catch (ClassNotFoundException e) {
+			// handle exception
+		} catch (InstantiationException e) {
+			// handle exception
+		} catch (IllegalAccessException e) {
+			// handle exception
+		}
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				//Turn off metal's use of bold fonts
+				UIManager.put("swing.boldMetal", Boolean.FALSE);
+				MainWindow.createAndShowGUI();
+			}
+		});//create window
+	}
 }

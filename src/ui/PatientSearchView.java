@@ -1,7 +1,9 @@
 package ui;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -15,6 +17,7 @@ import java.util.StringTokenizer;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicComboBoxUI;
+import javax.swing.plaf.metal.MetalComboBoxUI;
 
 import control.MainControl;
 import domain.Patient;
@@ -31,80 +34,72 @@ public class PatientSearchView extends JPanel implements ActionListener, Filler{
 	JComboBox nameField = new JComboBox();
 
 	JTextField mcpField = new JTextField(20);
-	JTextField DOB = new JTextField(20);
-	JTextField weight = new JTextField(10);
-	JTextField address = new JTextField(20);
-	JTextField tel = new JTextField(10);
+	JLabel DOB = new JLabel();
+	JLabel weight = new JLabel();
+	JLabel address = new JLabel();
+	JLabel tel = new JLabel();
+
 	static ArrayList<String> DrugsInHistory;
 	static String patient_ID;
-	
+
 	/**
 	 * create the view
 	 */
+	@SuppressWarnings("unchecked")
 	public PatientSearchView() {
 		super(new MigLayout("wrap 8", "[][grow][][][grow][][][][]", "[][][][][][][]"));
-		
+
 		JLabel label_3 = new JLabel("Name");
 		this.add(label_3,"cell 1 0,alignx right,gapx unrelated");
 
 		nameField.setEditable(true);
-		nameField.setPreferredSize(new Dimension(100,10));
-		nameField.setBorder(BorderFactory.createLineBorder(Color.black));
+		nameField.setPreferredSize(new Dimension(this.getMaximumSize().width,10));
+		//		nameField.setBorder(BorderFactory.createLineBorder(Color.black));
 		//set size
-		nameField.setPrototypeDisplayValue("123456789012345678901234567890");
-		
+		nameField.setPrototypeDisplayValue("1234567890123456789012345678");
+
 		//delete the arraw
 		nameField.setUI(new BasicComboBoxUI() {
-		    @Override
-		    protected JButton createArrowButton() {
-		    	return new JButton() {
-		    		@Override
-		    		public int getWidth() {
-		    			return 0;
-		    		}
-		    	};
-		    }
+			@Override
+			protected JButton createArrowButton() {
+				return new JButton() {
+					@Override
+					public int getWidth() {
+						return 0;
+					}
+				};
+			}
 		});
-		
+		nameField.setRenderer(new ComboBoxRenderer());
+
 		//create the model
 		SearchNameModel sbm = new SearchNameModel(this,nameField,MainControl.getMainControl().getPatientManager().getPatientList());
 		//set the model on the combobox
 		nameField.setModel(sbm);
 		//set the model as the item listener also
 		nameField.addItemListener(sbm);
-
-		this.add(nameField, "cell 2 0");
+		this.add(nameField, "cell 2 0, wrap");
 
 		JLabel label = new JLabel("MCP");
 		this.add(label,"cell 1 1,alignx right,gapx unrelated");
-		//this.add(new JTextField(20));
+		mcpField.setPreferredSize(new Dimension(this.getMaximumSize().width,30));
 		this.add(mcpField, "cell 2 1");
 
 		JLabel lblAddress = new JLabel("Address: ");
 		add(lblAddress, "cell 0 2");
-		address.setEditable(false);
-		address.setBorder(null);
 		this.add(address, "cell 1 2");
 
 		JLabel lblTell = new JLabel("Tel: ");
 		add(lblTell, "cell 2 2,alignx right");
-		//Tell = new JTextField(15);
-		tel.setEditable(false);
-		tel.setBorder(null);
 		this.add(tel, "cell 4 2");
 
 		JLabel dobLabel = new JLabel("DOB: ");
 		this.add(dobLabel,"cell 0 3,alignx trailing,gapx unrelated");
-		DOB.setEditable(false);
-		DOB.setBorder(null);
 		this.add(DOB, "cell 1 3,growx");
 
 		JLabel label_2 = new JLabel("Wieght: ");
 		this.add(label_2,"cell 2 3,alignx right,gapx unrelated");
-		weight= new JTextField(15);
-		weight.setEditable(false);
 		add(weight, "cell 4 3,growx");
-		weight.setBorder(null);
 		mcpField.addActionListener(this);
 	}
 
@@ -143,6 +138,7 @@ public class PatientSearchView extends JPanel implements ActionListener, Filler{
 		}
 	}
 
+	@SuppressWarnings("rawtypes")
 	public class SearchNameModel extends AbstractListModel
 	implements ComboBoxModel, KeyListener, ItemListener{
 		private Set<String> db = new HashSet<String>();
@@ -237,5 +233,24 @@ public class PatientSearchView extends JPanel implements ActionListener, Filler{
 			cb.setSelectedItem(e.getItem());
 		}
 	}//inner class
+
+	class ComboBoxRenderer extends javax.swing.plaf.basic.BasicComboBoxRenderer  
+	{  
+		public ComboBoxRenderer()  
+		{  
+			super();  
+			setOpaque(true);  
+		}  
+		public Component getListCellRendererComponent(JList list,Object value,int index,boolean isSelected,boolean cellHasFocus)  
+		{  
+			setText(value.toString());  
+			if(isSelected) {
+				setBackground(Color.decode("#335b8e")); 
+				setForeground(Color.WHITE);
+			}
+			else {setBackground(Color.WHITE); setForeground(Color.BLACK);}
+			return this;  
+		}  
+	}  //inner class
 }
 
