@@ -3,7 +3,11 @@ package ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
+import java.awt.Window;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
@@ -17,10 +21,15 @@ import net.miginfocom.swing.MigLayout;
 import java.awt.Component;
 
 import javax.swing.Box;
+
 import java.awt.FlowLayout;
 
 public class MainWindow extends JPanel {
 
+	/**
+	 * size of the screen
+	 */
+	static Dimension d = Toolkit.getDefaultToolkit().getScreenSize(); 
 	 /**
      * Create the GUI and show it.  For thread safety,
      * this method should be invoked from
@@ -34,12 +43,16 @@ public class MainWindow extends JPanel {
         //Add content to the window.
         mainFrame.getContentPane().add(new MainWindow(), BorderLayout.CENTER);
          
-        //frame.setResizable(false);
+        mainFrame.setResizable(false);
+//      	Dimension d = Toolkit.getDefaultToolkit().getScreenSize();  
+        mainFrame.setPreferredSize(new Dimension(d.width, d.height-50));//<---take 30 off the height 
      
         //Display the window.
         mainFrame.pack();
         mainFrame.setVisible(true);
-        mainFrame.setExtendedState(mainFrame.MAXIMIZED_BOTH); 
+//      mainFrame.setExtendedState(mainFrame.MAXIMIZED_BOTH); 
+
+        
     }
 
 	/**
@@ -52,9 +65,8 @@ public class MainWindow extends JPanel {
         tabbedPane.setBorder(BorderFactory.createLineBorder(Color.black));
         tabbedPane.setPreferredSize(new Dimension(800, 600));
         tabbedPane.addTab("New Prescription",this.newPrescription());
-  //      tabbedPane.addTab("Prescription History", this.prescriptionHistory());
+  //    tabbedPane.addTab("Prescription History", this.prescriptionHistory());
         
-        //Add the tabbed pane to this panel.
         this.add(tabbedPane);
          
         //The following line enables to use scrolling tabs.
@@ -63,22 +75,29 @@ public class MainWindow extends JPanel {
 	
 	protected JComponent newPrescription() {
 		
-		JSplitPane upperLeftPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT, 	new ClinicInfoView(false),new PatientSearchView());
-		
-		JSplitPane newPrescripanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT,upperLeftPanel, DrugLineView.getDrugLineview());
-		PatientAllergyView patientAllergyView_ = new PatientAllergyView();
-		FlowLayout flowLayout = (FlowLayout) patientAllergyView_.getLayout();
-		JSplitPane rightDownPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT ,patientAllergyView_, new PrescriptionHistoryView());
-	//	JSplitPane rightPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT ,newPrescripanel,patientAllergyView_);
-		JSplitPane rightPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT ,newPrescripanel,rightDownPanel);
-	//	JSplitPane rightDownPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT ,patientAllergyView_, new prescriptionHistoryView());
-		rightDownPanel.setDividerLocation(290);
-		rightPanel.setDividerLocation(5000);
-		return rightPanel;
+		JSplitPane newPrescription = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT ,prescriptionView(),patientInfoView());
+		newPrescription.setDividerLocation(d.width*2/3);
+		newPrescription.setBorder(BorderFactory.createRaisedBevelBorder());
+		return newPrescription;
 	}
 	
-	protected JComponent prescriptionHistory(){
-		JSplitPane patientInformation = new JSplitPane();
-		return patientInformation;
+	private JPanel prescriptionView(){
+		JPanel pv = new JPanel();
+		pv.setLayout(new MigLayout(""));
+//		pv.setBorder(BorderFactory.createRaisedBevelBorder());
+		
+		pv.add(new ClinicInfoView(false),"wrap");
+		pv.add(new PatientSearchView(),"wrap");
+		pv.add(DrugLineView.getDrugLineview(),"wrap");
+		return pv;
 	}
+	
+	private JPanel patientInfoView(){
+		JPanel pi = new JPanel();
+		pi.setLayout(new MigLayout(""));
+		pi.add(new PatientAllergyView(),"wrap");
+		pi.add(new PrescriptionHistoryView(),"wrap");
+		return pi;
+	}
+	
 }
