@@ -8,11 +8,11 @@ import java.util.Set;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-import mySqlDatabase.generatePDF;
 import domain.Formulary;
 import domain.Patient;
 import domain.PatientManager;
 import domain.Prescription;
+import techService.generatePDF;
 import ui.MainWindow;
 
 /**

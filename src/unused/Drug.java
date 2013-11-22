@@ -1,4 +1,4 @@
-package domain;
+package unused;
 
 public class Drug {
 

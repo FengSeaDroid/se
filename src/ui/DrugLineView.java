@@ -1,6 +1,5 @@
 package ui;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -8,28 +7,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.util.HashSet;
-import java.util.Set;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-
+import javax.swing.*;
 
 import ui.listener.PrintButtonCreateWindow;
 import ui.listener.PrintButtonSubmit;
-
 import net.miginfocom.swing.MigLayout;
 import control.MainControl;
-import domain.Drug;
 
+@SuppressWarnings("serial")
 public class DrugLineView extends JPanel implements FocusListener {
 
 	public  static DrugLineView getDrugLineview(){
@@ -38,11 +24,12 @@ public class DrugLineView extends JPanel implements FocusListener {
 	
 	private static DrugLineView dlv=new DrugLineView();
 	
-	private  JList<Drug> drugList = new JList<Drug>();
+//	private  JList<Drug> drugList = new JList<Drug>();
 	private  JScrollPane drugLineScroll;
 	private  JPanel drugLinePanel;
 	public JButton printbutton;
 	
+	@SuppressWarnings("rawtypes")
 	public void renewToDrugLineView(String drug){
 		
 		JComponent add = drugFiller();
@@ -99,6 +86,7 @@ public class DrugLineView extends JPanel implements FocusListener {
 		*/
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private JComponent drugFiller(){
 		JPanel drugFill = new JPanel(new MigLayout());
 		//JTextField drugLine = new JTextField(55);

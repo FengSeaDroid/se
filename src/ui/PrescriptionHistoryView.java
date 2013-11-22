@@ -34,7 +34,7 @@ import domain.Prescription;
  * 2-renew drugline 
  * 3-view prescription
  */
-public class prescriptionHistoryView extends JPanel {
+public class PrescriptionHistoryView extends JPanel {
 
 
 	Set<Prescription> prescriptionHistory = new HashSet<Prescription>();
@@ -55,7 +55,7 @@ public class prescriptionHistoryView extends JPanel {
 		}
 	};
 
-	public prescriptionHistoryView()
+	public PrescriptionHistoryView()
 	{
 
 		HistoryTable = new JTable(model);

@@ -7,8 +7,8 @@ import java.util.Set;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import techService.DBConnection;
 import control.MainControl;
-import mySqlDatabase.DBConnection;
 import domain.Patient;
 import domain.Prescription;
 

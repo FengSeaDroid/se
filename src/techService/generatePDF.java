@@ -1,4 +1,4 @@
-package mySqlDatabase;
+package techService;
 import java.awt.Desktop;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;

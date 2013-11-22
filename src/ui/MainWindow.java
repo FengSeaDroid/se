@@ -68,7 +68,7 @@ public class MainWindow extends JPanel {
 		JSplitPane newPrescripanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT,upperLeftPanel, DrugLineView.getDrugLineview());
 		PatientAllergyView patientAllergyView_ = new PatientAllergyView();
 		FlowLayout flowLayout = (FlowLayout) patientAllergyView_.getLayout();
-		JSplitPane rightDownPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT ,patientAllergyView_, new prescriptionHistoryView());
+		JSplitPane rightDownPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT ,patientAllergyView_, new PrescriptionHistoryView());
 	//	JSplitPane rightPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT ,newPrescripanel,patientAllergyView_);
 		JSplitPane rightPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT ,newPrescripanel,rightDownPanel);
 	//	JSplitPane rightDownPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT ,patientAllergyView_, new prescriptionHistoryView());
