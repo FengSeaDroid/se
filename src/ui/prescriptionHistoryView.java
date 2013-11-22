@@ -25,6 +25,15 @@ import control.MainControl;
 import domain.Patient;
 import domain.Prescription;
 
+/**
+ * @author safwan
+ * View all the previous prescription for the selected patient
+ * and add popup menu that will be shown whenever the user make
+ * right click on the prescription history table with 3 options 
+ * 1-renew prescription
+ * 2-renew drugline 
+ * 3-view prescription
+ */
 public class prescriptionHistoryView extends JPanel {
 
 
@@ -34,8 +43,11 @@ public class prescriptionHistoryView extends JPanel {
 	public JTable HistoryTable;
 	private static String[] columnNames = {"Date","Medication"};
 	private static Object[][] data ={{" "}};
-	Patient patient;
-	String physician;
+	private Patient patient;
+	private String physician;
+	private Prescription clickedPrescription;
+
+
 	static DefaultTableModel model = new DefaultTableModel(data,columnNames) {
 		@Override
 		public boolean isCellEditable(int row, int column) {
@@ -43,8 +55,6 @@ public class prescriptionHistoryView extends JPanel {
 		}
 	};
 
-
-	Prescription clickedPrescription;
 	public prescriptionHistoryView()
 	{
 
@@ -62,70 +72,23 @@ public class prescriptionHistoryView extends JPanel {
 
 		HistoryTable.addMouseListener(new java.awt.event.MouseAdapter() {
 
-			@Override
-			//			public void  mousePressed(MouseEvent e) {
-			//				patient = MainControl.getMainControl().getCurrentPatient();
-			//				physician = MainControl.getMainControl().getPhysicianName();
-			//				if(e.getClickCount()== 2 ){
-			//
-			//					JTable target = (JTable)e.getSource();
-			//					int selectedRow = target.getSelectedRow();
-			//					selectedRow =  HistoryTable.convertRowIndexToModel(selectedRow);
-			//					String date = (String)HistoryTable.getModel().getValueAt(selectedRow, 0);
-			//					// String med =  (String)HistoryTable.getModel().getValueAt(selectedRow, 1);
-			//					prescriptionHistory = patient.getPrescriptionHistory();
-			//
-			//					for(Prescription p: prescriptionHistory)
-			//					{
-			//						if(p.getIssueDate() == date)
-			//						{
-			//							prescriptionRenew.add(p);
-			//							clickedPrescription = p;
-			//						}
-			//					}
-			//
-			//					JFrame HistoryFrame = new JFrame("Prescription History");
-			//					// HistoryFrame .getContentPane().add(new HistoryWindow(temp.getPhysician(),temp.getIssueDate()), BorderLayout.CENTER);
-			//					HistoryFrame .getContentPane().add(new HistoryWindow(clickedPrescription), BorderLayout.CENTER);
-			//					HistoryFrame .pack(); 
-			//					HistoryFrame .setVisible(true);
-			//					HistoryFrame.setSize(new Dimension(500,500));
-			//
-			//				}
-			//				// int[] columns = HistoryTable.getSelectedColumns();
-			//				// int rowcount = model.getRowCount();
-			//				ArrayList<String> drugSpec;
-			//				//				if(e.getClickCount()== 1){
-			//				//
-			//				//					JTable target = (JTable)e.getSource();
-			//				//					//	 HistoryTable target = (HistoryTable)e.getSource();
-			//				//					// int selectedRow = HistoryTable.getSelectedRow();
-			//				//					int selectedRow = target.getSelectedRow();
-			//				//					selectedRow = HistoryTable.convertRowIndexToModel(selectedRow);
-			//				//					String date = (String)HistoryTable.getModel().getValueAt(selectedRow, 0);
-			//				//					String med = (String)HistoryTable.getModel().getValueAt(selectedRow, 1);
-			//				//					// Patient patient = MainControl.getMainControl().getCurrentPatient(); 
-			//				//					drugSpec = PatientSearchView.DrugsInHistory;
-			//				//					for(String s:drugSpec)
-			//				//					{
-			//				//						if(s.contains(med))
-			//				//						{
-			//				//							DrugLineView.getDrugLineview().renewToDrugLineView(s);
-			//				//							System.out.println(s);
-			//				//						}
-			//				//					}
-			//				//				}
-			//			}
+			/* 
+			 * right lick mouse function to show popup menue
+			 */
 			public void  mousePressed(MouseEvent e) {
 				if (e.getModifiers() == MouseEvent.BUTTON3_MASK){
-					
+
 					patient = MainControl.getMainControl().getCurrentPatient();
 					physician = MainControl.getMainControl().getPhysicianName();
 					System.out.println("Right Click pressed");
-					
+
 					//get the table component where the right click of the mouse been made
-					JTable target = (JTable)e.getSource();
+					final JTable target = (JTable)e.getSource();
 					int selectedRow = target.getSelectedRow();
+					final int indexOfSelectedRow = target.rowAtPoint(e.getPoint());
+					System.out.println("selected index is"+indexOfSelectedRow);
+					target.setRowSelectionInterval(indexOfSelectedRow, indexOfSelectedRow);
+					selectedRow = target.getSelectedRow();
 					selectedRow =  HistoryTable.convertRowIndexToModel(selectedRow);
 					String date = (String)HistoryTable.getModel().getValueAt(selectedRow, 0);
 					prescriptionHistory = patient.getPrescriptionHistory();
@@ -139,7 +102,7 @@ public class prescriptionHistoryView extends JPanel {
 							System.out.println(p.getIssueDate());
 						}
 					}
-					
+
 					JPopupMenu popupMenu = new JPopupMenu();
 
 					JMenuItem renewDrug=new JMenuItem("Renew Drug");
@@ -147,9 +110,16 @@ public class prescriptionHistoryView extends JPanel {
 
 						@Override
 						public void mousePressed(MouseEvent e) {
-							System.out.println("renewDrug");
-							DrugLineView.getDrugLineview().renewToDrugLineView("qweqweqwe");
-							
+							String drugName = (String)HistoryTable.getModel().getValueAt(indexOfSelectedRow, 1);
+							for(String drugLine:clickedPrescription.getDrugLines()){
+								String[] drug=drugLine.split(" ");
+								if(drug[0].equals(drugName))
+								{
+									DrugLineView.getDrugLineview().renewToDrugLineView(drugLine);
+								}
+							}
+
+
 						}
 					});
 					popupMenu.add(renewDrug);
@@ -163,6 +133,7 @@ public class prescriptionHistoryView extends JPanel {
 							for(String p: clickedPrescription.getDrugLines())
 							{
 								DrugLineView.getDrugLineview().renewToDrugLineView(p);
+								System.out.println("Renew Prescription Drug"+p);
 							}
 						}
 					});
@@ -174,7 +145,7 @@ public class prescriptionHistoryView extends JPanel {
 						@Override
 						public void mousePressed(MouseEvent e) {
 							System.out.println("viewPrescription");
-							
+
 							JFrame HistoryFrame = new JFrame("Prescription History");
 							// HistoryFrame .getContentPane().add(new HistoryWindow(temp.getPhysician(),temp.getIssueDate()), BorderLayout.CENTER);
 							HistoryFrame .getContentPane().add(new HistoryWindow(clickedPrescription), BorderLayout.CENTER);
