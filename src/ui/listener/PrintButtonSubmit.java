@@ -3,6 +3,7 @@ package ui.listener;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,6 +19,13 @@ public class PrintButtonSubmit implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		
+		//get the time stamp
+		Date issuedate=new Date(e.getWhen());
+		System.out.println(issuedate);
+		
+		
+		//
 		JButton thebuton=(JButton) e.getSource();
 		JPanel container=(JPanel) thebuton.getParent().getParent();
 		//System.out.println(container);
