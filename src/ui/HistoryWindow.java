@@ -41,7 +41,12 @@ public class HistoryWindow extends JPanel {
 		this.add(patientSearchView, "cell 0 1, center, wrap");
 		this.add(drugLineView, "cell 0 2,  center, wrap");
 		drugLineView.setBorder(BorderFactory.createLineBorder(Color.red));
-		drugLineView.renewToDrugLineView("jofewjofiewjofiew");
+		
+		
+		for(String p: currentPrescription.getDrugLines())
+		{
+			drugLineView.renewToDrugLineView(p);
+		}
 	}
 }
 

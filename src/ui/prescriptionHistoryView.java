@@ -118,48 +118,78 @@ public class prescriptionHistoryView extends JPanel {
 			//			}
 			public void  mousePressed(MouseEvent e) {
 				if (e.getModifiers() == MouseEvent.BUTTON3_MASK){
-					System.out.println("Right Click pressed");
-					JPopupMenu popupMenu = new JPopupMenu();
 					
+					patient = MainControl.getMainControl().getCurrentPatient();
+					physician = MainControl.getMainControl().getPhysicianName();
+					System.out.println("Right Click pressed");
+					
+					//get the table component where the right click of the mouse been made
+					JTable target = (JTable)e.getSource();
+					int selectedRow = target.getSelectedRow();
+					selectedRow =  HistoryTable.convertRowIndexToModel(selectedRow);
+					String date = (String)HistoryTable.getModel().getValueAt(selectedRow, 0);
+					prescriptionHistory = patient.getPrescriptionHistory();
+
+					for(Prescription p: prescriptionHistory)
+					{
+						if(p.getIssueDate() == date)
+						{
+							prescriptionRenew.add(p);
+							clickedPrescription = p;
+							System.out.println(p.getIssueDate());
+						}
+					}
+					
+					JPopupMenu popupMenu = new JPopupMenu();
+
 					JMenuItem renewDrug=new JMenuItem("Renew Drug");
 					renewDrug.addMouseListener(new MouseAdapter() {
 
-			                @Override
-			                public void mousePressed(MouseEvent e) {
-			                    System.out.println("renewDrug");
-			                }
-			            });
+						@Override
+						public void mousePressed(MouseEvent e) {
+							System.out.println("renewDrug");
+							DrugLineView.getDrugLineview().renewToDrugLineView("qweqweqwe");
+							
+						}
+					});
 					popupMenu.add(renewDrug);
-					
+
 					JMenuItem renewPrescription=new JMenuItem("Renew Prescription");
 					renewPrescription.addMouseListener(new MouseAdapter() {
 
-			                @Override
-			                public void mousePressed(MouseEvent e) {
-			                    System.out.println("Renew Prescription");
-			                }
-			            });
+						@Override
+						public void mousePressed(MouseEvent e) {
+							System.out.println("Renew Prescription");
+							for(String p: clickedPrescription.getDrugLines())
+							{
+								DrugLineView.getDrugLineview().renewToDrugLineView(p);
+							}
+						}
+					});
 					popupMenu.add(renewPrescription);
-					
+
 					JMenuItem viewPrescription=new JMenuItem("View Prescription");
 					viewPrescription.addMouseListener(new MouseAdapter() {
 
-			                @Override
-			                public void mousePressed(MouseEvent e) {
-			                    System.out.println("viewPrescription");
-			                }
-			            });
+						@Override
+						public void mousePressed(MouseEvent e) {
+							System.out.println("viewPrescription");
+							
+							JFrame HistoryFrame = new JFrame("Prescription History");
+							// HistoryFrame .getContentPane().add(new HistoryWindow(temp.getPhysician(),temp.getIssueDate()), BorderLayout.CENTER);
+							HistoryFrame .getContentPane().add(new HistoryWindow(clickedPrescription), BorderLayout.CENTER);
+							HistoryFrame .pack(); 
+							HistoryFrame .setVisible(true);
+							HistoryFrame.setSize(new Dimension(500,500));
+
+						}
+					});
 					popupMenu.add(viewPrescription);
-					
-					
+
+
 					HistoryTable.setComponentPopupMenu(popupMenu);
 
 					popupMenu.show();
-					//repaint();
-					//revalidate();
-			        //popup.show();
-
-
 				}
 			}
 		});

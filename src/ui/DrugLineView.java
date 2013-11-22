@@ -305,4 +305,7 @@ public class DrugLineView extends JPanel implements FocusListener {
 		// TODO Auto-generated method stub
 
 	}
+	public Component getDrugLinePanel(){
+		return drugLinePanel;
+	}
 }
