@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.*;
 
@@ -105,7 +107,56 @@ public class DrugLineView extends JPanel implements FocusListener {
 		drugLine.addItemListener(sbm);
 
 
-		drugLine.getEditor().getEditorComponent().addFocusListener(this);
+		//drugLine.getEditor().getEditorComponent().addFocusListener(this);
+		drugLine.getEditor().getEditorComponent().addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				System.out.println("released");
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				System.out.println("press");
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				System.out.println("exit");
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				//TO test whether there is an empty line
+				Boolean emptyflag=false;
+				
+				//
+				Component[] complist= drugLinePanel.getComponents();
+				for (int i = 0; i < complist.length; i++) {
+					JComboBox box= (JComboBox) ((JPanel)complist[i]).getComponent(0);
+					if(box.getEditor().getItem().toString().equals("")){
+						emptyflag=true;
+					}
+				}
+				
+				if(emptyflag==false){
+				drugLinePanel.add(drugFiller(),"wrap");
+				drugLinePanel.revalidate();}
+//				drugLineScroll.revalidate();
+				
+				System.out.println("listened!!!");
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				System.out.println("click");
+			}
+		});
 
 		drugFill.add(drugLine);
 
@@ -220,6 +271,7 @@ public class DrugLineView extends JPanel implements FocusListener {
 		
 		
 		JTextField jt55=new JTextField(9);
+		jt55.setName("effectiveDateView");
 		//datechooser here
 		DateChooser dateChooser = DateChooser.getInstance("yyyy-MM-dd");
 		dateChooser.register(jt55);
@@ -281,8 +333,24 @@ public class DrugLineView extends JPanel implements FocusListener {
 	@Override
 	public void focusGained(FocusEvent e) {
 //		this.drugLineScroll.add(this.drugFiller(),"wrap");
+
+		
+		
+		//TO test whether there is an empty line
+		Boolean emptyflag=false;
+		
+		//
+		Component[] complist= this.drugLinePanel.getComponents();
+		for (int i = 0; i < complist.length; i++) {
+			JComboBox box= (JComboBox) ((JPanel)complist[i]).getComponent(0);
+			if(box.getEditor().getItem().toString().equals("")){
+				emptyflag=true;
+			}
+		}
+		
+		if(emptyflag==false){
 		this.drugLinePanel.add(this.drugFiller(),"wrap");
-		drugLinePanel.revalidate();
+		drugLinePanel.revalidate();}
 //		drugLineScroll.revalidate();
 		
 		System.out.println("listened!!!");
