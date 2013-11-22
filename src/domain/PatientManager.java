@@ -246,4 +246,8 @@ public class PatientManager {
 
 	}
 	
+	public DBConnection getDBConnection(){
+		return dbconnection;
+	}
+	
 }
