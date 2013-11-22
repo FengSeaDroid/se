@@ -44,9 +44,15 @@ public class MainControl {
 	 * 
 	 * @return
 	 */
+	private String physicianID;
+	
 	public String getPhysicianID(){
-		return "1";
+		return physicianID;
 	}
+	public void setPhysicianID(String id){
+		 physicianID=id;
+	}
+	
 
 	/**
 	 * When the controller is needed, call this to get it.

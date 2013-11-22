@@ -39,12 +39,12 @@ public class LoginWindow extends JFrame implements ActionListener{
 		longinPanel.add(passwordTextField,"wrap, center");
 		longinPanel.add(connectButton,"left");
 		longinPanel.add(cancelButton, "right");
-		
+
 		connectButton.addActionListener(this);
 		cancelButton.addActionListener(this);	
 		usernameTextField.addActionListener(this);
 		passwordTextField.addActionListener(this);
-	
+
 		getContentPane().add(longinPanel);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -73,42 +73,46 @@ public class LoginWindow extends JFrame implements ActionListener{
 
 
 	public boolean checkUserPass() throws Exception{
-		
-		String physician_id=MainControl.getMainControl().getPhysicianID();
-		System.out.println("physician id is"+physician_id);
+
+		//String physician_id=MainControl.getMainControl().getPhysicianID();
+		//System.out.println("physician id is"+physician_id);
 		//physician table (physician_id	name	username	password	signature)
-		ResultSet userpassResult=PatientManager.getPatientManager().getDBConnection().execQuery("select username,password from physician where"
-				+ " physician_id="+physician_id);
-		
-		userpassResult.next();
-		if(userpassResult.getString("username").equals(this.getUsername())){
-			System.out.println("Correct UserName");
-			System.out.println("User from textField"+userpassResult.getString("username"));
-			System.out.println("User from textField"+this.getUsername());
-			if(userpassResult.getString("password").equals(this.getPassword())){
-				System.out.println("Correct Password");
-				this.setVisible(false);
-				return true;
+		ResultSet userpassResult=PatientManager.getPatientManager().getDBConnection().execQuery("select username,password,physician_id from physician ");
+
+		while (userpassResult.next()){
+			if(userpassResult.getString("username").equals(this.getUsername())){
+				System.out.println("Correct UserName");
+				System.out.println("User from textField"+userpassResult.getString("username"));
+				System.out.println("User from textField"+this.getUsername());
+				if(userpassResult.getString("password").equals(this.getPassword())){
+					System.out.println("Correct Password");
+					this.setVisible(false);
+					MainControl.getMainControl().setPhysicianID(userpassResult.getString("physician_id"));
+					System.out.println("physician ID is"+userpassResult.getString("physician_id"));
+					return true;
+				}
+				else{
+					System.out.println("Wrong Password");
+				}
 			}
 			else{
-				System.out.println("Wrong Password");
+				System.out.println("Wrong UserName");
+				System.out.println("User from textField"+userpassResult.getString("username"));
+				System.out.println("User from textField"+this.getUsername());
 			}
+
 		}
-		else{
-			System.out.println("Wrong UserName");
-			System.out.println("User from textField"+userpassResult.getString("username"));
-			System.out.println("User from textField"+this.getUsername());
-		}
+
 		return false;
 	}
-	
+
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource()==connectButton || e.getSource()==usernameTextField || e.getSource()==passwordTextField){
-			 try {
+			try {
 				if(this.checkUserPass()){
 					System.out.println("correct everything");
 					MainWindow.createAndShowGUI();
-					 
+
 				}
 				else{
 					this.setUsernameTextField("");
@@ -122,7 +126,7 @@ public class LoginWindow extends JFrame implements ActionListener{
 		if (e.getSource()==cancelButton){
 			this.setVisible(false);
 		}
-		
+
 	}
 	public static void main(String args[]) throws Exception{
 		try {
@@ -142,9 +146,9 @@ public class LoginWindow extends JFrame implements ActionListener{
 			// handle exception
 		}
 		LoginWindow test=new LoginWindow();
-		
+
 		//test.checkUserPass();
 	}
 
-	
+
 }
