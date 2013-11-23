@@ -116,7 +116,7 @@ public class PrescriptionHistoryView extends JPanel {
 								String[] drug=drugLine.split(" ");
 								if(drug[0].equals(drugName))
 								{
-									DrugLineView.getDrugLineview().renewToDrugLineView(drugLine);
+									NewDrugLineView.getDrugLineView().populate(drugLine);
 								}
 							}
 
@@ -133,7 +133,7 @@ public class PrescriptionHistoryView extends JPanel {
 							System.out.println("Renew Prescription");
 							for(String p: clickedPrescription.getDrugLines())
 							{
-								DrugLineView.getDrugLineview().renewToDrugLineView(p);
+								NewDrugLineView.getDrugLineView().populate(p);
 								System.out.println("Renew Prescription Drug"+p);
 							}
 						}

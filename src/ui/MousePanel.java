@@ -12,10 +12,15 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+@SuppressWarnings({"serial","rawtypes"})
 public class MousePanel extends VanillaPanel implements MouseListener {
 	
 	private int originalSize;
 	
+	public MousePanel(int width) {
+		super(width);
+	}
+
 	/**
 	 * Static factory
 	 * @param width
@@ -23,14 +28,14 @@ public class MousePanel extends VanillaPanel implements MouseListener {
 	 * @return
 	 */
 	public static JPanel[] fillerWithScroll(int width, int height){
-		boxWidth=width;
 		JPanel[] panels ={null,null};
 		panels[0] = new JPanel();
-		panels[1] = new MousePanel();
+		panels[1] = new MousePanel(width);
 		panels[0].addMouseListener((MouseListener)panels[1]);
 		JScrollPane scroll = new JScrollPane(panels[1]);
 		scroll.setPreferredSize(new Dimension(width,height));
 		scroll.addMouseListener((MouseListener)panels[1]);
+		scroll.setBorder(null);
 		panels[0].add(scroll);
 		return panels;
 	}

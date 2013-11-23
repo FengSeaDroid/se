@@ -77,7 +77,7 @@ public class MainWindow extends JPanel {
 		
 		JSplitPane newPrescription = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT ,prescriptionView(),patientInfoView());
 		newPrescription.setDividerLocation(d.width*2/3);
-		newPrescription.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
+//		newPrescription.setBorder(BorderFactory.createTitledBorder(""));
 		newPrescription.setEnabled( false );
 		return newPrescription;
 	}
@@ -89,7 +89,7 @@ public class MainWindow extends JPanel {
 		
 		pv.add(new ClinicInfoView(false),"wrap");
 		pv.add(new PatientSearchView(),"wrap");
-		pv.add(DrugLineView.getDrugLineview(),"wrap");
+		pv.add(NewDrugLineView.getDrugLineView(),"wrap");
 		return pv;
 	}
 	

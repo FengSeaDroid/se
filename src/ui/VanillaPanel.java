@@ -1,5 +1,6 @@
 package ui;
 
+
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -20,12 +21,14 @@ import net.miginfocom.swing.MigLayout;
  * @author Fredseadroid
  *
  */
+@SuppressWarnings({"serial","rawtypes"})
 public class VanillaPanel extends JPanel implements KeyListener  {
 
 	/**
 	 * width for the combobox.
 	 */
-	protected static int boxWidth;
+	protected int boxWidth = -1;
+	
 	
 	public static final boolean EDIBLE = true;
 	
@@ -37,10 +40,12 @@ public class VanillaPanel extends JPanel implements KeyListener  {
 	/**
 	 * Create the panel.
 	 */
-	public VanillaPanel() {
+	public VanillaPanel(int width) {
 		super.setLayout(new MigLayout("", "", "0[]0[]0"));
+		this.boxWidth=width;
 		boxList.add(drugLine());
 		reDraw();
+		
 	}
 	
 	/**
@@ -50,11 +55,11 @@ public class VanillaPanel extends JPanel implements KeyListener  {
 	 * @return
 	 */
 	public static JPanel[] fillerWithScroll(int width, int height){
-		boxWidth=width;
 		JPanel[] panels ={null,null};
 		panels[0] = new JPanel();
-		panels[1] = new VanillaPanel();
+		panels[1] = new VanillaPanel(width);
 		JScrollPane scroll = new JScrollPane(panels[1]);
+		scroll.setBorder(null);
 		scroll.setPreferredSize(new Dimension(width,height));
 		panels[0].add(scroll);
 		return panels;
@@ -115,13 +120,14 @@ public class VanillaPanel extends JPanel implements KeyListener  {
 	 * @param edible
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	protected JComboBox drugLine(String s,boolean edible){
 		JComboBox drug = new JComboBox();
 		int width = (int) (boxWidth*.9);
 		drug.setPreferredSize(new Dimension(width,30));
 //		System.out.println(boxWidth);
 		drug.setEditable(true);
-		drug.setPrototypeDisplayValue("1234567890123456");
+//		drug.setPrototypeDisplayValue("1234567890123456");
 		drug.setUI(new BasicComboBoxUI() {
 		    @Override
 		    protected JButton createArrowButton() {
