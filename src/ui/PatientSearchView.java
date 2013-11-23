@@ -119,14 +119,7 @@ public class PatientSearchView extends JPanel implements ActionListener, Filler{
 		tel.setText(patient.getTel());
 		allergy = patient.getAllergy();
 
-//		for(String a: allergy){
-//			String[] data = {a};
-//			PatientAllergyView.model.addRow(data);
-//		}
-
-		String[] j = {"jfeow","jofewj"};
-		Set<String> se = new HashSet<String>(Arrays.asList(j));
-		PatientAllergyView.outer.inner.populate(se, false);
+		((VanillaPanel) PatientAllergyView.innerPanels[1]).populate(allergy, false);
 		
 		//take care below
 		prescriptionHistory = patient.getPrescriptionHistory();

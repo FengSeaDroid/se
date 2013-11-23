@@ -8,6 +8,7 @@ import java.awt.event.MouseListener;
 import java.util.Set;
 
 import javax.swing.JComboBox;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
@@ -21,16 +22,17 @@ public class MousePanel extends VanillaPanel implements MouseListener {
 	 * @param height
 	 * @return
 	 */
-	public static OuterPanel fillerWithScroll(int width, int height){
+	public static JPanel[] fillerWithScroll(int width, int height){
 		boxWidth=width;
-		VanillaPanel inner = new MousePanel();
-		OuterPanel outer = inner.new OuterPanel();
-		outer.inner = inner;
-		inner.addMouseListener((MouseListener) inner);
-		JScrollPane scroll = new JScrollPane(inner);
+		JPanel[] panels ={null,null};
+		panels[0] = new JPanel();
+		panels[1] = new MousePanel();
+		panels[0].addMouseListener((MouseListener)panels[1]);
+		JScrollPane scroll = new JScrollPane(panels[1]);
 		scroll.setPreferredSize(new Dimension(width,height));
-		outer.add(scroll);
-		return outer;
+		scroll.addMouseListener((MouseListener)panels[1]);
+		panels[0].add(scroll);
+		return panels;
 	}
 	
 	@Override
@@ -42,7 +44,6 @@ public class MousePanel extends VanillaPanel implements MouseListener {
 			jt.setEnabled(false);
 			jt.setDisabledTextColor(Color.BLACK);
 			jt.addMouseListener(this);
-			System.out.println("populated");
 		}
 	}
 	

@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
@@ -57,11 +58,11 @@ public class PrescriptionHistoryView extends JPanel {
 
 	public PrescriptionHistoryView()
 	{
-
+		this.setBorder(BorderFactory.createTitledBorder("Patient History Prescription"));
 		HistoryTable = new JTable(model);
 		HistoryTable.setFillsViewportHeight(true);
-		HistoryTable.setPreferredSize(new Dimension(500,200));
-		HistoryTable.getColumnModel().getColumn(1).setPreferredWidth(300);
+		HistoryTable.setPreferredSize(new Dimension(MainWindow.d.width/3-80,MainWindow.d.height/2-150));
+		HistoryTable.getColumnModel().getColumn(1).setPreferredWidth(100);
 		HistoryTable.setPreferredScrollableViewportSize(HistoryTable.getPreferredSize());
 		//HistoryTable.setEnabled(false);
 

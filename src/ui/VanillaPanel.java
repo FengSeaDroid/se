@@ -1,6 +1,5 @@
 package ui;
 
-
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -50,15 +49,15 @@ public class VanillaPanel extends JPanel implements KeyListener  {
 	 * @param height
 	 * @return
 	 */
-	public static OuterPanel fillerWithScroll(int width, int height){
+	public static JPanel[] fillerWithScroll(int width, int height){
 		boxWidth=width;
-		VanillaPanel inner = new VanillaPanel();
-		OuterPanel outer = inner.new OuterPanel();
-		outer.inner = inner;
-		JScrollPane scroll = new JScrollPane(inner);
+		JPanel[] panels ={null,null};
+		panels[0] = new JPanel();
+		panels[1] = new VanillaPanel();
+		JScrollPane scroll = new JScrollPane(panels[1]);
 		scroll.setPreferredSize(new Dimension(width,height));
-		outer.add(scroll);
-		return outer;
+		panels[0].add(scroll);
+		return panels;
 	}
 	
 	/**
@@ -118,7 +117,7 @@ public class VanillaPanel extends JPanel implements KeyListener  {
 	 */
 	protected JComboBox drugLine(String s,boolean edible){
 		JComboBox drug = new JComboBox();
-		int width = (int) (boxWidth*.95);
+		int width = (int) (boxWidth*.9);
 		drug.setPreferredSize(new Dimension(width,30));
 //		System.out.println(boxWidth);
 		drug.setEditable(true);
@@ -356,11 +355,6 @@ public class VanillaPanel extends JPanel implements KeyListener  {
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
-	}
-	
-	public class OuterPanel extends JPanel {
-		public VanillaPanel inner;
 		
 	}
 
