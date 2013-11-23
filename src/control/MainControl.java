@@ -205,5 +205,7 @@ public class MainControl {
 				MainWindow.createAndShowGUI();
 			}
 		});//create window
+		
+		MainControl.getMainControl().setPhysicianID("1");
 	}
 }

@@ -1,35 +1,27 @@
 package ui;
 
 import java.awt.Dimension;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Vector;
 
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MaximizeAction;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
+
+
+import ui.VanillaPanel.OuterPanel;
+import net.miginfocom.swing.MigLayout;
+
 
 public class PatientAllergyView extends JPanel {
-	public JTable allergyTable;
-	 
-	private static String[] columnNames = {"Drug Allergy"};
 	
-	private static Object[][] data ={{" "}};
-
-	static DefaultTableModel model = new DefaultTableModel(data,columnNames);
-	/**
-	 * Create the panel.
-	 */
-	public PatientAllergyView() {
-		allergyTable = new JTable(model);
-		allergyTable.setFillsViewportHeight(true);
-		allergyTable.setEnabled(true);
-		JScrollPane scrollPane = new JScrollPane(allergyTable); 
-		scrollPane.setPreferredSize(new Dimension(500,250));
-	 	this.add(scrollPane);
+	public static OuterPanel outer;
+	
+	public PatientAllergyView(){
+		super.setLayout(new MigLayout("debug"));
+//		outer = MousePanel.fillerWithScroll(MainWindow.d.width/3-10,MainWindow.d.height/2);
+		outer = MousePanel.fillerWithScroll(500,300);
+		this.setPreferredSize(new Dimension(500,300));
+	}
+	
+	public OuterPanel getData(){
+		return outer;
 	}
 }

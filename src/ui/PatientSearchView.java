@@ -11,6 +11,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -118,10 +119,15 @@ public class PatientSearchView extends JPanel implements ActionListener, Filler{
 		tel.setText(patient.getTel());
 		allergy = patient.getAllergy();
 
-		for(String a: allergy){
-			String[] data = {a};
-			PatientAllergyView.model.addRow(data);
-		}
+//		for(String a: allergy){
+//			String[] data = {a};
+//			PatientAllergyView.model.addRow(data);
+//		}
+
+		String[] j = {"jfeow","jofewj"};
+		Set<String> se = new HashSet<String>(Arrays.asList(j));
+		PatientAllergyView.outer.inner.populate(se, false);
+		
 		//take care below
 		prescriptionHistory = patient.getPrescriptionHistory();
 		DrugsInHistory = new ArrayList<String>();
@@ -252,5 +258,6 @@ public class PatientSearchView extends JPanel implements ActionListener, Filler{
 			return this;  
 		}  
 	}  //inner class
-}
+
+}//class
 
