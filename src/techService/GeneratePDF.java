@@ -38,7 +38,7 @@ import domain.Prescription;
  * by calling one method named generateReport
  * the libary used for generating PDF is Itext 
  */
-public class generatePDF {
+public class GeneratePDF {
   private static String FILE = "prescription.pdf";
   private static Font titleFont = new Font(Font.FontFamily.TIMES_ROMAN, 16,
       Font.BOLD);
@@ -67,7 +67,9 @@ public static void generateReport() throws Exception{
       //createTable();
       creatRxImage();
       createDrugLine();
-      createSignature();
+      if(!MainControl.getMainControl().isLocum()){
+          createSignature();
+      }
       createDate();
       document.close();
       Desktop.getDesktop().open(new File(FILE));

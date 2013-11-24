@@ -3,6 +3,10 @@ package ui;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.ResultSet;
 
 import javax.swing.JButton;
@@ -19,7 +23,7 @@ import control.MainControl;
 import domain.PatientManager;
 import net.miginfocom.swing.MigLayout;
 
-public class LoginWindow extends JFrame implements ActionListener{
+public class LoginWindow extends JFrame implements ActionListener,FocusListener{
 
 	private JPanel longinPanel=new JPanel(new MigLayout("wrap 3","[grow][grow][grow]","[][][][]"));
 	private JLabel userNameLabel=new JLabel("Username");
@@ -50,6 +54,15 @@ public class LoginWindow extends JFrame implements ActionListener{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
 		this.setFocusableWindowState(true);
+		this.addFocusListener(this);
+		usernameTextField.addFocusListener(this);
+//		this.addWindowFocusListener(new WindowAdapter() {
+//			
+//
+//public void windowLostFocus(WindowEvent evt) {
+//requestFocusInWindow();
+//}
+//});
 		this.setAlwaysOnTop(true);
 		setVisible(true);
 
@@ -77,7 +90,7 @@ public class LoginWindow extends JFrame implements ActionListener{
 		//String physician_id=MainControl.getMainControl().getPhysicianID();
 		//System.out.println("physician id is"+physician_id);
 		//physician table (physician_id	name	username	password	signature)
-		ResultSet userpassResult=PatientManager.getPatientManager().getDBConnection().execQuery("select username,password,physician_id from physician ");
+		ResultSet userpassResult=PatientManager.getPatientManager().getDBConnection().execQuery("select username,password,physician_id,locum from physician ");
 
 		while (userpassResult.next()){
 			if(userpassResult.getString("username").equals(this.getUsername())){
@@ -88,6 +101,9 @@ public class LoginWindow extends JFrame implements ActionListener{
 					System.out.println("Correct Password");
 					this.setVisible(false);
 					MainControl.getMainControl().setPhysicianID(userpassResult.getString("physician_id"));
+					MainControl.getMainControl().setLocum(userpassResult.getString("Locum"));
+					MainControl.getMainControl().setPhysicianUserName(this.getUsername());
+					MainControl.getMainControl().setPhysicianPassword(this.getPassword());
 					System.out.println("physician ID is"+userpassResult.getString("physician_id"));
 					return true;
 				}
@@ -119,7 +135,6 @@ public class LoginWindow extends JFrame implements ActionListener{
 					this.setPasswordTextField("");
 				}
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
@@ -145,9 +160,28 @@ public class LoginWindow extends JFrame implements ActionListener{
 		} catch (IllegalAccessException e) {
 			// handle exception
 		}
-		LoginWindow test=new LoginWindow();
+		LoginWindow loginWindow=new LoginWindow();
+		loginWindow.setLocationRelativeTo(null);
+
+		
 
 		//test.checkUserPass();
+	}
+
+	@Override
+	public void focusGained(FocusEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println("focus gained");
+	}
+
+	@Override
+	public void focusLost(FocusEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println("focus lost");
+		//usernameTextField.requestFocusInWindow();
+		//this.setFocusableWindowState(true);
+		//this.toFront();
+		
 	}
 
 

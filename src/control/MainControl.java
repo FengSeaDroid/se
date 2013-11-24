@@ -14,7 +14,7 @@ import domain.Formulary;
 import domain.Patient;
 import domain.PatientManager;
 import domain.Prescription;
-import techService.generatePDF;
+import techService.GeneratePDF;
 import ui.MainWindow;
 
 /**
@@ -53,7 +53,41 @@ public class MainControl {
 		 physicianID=id;
 	}
 	
+	private String locum;
+	
+	public boolean isLocum(){
+		if (locum.equals("1")){
+			return true;
+		}
+		else if(locum.equals("0")){
+			return false;
+		}
+		return false;
+	}
+	
+	public void setLocum(String locum){
+		this.locum=locum;
+	}
+	
+	private String physicianUserName;
+	
+	public String getPhysicianUserName() {
+		return physicianUserName;
+	}
+	public void setPhysicianUserName(String physicianUserName) {
+		System.out.println("Thats the physician UserName"+physicianUserName);
+		this.physicianUserName = physicianUserName;
+	}
+	
+	private String physicianPassword;
 
+	public String getPhysicianPassword() {
+		return physicianPassword;
+	}
+	public void setPhysicianPassword(String physicianPassword) {
+		System.out.println("Thats the physician Password"+physicianPassword);
+		this.physicianPassword = physicianPassword;
+	}
 	/**
 	 * When the controller is needed, call this to get it.
 	 * 
@@ -175,7 +209,7 @@ public class MainControl {
 			this.getPrescription().addDrugLine(s);
 		}
 		this.getPrescription().save();
-		generatePDF.generateReport();
+		GeneratePDF.generateReport();
 	}
 
 	/**

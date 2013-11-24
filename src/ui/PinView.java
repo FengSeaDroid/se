@@ -3,6 +3,10 @@ package ui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -14,44 +18,81 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import control.MainControl;
-
 import net.miginfocom.swing.MigLayout;
 
-public class PinView extends JPanel {
-
-	public JPanel drawPinView() {
-		// TODO Auto-generated constructor stub
-		JPanel jp=new JPanel(new MigLayout("wrap 3","[grow][grow][grow]","[][][][]"));
-		
-		JLabel msg=new JLabel("Please type in your pin number:");
-		
-		jp.add(msg,"span 4,align center");
-		jp.add(drawPin(),"span 4,align center");
-		
-		JButton bt_ok=new JButton("print");
-		JButton bt_cancel=new JButton("cancel");
-		
-		jp.add(bt_ok,"span 2,align center");
-		jp.add(bt_cancel,"span 2,align center");
-		return jp;
-	}
-
-	public JPanel drawPin(){
-		JPanel jp=new JPanel();
-		
-		JPasswordField jpf=new JPasswordField(10);
-		jpf.setSize(100, 100);
-		
-		jp.add(jpf);
-		return jp;
-	}
+public class PinView extends JFrame implements ActionListener,FocusListener {
 	
+	private JPanel pinPanel=new JPanel(new MigLayout("wrap 3","[grow][grow][grow]","[][][][]"));
+	private JButton printButton;
+	private JButton cancelButton;
+	private JLabel msgLabel=new JLabel("Please type in your pin number:");
+	private JPasswordField pinPasswordField=new JPasswordField(20);
+
+	public PinView() {
+		
+		super("Print Authentication Window");
+		this.setSize(250, 100);
+
+		pinPanel.setLayout (new MigLayout()); 
+		pinPanel.add(msgLabel,"span 5,align center");
+		
+		pinPasswordField=new JPasswordField(10);
+		//pinPanel.add(pinPasswordField);
+		//pinPasswordField.setSize(100, 100);
+		pinPanel.add(pinPasswordField,"wrap, center");	
+		
+		
+		printButton=new JButton("print");
+		pinPanel.add(printButton,"left");
+		printButton.addActionListener(this);
+		
+		cancelButton=new JButton("cancel");
+		pinPanel.add(cancelButton,"right");
+		cancelButton.addActionListener(this);
+		
+		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setResizable(false);
+		this.setAlwaysOnTop(true);
+		this.setFocusableWindowState(true);
+		this.setLocationRelativeTo(null);
+
+		this.addFocusListener(this);
+		
+		this.add(pinPanel);
+		this.setVisible(true);
+	}
+
 	public static void main(String[] args){
-		JFrame jf=new JFrame();
-		jf.setSize(300, 140);
-		jf.add(new PinView().drawPinView());
-		jf.setVisible(true);
+		JFrame jf=new PinView();
+		//jf.setVisible(true);
 		jf.setLocationRelativeTo(null);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource()==printButton || e.getSource()==pinPasswordField){
+			if(pinPasswordField.getText().equals(MainControl.getMainControl().getPhysicianPassword()))
+			{
+				//Print report method for report
+
+			}
+		}
+		if(e.getSource()==cancelButton){
+			this.setVisible(false);
+		}
+	}
+
+	@Override
+	public void focusGained(FocusEvent e) {
+		
+	}
+
+	@Override
+	public void focusLost(FocusEvent e) {
+//		this.requestFocusInWindow();
+//		this.setFocusableWindowState(true);
+//		this.toFront();
 	}
 	
 }
