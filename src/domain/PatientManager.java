@@ -250,4 +250,13 @@ public class PatientManager {
 		return dbconnection;
 	}
 	
+	public void addAllergy(Set<String> allergySet) throws Exception{
+		//Allergy table description (patient_id,allergy_agent)
+		for (String allergy : allergySet){
+			dbconnection.manipulateData("insert into allergy(patient_id,allergy_agent) values"
+					+ " ('"+MainControl.getMainControl().getCurrentPatient().getPatientID()+"','"+allergy+"')");
+
+		}
+		
+	}
 }
