@@ -24,8 +24,9 @@ public class NewDrugLineView extends JPanel implements ActionListener{
 	private JPanel dateView;
 	
 	private JTextField effectiveDate;
+	
 	public String getEffectiveDate(){
-		if (effectiveDate.getText().equals("")){
+		if (effectiveDate.getText().equals("")||effectiveDate.getText().equals(new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()))){
 			return new SimpleDateFormat("yyyy-MM-dd HH:mm").format(Calendar.getInstance().getTime());
 		}
 		else {

@@ -10,10 +10,23 @@ import java.awt.event.KeyListener;
 import java.util.*;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicComboBoxUI;
 
 import control.MainControl;
 import ui.PatientSearchView.ComboBoxRenderer;
 
+
+/**
+ * 
+ * @author Fred
+ *
+ */
+////initially isFired = false;
+////keyboard check, if there's space, fire, isFired = true
+////keyboard check, if there's still space, do nothing
+//// if the space goes away, isFired = false
+//
+////extend jcombobox with a flag!!!
 @SuppressWarnings({"serial","rawtypes"})
 public class SuggestionPanel extends VanillaPanel {
 	
@@ -48,15 +61,59 @@ public class SuggestionPanel extends VanillaPanel {
 	@SuppressWarnings("unchecked")
 	@Override
 	protected JComboBox drugLine(String s,boolean edible){
-		JComboBox drug = super.drugLine(s,edible);
+		JComboBox drug = new FirableBox();
+		int width = (int) (boxWidth*.9);
+		drug.setPreferredSize(new Dimension(width,30));
+		drug.setEditable(true);
+
+		drug.setUI(new BasicComboBoxUI() {
+		    @Override
+		    protected JButton createArrowButton() {
+		    	return new JButton() {
+		    		@Override
+		    		public int getWidth() {
+		    			return 0;
+		    		}
+		    	};
+		    }
+		});
+
 		drug.setRenderer(new ComboBoxRenderer());
 		SearchBoxModel sbm = new SearchBoxModel(drug,MainControl.getMainControl().getFormulary().getAllDrugSet());
 		drug.setModel(sbm);
 		drug.addItemListener(sbm);
+		//JTextField must under model or not working
 		JTextField jt = (JTextField)drug.getEditor().getEditorComponent();
+		jt.setBorder(BorderFactory.createEmptyBorder(2,10, 2, 2));
+		jt.addKeyListener(this);
 		jt.setText(s);
-		jt.setEditable(edible);
+		jt.setEnabled(edible);
+		jt.setDisabledTextColor(Color.BLACK);
 		return drug;
+	}
+	
+	/**
+	 * test if the drug is allergy agent.
+	 */
+	@Override
+	public void keyPressed(KeyEvent e) {
+		super.keyPressed(e);
+		JTextField jt = (JTextField)e.getSource();
+		FirableBox tempBox = (FirableBox)jt.getParent();
+//		int i = this.boxList.indexOf(tempBox);
+//		int pos = jt.getCaretPosition();
+		String[] drugSpec = jt.getText().split(" ");
+		if (drugSpec.length>1 && !tempBox.isFired()){
+			for (String s: MainWindow.patientAllergy.pull()){
+				if (s.equals(drugSpec[0])){
+					new AlertPopup(s);
+					tempBox.setFired(true);
+				}
+			}
+		}
+		if (drugSpec.length<=1 && tempBox.isFired()){
+			tempBox.setFired(false);
+		}
 	}
 	
 	public class SearchBoxModel extends AbstractListModel
@@ -176,5 +233,19 @@ public class SuggestionPanel extends VanillaPanel {
 			return this;  
 		}  
 	}  //inner class
+	
+	public class FirableBox extends JComboBox<JTextField>{
+		
+		private static final long serialVersionUID = -5970625848197390449L;
 
+		private boolean fired = false;
+		
+		public boolean isFired(){
+			return this.fired;
+		}
+		
+		public void setFired(boolean fire){
+			this.fired=fire;
+		}
+	}//inner class
 }

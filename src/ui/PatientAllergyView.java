@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.Dimension;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.swing.BorderFactory;
@@ -29,5 +30,9 @@ public class PatientAllergyView extends JPanel {
 	public void clear() {
 		((VanillaPanel) this.innerPanels[1]).clear();
 		
+	}
+	
+	public Set<String> pull(){
+		return new HashSet<String>(((VanillaPanel) this.innerPanels[1]).pull());
 	}
 }

@@ -139,7 +139,7 @@ public class LoginWindow extends JFrame implements ActionListener,FocusListener{
 			}
 		}
 		if (e.getSource()==cancelButton){
-			this.setVisible(false);
+			this.dispose();
 		}
 
 	}

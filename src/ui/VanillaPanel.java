@@ -124,9 +124,9 @@ public class VanillaPanel extends JPanel implements KeyListener  {
 	 * @param edible
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	protected JComboBox drugLine(String s,boolean edible){
 		JComboBox drug = new JComboBox();
+//		JComboBox drug = new FirableBox();
 		int width = (int) (boxWidth*.9);
 		drug.setPreferredSize(new Dimension(width,30));
 //		System.out.println(boxWidth);
@@ -225,17 +225,28 @@ public class VanillaPanel extends JPanel implements KeyListener  {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+		
+		JTextField jt = (JTextField)e.getSource();
+		JComboBox tempBox = (JComboBox)jt.getParent();
+		int i = this.boxList.indexOf(tempBox);
+		int pos = jt.getCaretPosition();
+		
 		if(e.getKeyCode() == KeyEvent.VK_ENTER){
-			JTextField jt = (JTextField)e.getSource();
-			int pos = jt.getCaretPosition();
-			int i=this.boxList.indexOf(jt.getParent());
-			enterPress(i,pos);
+//			JTextField jt = (JTextField)e.getSource();
+//			JComboBox tempBox = (JComboBox)jt.getParent();
+//			int i=this.boxList.indexOf(tempBox);
+//			int pos = jt.getCaretPosition();
+//			int i=this.boxList.indexOf(jt.getParent());
+			if (tempBox.getModel().getSize()==0 || tempBox.getSelectedIndex()==-1){
+				enterPress(i,pos);
+			}
+			
 		}
 		
 		if(e.getKeyCode() == KeyEvent.VK_BACK_SPACE){
-			JTextField jt = (JTextField)e.getSource();
+//			JTextField jt = (JTextField)e.getSource();
 			if (jt.getCaretPosition()==0){
-				int i=this.boxList.indexOf(jt.getParent());
+//				int i=this.boxList.indexOf(jt.getParent());
 				if (i>0){
 					deleteLine(i);
 				}
@@ -243,8 +254,8 @@ public class VanillaPanel extends JPanel implements KeyListener  {
 		}
 		
 		if(e.getKeyCode() == KeyEvent.VK_DELETE){
-			JTextField jt = (JTextField)e.getSource();
-			int i=this.boxList.indexOf(jt.getParent());
+//			JTextField jt = (JTextField)e.getSource();
+//			int i=this.boxList.indexOf(jt.getParent());
 
 			if (jt.getCaretPosition()==jt.getText().length()) {
 				if (i < this.boxList.size()-1){
@@ -256,13 +267,13 @@ public class VanillaPanel extends JPanel implements KeyListener  {
 		}
 		
 		if(e.getKeyCode() == KeyEvent.VK_UP){
-			JTextField jt = (JTextField)e.getSource();
-			JComboBox tempBox = (JComboBox)jt.getParent();
-			int i=this.boxList.indexOf(tempBox);
+//			JTextField jt = (JTextField)e.getSource();
+//			JComboBox tempBox = (JComboBox)jt.getParent();
+//			int i=this.boxList.indexOf(tempBox);
 			//tempBox.getModel().getSize()==0 || tempBox.getSelectedIndex()==0
 			//the above code means if there's the dropdown menu, don't invoke
 			if (tempBox.getModel().getSize()==0 || tempBox.getSelectedIndex()==0){	
-				int pos = jt.getCaretPosition();
+//				int pos = jt.getCaretPosition();
 				if (i>0){
 					this.boxList.get(i-1).requestFocus();
 					JTextField njt = (JTextField)this.boxList.get(i-1).getEditor().getEditorComponent();
@@ -276,14 +287,14 @@ public class VanillaPanel extends JPanel implements KeyListener  {
 			}
 		}
 		if(e.getKeyCode() == KeyEvent.VK_DOWN){
-			JTextField jt = (JTextField)e.getSource();
-			JComboBox tempBox = (JComboBox)jt.getParent();
-			int i=this.boxList.indexOf(tempBox);
+//			JTextField jt = (JTextField)e.getSource();
+//			JComboBox tempBox = (JComboBox)jt.getParent();
+//			int i=this.boxList.indexOf(tempBox);
 			
 			//tempBox.getModel().getSize()==0 || tempBox.getSelectedIndex()== tempBox.getItemCount()-1
 			//the above code means if there's the dropdown menu, don't invoke
 			if (tempBox.getModel().getSize()==0 || tempBox.getSelectedIndex()== tempBox.getItemCount()-1){
-				int pos = jt.getCaretPosition();
+//				int pos = jt.getCaretPosition();
 				if (this.boxList.size()>i+1){
 					this.boxList.get(i+1).requestFocus();
 					JTextField njt = (JTextField)this.boxList.get(i+1).getEditor().getEditorComponent();
@@ -298,9 +309,9 @@ public class VanillaPanel extends JPanel implements KeyListener  {
 		}
 		
 		if(e.getKeyCode() == KeyEvent.VK_LEFT){
-			JTextField jt = (JTextField)e.getSource();
-			JComboBox tempBox = (JComboBox)jt.getParent();
-			int i=this.boxList.indexOf(tempBox);
+//			JTextField jt = (JTextField)e.getSource();
+//			JComboBox tempBox = (JComboBox)jt.getParent();
+//			int i=this.boxList.indexOf(tempBox);
 			if (i>0 && jt.getCaretPosition()==0){
 				this.boxList.get(i-1).requestFocus();
 				JTextField njt = (JTextField)this.boxList.get(i-1).getEditor().getEditorComponent();
@@ -308,10 +319,11 @@ public class VanillaPanel extends JPanel implements KeyListener  {
 				njt.setCaretPosition(length);
 			}
 		}
+		
 		if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-			JTextField jt = (JTextField)e.getSource();
-			JComboBox tempBox = (JComboBox)jt.getParent();
-			int i=this.boxList.indexOf(tempBox);
+//			JTextField jt = (JTextField)e.getSource();
+//			JComboBox tempBox = (JComboBox)jt.getParent();
+//			int i=this.boxList.indexOf(tempBox);
 			if (this.boxList.size()>i+1 && jt.getCaretPosition()==jt.getText().length()){
 				this.boxList.get(i+1).requestFocus();
 				JTextField njt = (JTextField)this.boxList.get(i+1).getEditor().getEditorComponent();
@@ -319,9 +331,6 @@ public class VanillaPanel extends JPanel implements KeyListener  {
 			}
 		}
 		
-		if(e.getKeyCode() == KeyEvent.VK_LEFT){
-			
-		}
 		/**
 		 * test: pull data.
 		 */

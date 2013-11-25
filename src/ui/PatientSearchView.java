@@ -26,8 +26,8 @@ import domain.Prescription;
 import net.miginfocom.swing.MigLayout;
 
 @SuppressWarnings({"serial","rawtypes"})
-public class PatientSearchView extends JPanel implements ActionListener, Filler{
-
+//public class PatientSearchView extends JPanel implements ActionListener, PatientSearchView.Filler{
+public class PatientSearchView extends JPanel implements ActionListener{
 
 	private Set<Prescription> prescriptionHistory = new HashSet<Prescription>();
 	private Set<String> allergy = new HashSet<String>();
@@ -145,6 +145,19 @@ public class PatientSearchView extends JPanel implements ActionListener, Filler{
 		}
 	}
 
+	//inner class
+	
+	public void clear() {
+		this.nameField.getEditor().setItem("");
+		this.mcpField.setText("");
+		this.DOB.setText("");
+		this.weight.setText("");
+		this.address.setText("");
+		this.tel.setText("");
+		this.prescriptionHistory.clear();
+		this.allergy.clear();
+	}
+
 	public class SearchNameModel extends AbstractListModel implements ComboBoxModel, KeyListener, ItemListener{
 		private Set<String> db = new HashSet<String>();
 		private ArrayList<String> data = new ArrayList<String>();
@@ -152,10 +165,12 @@ public class PatientSearchView extends JPanel implements ActionListener, Filler{
 		private JComboBox cb;
 		private ComboBoxEditor cbe;
 		private int currPos = 0;
-		private Filler filler;
+//		private Filler filler;
+		private PatientSearchView filler;
 		private String mcp;
 
-		public SearchNameModel(Filler f,JComboBox jcb, Set<String> textList) {
+//		public SearchNameModel(Filler f,JComboBox jcb, Set<String> textList) {
+		public SearchNameModel(PatientSearchView f,JComboBox jcb, Set<String> textList) {
 
 			cb = jcb;
 			cbe = jcb.getEditor();
@@ -256,18 +271,11 @@ public class PatientSearchView extends JPanel implements ActionListener, Filler{
 			else {setBackground(Color.WHITE); setForeground(Color.BLACK);}
 			return this;  
 		}  
-	}  //inner class
-
-	public void clear() {
-		this.nameField.getEditor().setItem("");
-		this.mcpField.setText("");
-		this.DOB.setText("");
-		this.weight.setText("");
-		this.address.setText("");
-		this.tel.setText("");
-		this.prescriptionHistory.clear();
-		this.allergy.clear();
 	}
+	
+//	public static interface Filler {
+//		public void fill(String s);
+//	}
 
 }//class
 

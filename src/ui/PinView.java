@@ -46,8 +46,13 @@ public class PinView extends JFrame implements ActionListener,FocusListener {
 		pinPanel.add(cancelButton,"right");
 		cancelButton.addActionListener(this);
 
-
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		no close the whole program Safwan the terrorist!!!
+//		Safwan Alquraan close JFrame
+//		Feng Wu not this JFrame man, it's static!
+//		Safwan Alquraan really ok i know
+//		Feng Wu so you should know it can't know which jframe to close, so it close all and all program is dead
+//		all your fault!
+//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
 		this.setAlwaysOnTop(true);
 		this.setFocusableWindowState(true);
@@ -82,7 +87,7 @@ public class PinView extends JFrame implements ActionListener,FocusListener {
 			}
 		}
 		if(e.getSource()==cancelButton){
-			this.setVisible(false);
+			this.dispose();
 		}
 	}
 
@@ -93,9 +98,6 @@ public class PinView extends JFrame implements ActionListener,FocusListener {
 
 	@Override
 	public void focusLost(FocusEvent e) {
-		//		this.requestFocusInWindow();
-		//		this.setFocusableWindowState(true);
-		//		this.toFront();
 	}
 
 }
