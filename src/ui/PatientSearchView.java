@@ -232,7 +232,7 @@ public class PatientSearchView extends JPanel implements ActionListener{
 					jtf.setCaretPosition(currPos);
 				}
 			}
-			else if(e.getKeyCode() == KeyEvent.VK_ENTER){
+			else if(e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_SPACE){
 				cb.setSelectedIndex(cb.getSelectedIndex());
 				JTextField jt = (JTextField)cb.getEditor().getEditorComponent();
 				System.out.println(jt.getText());
