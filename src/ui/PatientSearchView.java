@@ -114,8 +114,8 @@ public class PatientSearchView extends JPanel implements ActionListener, Filler{
 	}
 
 	public void fill(String mcp){
-		Patient patient = MainControl.getMainControl().lookupPatient(mcp);
 		MainWindow.clear();
+		Patient patient = MainControl.getMainControl().lookupPatient(mcp);
 		this.clear();
 		if (patient != null){
 			this.nameField.getEditor().setItem(patient.getName());

@@ -25,7 +25,12 @@ public class NewDrugLineView extends JPanel implements ActionListener{
 	
 	private JTextField effectiveDate;
 	public String getEffectiveDate(){
-		return effectiveDate.getText();
+		if (effectiveDate.getText().equals("")){
+			return new SimpleDateFormat("yyyy-MM-dd HH:mm").format(Calendar.getInstance().getTime());
+		}
+		else {
+			return effectiveDate.getText();
+		}
 	}
 	private JPanel[] innerPanels;
 
@@ -77,6 +82,7 @@ public class NewDrugLineView extends JPanel implements ActionListener{
 		JPanel effectiveDatePanel = new JPanel(new MigLayout("wrap 2","[]","[][]"));
 		effectiveDatePanel.add(new JLabel("Effective Date:"),"align left");
 		effectiveDate=new JTextField(10);
+		
 		String date = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
 		TextPrompt effectiveDatePrompt =new TextPrompt(date,effectiveDate);
 		effectiveDatePrompt.setShow(uiapi.TextPrompt.Show.FOCUS_LOST);
@@ -119,6 +125,7 @@ public class NewDrugLineView extends JPanel implements ActionListener{
 			//Call print PDF directly without showing the pin
 			try {
 				MainControl.getMainControl().print(MainWindow.drugLineView.pull(), MainWindow.drugLineView.getEffectiveDate());
+				MainWindow.clear();
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

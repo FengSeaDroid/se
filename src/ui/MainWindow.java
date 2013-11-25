@@ -22,6 +22,8 @@ import java.awt.Component;
 
 import javax.swing.Box;
 
+import control.MainControl;
+
 import java.awt.FlowLayout;
 
 public class MainWindow extends JPanel {
@@ -52,6 +54,8 @@ public class MainWindow extends JPanel {
 			drugLineView.clear();
 			patientAllergy.clear();
 			patientPrescriptionHistory.clear();
+			MainControl.getMainControl().setCurrentPatient(null);
+			MainControl.getMainControl().setPrescription(null);
 		}
 
 	}

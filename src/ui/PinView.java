@@ -73,7 +73,8 @@ public class PinView extends JFrame implements ActionListener,FocusListener {
 				//Print report method for report
 				try {
 					MainControl.getMainControl().print(MainWindow.drugLineView.pull(), MainWindow.drugLineView.getEffectiveDate());
-					this.setVisible(false);
+					MainWindow.clear();
+					this.dispose();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

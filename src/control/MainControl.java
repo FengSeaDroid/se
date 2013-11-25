@@ -190,9 +190,7 @@ public class MainControl {
 
 	public Patient lookupPatient (String MCP){
 		setCurrentPatient(patientManager.lookupPatient(MCP));
-		if (getCurrentPatient() != null){
-			this.setPrescription(new Prescription(this.getPhysicianName()));
-		}
+
 		return getCurrentPatient();
 	}
 
@@ -203,6 +201,9 @@ public class MainControl {
 	 * @throws Exception 
 	 */
 	public void print(Set<String> drugLines, String effectiveDate) throws Exception{
+		if (getCurrentPatient() != null){
+			this.setPrescription(new Prescription(this.getPhysicianName()));
+		} else System.out.println("even no patient yet");
 		this.getPrescription().setEffectiveDate(effectiveDate);
 		for (String s: drugLines){
 			this.getPrescription().addDrugLine(s);
@@ -240,6 +241,7 @@ public class MainControl {
 		});//create window
 		
 		MainControl.getMainControl().setPhysicianID("1");
-		MainControl.getMainControl().locum="0";
+		MainControl.getMainControl().locum="1";
+		MainControl.getMainControl().setPhysicianPassword("111");
 	}
 }
