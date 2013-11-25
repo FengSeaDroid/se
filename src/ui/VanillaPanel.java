@@ -1,6 +1,7 @@
 package ui;
 
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -98,6 +99,9 @@ public class VanillaPanel extends JPanel implements KeyListener  {
 	 * 					whether the populate panel is edible or not
 	 */
 	public void populate(Set<String> drugLines, boolean edible){
+		if (drugLines == null){
+			drugLines = new HashSet<String>();
+		}
 		for (int i = 0; i<this.boxList.size();i++){
 			JTextField jt = (JTextField)this.boxList.get(i).getEditor().getEditorComponent();
 			if (!jt.getText().equals("")){
@@ -141,9 +145,11 @@ public class VanillaPanel extends JPanel implements KeyListener  {
 		});
 
 		JTextField jt = (JTextField)drug.getEditor().getEditorComponent();
+		jt.setBorder(BorderFactory.createEmptyBorder(2,10, 2, 2));
 		jt.addKeyListener(this);
 		jt.setText(s);
-		jt.setEditable(edible);
+		jt.setEnabled(edible);
+		jt.setDisabledTextColor(Color.BLACK);
 		return drug;
 	}
 	
@@ -207,6 +213,9 @@ public class VanillaPanel extends JPanel implements KeyListener  {
 	
 	protected void reDraw(){
 		this.removeAll();
+		if (this.boxList.size()==0){
+			boxList.add(drugLine());
+		}
 		for (int i = 0; i<this.boxList.size();i++){
 			this.add(this.boxList.get(i),"wrap, center");
 		}
@@ -327,9 +336,9 @@ public class VanillaPanel extends JPanel implements KeyListener  {
 		 */
 		if(e.getKeyCode() == KeyEvent.VK_F11){
 			Set<String> testS = new HashSet<String>();
-			testS.add("hello");
-			testS.add("hello1");
-			testS.add("hello2");
+//			testS.add("hello");
+//			testS.add("hello1");
+//			testS.add("hello2");
 			populate(testS,EDIBLE);
 		}
 		

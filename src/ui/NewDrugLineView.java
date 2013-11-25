@@ -48,8 +48,10 @@ public class NewDrugLineView extends JPanel implements ActionListener{
 	}
 
 	public void populate(String s,boolean edible){
-		Set<String> stringSet = new HashSet<String>();
-		stringSet.add(s);
+		Set<String >stringSet = new HashSet<String>();
+		if (s != null){
+			stringSet.add(s);
+		}
 		((VanillaPanel) this.innerPanels[1]).populate(stringSet,edible);
 	}
 	
@@ -66,12 +68,10 @@ public class NewDrugLineView extends JPanel implements ActionListener{
 		refillPanel.add(new JLabel("Refill:"),"align left");	
 		JTextField refill=new JTextField(3);
 		refillPanel.add(refill,"align left");
-		
 		jp.add(refillPanel,"align left");
 		
 		JPanel effectiveDatePanel = new JPanel(new MigLayout("wrap 2","[]","[][]"));
 		effectiveDatePanel.add(new JLabel("Effective Date:"),"align left");
-
 		effectiveDate=new JTextField(9);
 //		effectiveDate.setName("effectiveDateView");
 		//datechooser here
@@ -120,5 +120,9 @@ public class NewDrugLineView extends JPanel implements ActionListener{
 			new PinView();
 
 		}
+	}
+
+	public void clear() {
+		((VanillaPanel) this.innerPanels[1]).populate(null,true);
 	}
 }

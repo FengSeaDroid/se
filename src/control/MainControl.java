@@ -1,8 +1,5 @@
 package control;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.swing.SwingUtilities;
@@ -192,8 +189,10 @@ public class MainControl {
 	}
 
 	public Patient lookupPatient (String MCP){
-		this.setCurrentPatient(patientManager.lookupPatient(MCP));
-		this.setPrescription(new Prescription(this.getPhysicianName()));
+		setCurrentPatient(patientManager.lookupPatient(MCP));
+		if (getCurrentPatient() == null){
+			this.setPrescription(new Prescription(this.getPhysicianName()));
+		}
 		return getCurrentPatient();
 	}
 

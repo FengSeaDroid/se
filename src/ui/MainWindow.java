@@ -39,6 +39,22 @@ public class MainWindow extends JPanel {
 	static NewDrugLineView drugLineView;
 	static PatientAllergyView patientAllergy;
 	static PrescriptionHistoryView patientPrescriptionHistory;
+	
+	/**
+	 *  Static method for clear the window
+	 */
+	public static void clear(){
+		if (patientSearch != null &&
+				drugLineView != null &&
+				patientAllergy != null &&
+				patientPrescriptionHistory != null){
+			patientSearch.clear();
+			drugLineView.clear();
+			patientAllergy.clear();
+			patientPrescriptionHistory.clear();
+		}
+
+	}
 	 /**
      * Create the GUI and show it.  For thread safety,
      * this method should be invoked from

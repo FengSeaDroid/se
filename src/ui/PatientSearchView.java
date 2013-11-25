@@ -16,7 +16,9 @@ import java.util.Set;
 import java.util.StringTokenizer;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicComboBoxUI;
+import javax.swing.text.JTextComponent;
 
 import control.MainControl;
 import domain.Patient;
@@ -50,7 +52,6 @@ public class PatientSearchView extends JPanel implements ActionListener, Filler{
 
 		nameField.setEditable(true);
 		nameField.setPreferredSize(new Dimension(this.getMaximumSize().width,10));
-		//		nameField.setBorder(BorderFactory.createLineBorder(Color.black));
 		//set size
 		nameField.setPrototypeDisplayValue("1234567890123456789012345678");
 
@@ -67,6 +68,7 @@ public class PatientSearchView extends JPanel implements ActionListener, Filler{
 			}
 		});
 		nameField.setRenderer(new ComboBoxRenderer());
+		((JComponent) nameField.getEditor().getEditorComponent()).setBorder(BorderFactory.createEmptyBorder(2,10, 2, 2));
 
 		//create the model
 		SearchNameModel sbm = new SearchNameModel(this,nameField,MainControl.getMainControl().getPatientManager().getPatientList());
@@ -80,6 +82,7 @@ public class PatientSearchView extends JPanel implements ActionListener, Filler{
 		this.add(label,"cell 1 1,alignx right,gapx unrelated");
 		mcpField.setPreferredSize(new Dimension(this.getMaximumSize().width,30));
 		this.add(mcpField, "cell 2 1");
+		mcpField.addActionListener(this);
 
 		JLabel lblAddress = new JLabel("Address: ");
 		add(lblAddress, "cell 0 2");
@@ -96,12 +99,14 @@ public class PatientSearchView extends JPanel implements ActionListener, Filler{
 		JLabel label_2 = new JLabel("Wieght: ");
 		this.add(label_2,"cell 2 3,alignx right,gapx unrelated");
 		add(weight, "cell 4 3,growx");
-		mcpField.addActionListener(this);
+		
 	}
 	
 	public void setEdible(boolean edible){
 		this.nameField.setEnabled(edible);
 		this.mcpField.setEnabled(edible);
+		((JTextComponent) nameField.getEditor().getEditorComponent()).setDisabledTextColor(Color.BLACK);
+		mcpField.setDisabledTextColor(Color.BLACK);
 	}
 
 	public void actionPerformed(ActionEvent e){
@@ -110,29 +115,31 @@ public class PatientSearchView extends JPanel implements ActionListener, Filler{
 
 	public void fill(String mcp){
 		Patient patient = MainControl.getMainControl().lookupPatient(mcp);
-		//patient_ID = patient.getPatientID();
-		nameField.getEditor().setItem(patient.getName());
-		this.mcpField.setText(patient.getMCP());
-		DOB.setText(patient.getDateOfBirth());
-		weight.setText(patient.getWeight());
-		address.setText(patient.getAddress());
-		tel.setText(patient.getTel());
-		allergy = patient.getAllergy();
+		MainWindow.clear();
+		if (patient != null){
+			this.nameField.getEditor().setItem(patient.getName());
+			this.mcpField.setText(patient.getMCP());
+			this.DOB.setText(patient.getDateOfBirth());
+			this.weight.setText(patient.getWeight());
+			this.address.setText(patient.getAddress());
+			this.tel.setText(patient.getTel());
+			this.allergy = patient.getAllergy();
 
-		((VanillaPanel) PatientAllergyView.innerPanels[1]).populate(allergy, false);
-		
-		//take care below
-		prescriptionHistory = patient.getPrescriptionHistory();
-		List <String> drugsInHistory = new ArrayList<String>();
-		for(Prescription p: prescriptionHistory)
+			MainWindow.patientAllergy.populate(allergy, false);
+			
+			//take care below
+			this.prescriptionHistory = patient.getPrescriptionHistory();
+			List <String> drugsInHistory = new ArrayList<String>();
+			for(Prescription p: prescriptionHistory)
 
-		{
-			for(String s:p.getDrugLines()) {
-				drugsInHistory.add(s);
-				StringTokenizer st = new StringTokenizer(s, " "); 
-				String key = st.nextToken(); 
-				String[] data = {p.getIssueDate(),key};
-				MainWindow.patientPrescriptionHistory.getModel().addRow(data);
+			{
+				for(String s:p.getDrugLines()) {
+					drugsInHistory.add(s);
+					StringTokenizer st = new StringTokenizer(s, " "); 
+					String key = st.nextToken(); 
+					String[] data = {p.getIssueDate(),key};
+					MainWindow.patientPrescriptionHistory.getModel().addRow(data);
+				}
 			}
 		}
 	}
@@ -250,6 +257,15 @@ public class PatientSearchView extends JPanel implements ActionListener, Filler{
 			return this;  
 		}  
 	}  //inner class
+
+	public void clear() {
+		this.nameField.getEditor().setItem("");
+		this.mcpField.setText("");
+		this.DOB.setText("");
+		this.weight.setText("");
+		this.address.setText("");
+		this.tel.setText("");
+	}
 
 }//class
 

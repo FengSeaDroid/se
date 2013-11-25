@@ -39,6 +39,19 @@ import domain.Prescription;
 public class PrescriptionHistoryView extends JPanel implements MouseListener {
 
 
+	public PrescriptionHistoryView()
+	{
+		this.setBorder(BorderFactory.createTitledBorder("Patient History Prescription"));
+		historyTable = new JTable(model);
+		historyTable.getColumnModel().getColumn(1).setPreferredWidth(100);
+	
+		JScrollPane scrollPane = new JScrollPane(historyTable); 
+		scrollPane.setPreferredSize(new Dimension(MainWindow.d.width/3-80,MainWindow.d.height/2-150));
+		this.add(scrollPane);
+	
+		historyTable.addMouseListener(this);
+	}
+
 	Set<Prescription> prescriptionHistory = new HashSet<Prescription>();
 	Set<Prescription> prescriptionRenew = new HashSet<Prescription>();
 
@@ -60,17 +73,8 @@ public class PrescriptionHistoryView extends JPanel implements MouseListener {
 		return this.model;
 	}
 
-	public PrescriptionHistoryView()
-	{
-		this.setBorder(BorderFactory.createTitledBorder("Patient History Prescription"));
-		historyTable = new JTable(model);
-		historyTable.getColumnModel().getColumn(1).setPreferredWidth(100);
-
-		JScrollPane scrollPane = new JScrollPane(historyTable); 
-		scrollPane.setPreferredSize(new Dimension(MainWindow.d.width/3-80,MainWindow.d.height/2-150));
-		this.add(scrollPane);
-
-		historyTable.addMouseListener(this);
+	public void clear() {
+		getModel().setRowCount(0);
 	}
 
 	@Override
