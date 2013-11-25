@@ -17,11 +17,11 @@ import domain.Prescription;
  *
  */
 public class PatientManager {
-	
+
 	private static PatientManager patientManagerInstance = new PatientManager();
 	private DBConnection dbconnection;
 	private Patient patient;
-	
+
 	/**
 	 * Patient manager constructor
 	 */
@@ -34,10 +34,10 @@ public class PatientManager {
 			dbconnection=new DBConnection("jdbc:mysql://localhost:3306/cs6713","root","");
 		}
 		catch ( Exception e ) {
-	    System.out.println(e.getMessage());
+			System.out.println(e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * @return patient manager to be used whenever needed
 	 */
@@ -45,7 +45,7 @@ public class PatientManager {
 	public static PatientManager getPatientManager(){
 		return patientManagerInstance;
 	}
-	
+
 	/**
 	 * search patient on the database based on his MCP and return patient object
 	 */
@@ -54,12 +54,12 @@ public class PatientManager {
 			System.out.println("MCP number is"+MCP);
 			ResultSet patientResult=dbconnection.execQuery("select patient_id,MCP,name,address,dob,"
 					+ "weight,phone from patient where MCp="+MCP);
-			
+
 			patientResult.next();
-			
+
 			String p_id=patientResult.getString("patient_id");
 			System.out.println("Patient ID"+p_id);
-			
+
 			//Patient table description in the DB (patient_id,MCP,name,address,dob,weight,phone)
 
 			String mcp=patientResult.getString("MCP");
@@ -73,25 +73,25 @@ public class PatientManager {
 			String weight=patientResult.getString("weight");
 
 			String tel=patientResult.getString("phone");
-			
+
 			ResultSet allergyResult=getAlergy(p_id);
 			Set<String> allergySet = new HashSet<String>();
 
-	        while (allergyResult.next()){
-	        	
-	        	allergySet.add(""+allergyResult.getString("allergy_agent"));
+			while (allergyResult.next()){
+
+				allergySet.add(""+allergyResult.getString("allergy_agent"));
 			}
-	        Set<Prescription> prescriptionSet=new HashSet<Prescription>();
-	        prescriptionSet.addAll(this.getPrescriptionHistory(p_id));
+			Set<Prescription> prescriptionSet=new HashSet<Prescription>();
+			prescriptionSet.addAll(this.getPrescriptionHistory(p_id));
 			patient=new Patient(p_id,name,mcp,dateOfBirth,weight,address,tel,allergySet,prescriptionSet);
 
 		}
 		catch (Exception e){
-		    System.out.println(e.getMessage());
+			System.out.println(e.getMessage());
 		}
 		return patient;
 	}
-	
+
 	/**
 	 * Get allergy as ResultSet for particular patient
 	 */
@@ -106,7 +106,7 @@ public class PatientManager {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Get prescription History for specific patient as set of prescription objects
 	 */
@@ -144,7 +144,7 @@ public class PatientManager {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * query the formulary table in the DB and return formulary object
 	 */
@@ -154,33 +154,33 @@ public class PatientManager {
 		try{
 			//formulary table description in the DB (medicine,medicine_spec)
 			ResultSet formularyResult=dbconnection.execQuery("select medicine,medicine_spec from formulary");
-			
+
 			while(formularyResult.next()){
 				formularySet.add(formularyResult.getString("medicine")+" "+formularyResult.getString("medicine_spec"));
 			}
 		}
 		catch(Exception e){
 			System.out.println(e.getMessage());
-			}
+		}
 		Formulary formulary=new Formulary(formularySet);
 		return formulary;
 	}
-	
+
 	/**
 	 * save prescription for specific user and add it to the database
 	 */
 	protected void savePrescription (Prescription prescription) {
 		try{
-			
+
 			dbconnection.manipulateData("insert into prescription (prescription_id,issue_date,effective_date,physician_id,patient_id)"
 					+ "VALUES (NULL ,'"+prescription.getIssueDate()+"','"+prescription.getEffectiveDate()+"','"+MainControl.getMainControl().getPhysicianID()+"','"
 					+MainControl.getMainControl().getCurrentPatient().getPatientID()+"');");
-			
+
 			ResultSet maxPrescriptionID=dbconnection.execQuery("SELECT max(prescription_id) FROM prescription");
 			maxPrescriptionID.next();
 			String maxID=maxPrescriptionID.getString(1);
 			Set<String> drugs=prescription.getDrugLines();
-			
+
 			for (String s : drugs) {
 				String[] medicine=s.split(" ");
 				String spec ="";
@@ -191,15 +191,15 @@ public class PatientManager {
 					spec = spec + medicine[i];
 				}
 				dbconnection.manipulateData("insert into prescription_spec(prescription_id,medicine_name,medicine_spec) values ('"+maxID+"','"+medicine[0]+"','"+spec+"')");
-				
+
 			}
-		
+
 		}
 		catch (Exception e){
 			System.out.println(e.getMessage());
 		}
 	}
-	
+
 	public byte[] getSignature(String physicianID)
 	{
 		try
@@ -220,7 +220,7 @@ public class PatientManager {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * return set of patients the information will be formated such that
 	 * each element in this set will contain name,address,MCP
@@ -233,7 +233,7 @@ public class PatientManager {
 			Set<String> patientSet=new HashSet<String>();
 			while (signatureResult.next())
 			{
-//				System.out.println(signatureResult.getString("name")+";"+signatureResult.getString("address")+";"+signatureResult.getString("MCP"));
+				//				System.out.println(signatureResult.getString("name")+";"+signatureResult.getString("address")+";"+signatureResult.getString("MCP"));
 				patientSet.add(signatureResult.getString("name")+";"+signatureResult.getString("address")+";"+signatureResult.getString("MCP"));
 			}
 			return patientSet;
@@ -245,18 +245,37 @@ public class PatientManager {
 		return null;
 
 	}
-	
+
 	public DBConnection getDBConnection(){
 		return dbconnection;
 	}
-	
+
 	public void addAllergy(Set<String> allergySet) throws Exception{
 		//Allergy table description (patient_id,allergy_agent)
+		ResultSet allergyResult=dbconnection.execQuery("SELECT allergy_agent FROM prescriptionsys.allergy where patient_id="
+				+MainControl.getMainControl().getCurrentPatient().getPatientID() );
+		Set<String> dbAllergySet=new HashSet<String>();
+		while(allergyResult.next()){
+			dbAllergySet.add(allergyResult.getString("allergy_agent"));
+		}
+		boolean allergyFound=false;
+		int counter=0;
 		for (String allergy : allergySet){
-			dbconnection.manipulateData("insert into allergy(patient_id,allergy_agent) values"
-					+ " ('"+MainControl.getMainControl().getCurrentPatient().getPatientID()+"','"+allergy+"')");
-
+			for(String dballergy: dbAllergySet){
+				if(!allergy.equals(dballergy)){
+					counter++;
+				}
+			}
+			if (counter==dbAllergySet.size()){
+				System.out.println("Allergy will be added to DB"+allergy);
+				dbconnection.manipulateData("insert into allergy(patient_id,allergy_agent) values"
+						+ " ('"+MainControl.getMainControl().getCurrentPatient().getPatientID()+"','"+allergy+"')");
+			}
+			else{
+				System.out.println("allergy is already in DB nothing to update");
+			}
 		}
 		
+
 	}
 }
