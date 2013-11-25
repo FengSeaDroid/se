@@ -3,6 +3,7 @@ package ui;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -45,16 +46,13 @@ public class PatientSearchView extends JPanel implements ActionListener{
 	 */
 	@SuppressWarnings("unchecked")
 	public PatientSearchView() {
-		super(new MigLayout("wrap 8", "[][grow][][][grow][][][][]", "[][][][][][][]"));
+		super(new MigLayout("", "50[100][250][100][250]50", ""));
 
-		JLabel label_3 = new JLabel("Name");
-		this.add(label_3,"cell 1 0,alignx right,gapx unrelated");
-
+		JLabel nameLabel = new JLabel("Name: ");
+		nameLabel.setFont(new Font(nameLabel.getFont().getFontName(),Font.BOLD,nameLabel.getFont().getSize()+2));
+		this.add(nameLabel,"cell 0 0,align right");
 		nameField.setEditable(true);
-		nameField.setPreferredSize(new Dimension(this.getMaximumSize().width,10));
-		//set size
-		nameField.setPrototypeDisplayValue("1234567890123456789012345678");
-
+		nameField.setPreferredSize(new Dimension(MainWindow.d.width*1/3,10));
 		//delete the arrow
 		nameField.setUI(new BasicComboBoxUI() {
 			@Override
@@ -76,29 +74,31 @@ public class PatientSearchView extends JPanel implements ActionListener{
 		nameField.setModel(sbm);
 		//set the model as the item listener also
 		nameField.addItemListener(sbm);
-		this.add(nameField, "cell 2 0, wrap");
+		this.add(nameField, "cell 1 0, span 3");
 
-		JLabel label = new JLabel("MCP");
-		this.add(label,"cell 1 1,alignx right,gapx unrelated");
+		JLabel mcpLabel = new JLabel("MCP: ");
+		mcpLabel.setFont(new Font(mcpLabel.getFont().getFontName(),Font.BOLD,mcpLabel.getFont().getSize()+2));
+		this.add(mcpLabel,"cell 0 1,align right");
 		mcpField.setPreferredSize(new Dimension(this.getMaximumSize().width,30));
-		this.add(mcpField, "cell 2 1");
+		mcpField.setBorder(BorderFactory.createEmptyBorder(2,10, 2, 2));
+		this.add(mcpField, "cell 1 1 2 1");
 		mcpField.addActionListener(this);
 
 		JLabel lblAddress = new JLabel("Address: ");
-		add(lblAddress, "cell 0 2");
+		add(lblAddress, "cell 0 2,align right");
 		this.add(address, "cell 1 2");
 
-		JLabel lblTell = new JLabel("Tel: ");
-		add(lblTell, "cell 2 2,alignx right");
-		this.add(tel, "cell 4 2");
+		JLabel telLabel = new JLabel("Tel: ");
+		add(telLabel, "cell 2 2,align right");
+		this.add(tel, "cell 3 2");
 
 		JLabel dobLabel = new JLabel("DOB: ");
-		this.add(dobLabel,"cell 0 3,alignx trailing,gapx unrelated");
-		this.add(DOB, "cell 1 3,growx");
+		this.add(dobLabel,"cell 0 3,align right");
+		this.add(DOB, "cell 1 3");
 
 		JLabel label_2 = new JLabel("Wieght: ");
-		this.add(label_2,"cell 2 3,alignx right,gapx unrelated");
-		add(weight, "cell 4 3,growx");
+		this.add(label_2,"cell 2 3,align right");
+		add(weight, "cell 3 3");
 		
 	}
 	
@@ -125,7 +125,7 @@ public class PatientSearchView extends JPanel implements ActionListener{
 			this.address.setText(patient.getAddress());
 			this.tel.setText(patient.getTel());
 			this.allergy = patient.getAllergy();
-
+			this.revalidate();
 			MainWindow.patientAllergy.populate(allergy, false);
 			
 			//take care below
