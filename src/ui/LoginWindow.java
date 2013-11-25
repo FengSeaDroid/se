@@ -90,7 +90,7 @@ public class LoginWindow extends JFrame implements ActionListener,FocusListener{
 		//String physician_id=MainControl.getMainControl().getPhysicianID();
 		//System.out.println("physician id is"+physician_id);
 		//physician table (physician_id	name	username	password	signature)
-		ResultSet userpassResult=PatientManager.getPatientManager().getDBConnection().execQuery("select username,password,physician_id,locum from physician ");
+		ResultSet userpassResult=PatientManager.getPatientManager().getDBConnection().execQuery("select username,password,physician_id,locum from physician");
 
 		while (userpassResult.next()){
 			if(userpassResult.getString("username").equals(this.getUsername())){
