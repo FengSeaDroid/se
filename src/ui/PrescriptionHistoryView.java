@@ -7,6 +7,7 @@ import java.awt.PopupMenu;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -35,138 +36,141 @@ import domain.Prescription;
  * 2-renew drugline 
  * 3-view prescription
  */
-public class PrescriptionHistoryView extends JPanel {
+public class PrescriptionHistoryView extends JPanel implements MouseListener {
 
 
 	Set<Prescription> prescriptionHistory = new HashSet<Prescription>();
 	Set<Prescription> prescriptionRenew = new HashSet<Prescription>();
 
-	public JTable HistoryTable;
+	private JTable historyTable;
 	private static String[] columnNames = {"Date","Medication"};
 	private static Object[][] data ={{" "}};
 	private Patient patient;
-	private String physician;
 	private Prescription clickedPrescription;
 
 
-	static DefaultTableModel model = new DefaultTableModel(data,columnNames) {
+	private DefaultTableModel model = new DefaultTableModel(data,columnNames) {
 		@Override
 		public boolean isCellEditable(int row, int column) {
 			return false;
 		}
 	};
 
+	public DefaultTableModel getModel(){
+		return this.model;
+	}
+
 	public PrescriptionHistoryView()
 	{
 		this.setBorder(BorderFactory.createTitledBorder("Patient History Prescription"));
-		HistoryTable = new JTable(model);
-		HistoryTable.setFillsViewportHeight(true);
-		HistoryTable.setPreferredSize(new Dimension(MainWindow.d.width/3-80,MainWindow.d.height/2-150));
-		HistoryTable.getColumnModel().getColumn(1).setPreferredWidth(100);
-		HistoryTable.setPreferredScrollableViewportSize(HistoryTable.getPreferredSize());
-		//HistoryTable.setEnabled(false);
+		historyTable = new JTable(model);
+		historyTable.getColumnModel().getColumn(1).setPreferredWidth(100);
 
-		JScrollPane scrollPane = new JScrollPane(HistoryTable); 
-		Dimension maximumSize = new Dimension(1, 1000);
-		scrollPane.setMaximumSize(maximumSize);
+		JScrollPane scrollPane = new JScrollPane(historyTable); 
+		scrollPane.setPreferredSize(new Dimension(MainWindow.d.width/3-80,MainWindow.d.height/2-150));
 		this.add(scrollPane);
 
-		HistoryTable.addMouseListener(new java.awt.event.MouseAdapter() {
+		historyTable.addMouseListener(this);
+	}
 
-			/* 
-			 * right lick mouse function to show popup menue
-			 */
-			public void  mousePressed(MouseEvent e) {
-				if (e.getModifiers() == MouseEvent.BUTTON3_MASK){
+	@Override
+	public void mouseClicked(MouseEvent e) {
+	}
 
-					patient = MainControl.getMainControl().getCurrentPatient();
-					physician = MainControl.getMainControl().getPhysicianName();
-					System.out.println("Right Click pressed");
+	@Override
+	public void mousePressed(MouseEvent e) {
+		
+		if (e.getModifiers() == MouseEvent.BUTTON3_MASK){
+			patient = MainControl.getMainControl().getCurrentPatient();
+			System.out.println("Right Click pressed");
 
-					//get the table component where the right click of the mouse been made
-					final JTable target = (JTable)e.getSource();
-					int selectedRow = target.getSelectedRow();
-					final int indexOfSelectedRow = target.rowAtPoint(e.getPoint());
-					System.out.println("selected index is"+indexOfSelectedRow);
-					target.setRowSelectionInterval(indexOfSelectedRow, indexOfSelectedRow);
-					selectedRow = target.getSelectedRow();
-					selectedRow =  HistoryTable.convertRowIndexToModel(selectedRow);
-					String date = (String)HistoryTable.getModel().getValueAt(selectedRow, 0);
-					prescriptionHistory = patient.getPrescriptionHistory();
+			//get the table component where the right click of the mouse been made
+			final JTable target = (JTable)e.getSource();
+			int selectedRow = target.getSelectedRow();
+			final int indexOfSelectedRow = target.rowAtPoint(e.getPoint());
+			System.out.println("selected index is"+indexOfSelectedRow);
+			target.setRowSelectionInterval(indexOfSelectedRow, indexOfSelectedRow);
+			selectedRow = target.getSelectedRow();
+			selectedRow = historyTable.convertRowIndexToModel(selectedRow);
+			String date = (String)historyTable.getModel().getValueAt(selectedRow, 0);
+			prescriptionHistory = patient.getPrescriptionHistory();
 
-					for(Prescription p: prescriptionHistory)
-					{
-						if(p.getIssueDate() == date)
-						{
-							prescriptionRenew.add(p);
-							clickedPrescription = p;
-							System.out.println(p.getIssueDate());
-						}
-					}
-
-					JPopupMenu popupMenu = new JPopupMenu();
-
-					JMenuItem renewDrug=new JMenuItem("Renew Drug");
-					renewDrug.addMouseListener(new MouseAdapter() {
-
-						@Override
-						public void mousePressed(MouseEvent e) {
-							String drugName = (String)HistoryTable.getModel().getValueAt(indexOfSelectedRow, 1);
-							for(String drugLine:clickedPrescription.getDrugLines()){
-								String[] drug=drugLine.split(" ");
-								if(drug[0].equals(drugName))
-								{
-									NewDrugLineView.getDrugLineView().populate(drugLine);
-								}
-							}
-
-
-						}
-					});
-					popupMenu.add(renewDrug);
-
-					JMenuItem renewPrescription=new JMenuItem("Renew Prescription");
-					renewPrescription.addMouseListener(new MouseAdapter() {
-
-						@Override
-						public void mousePressed(MouseEvent e) {
-							System.out.println("Renew Prescription");
-							for(String p: clickedPrescription.getDrugLines())
-							{
-								NewDrugLineView.getDrugLineView().populate(p);
-								System.out.println("Renew Prescription Drug"+p);
-							}
-						}
-					});
-					popupMenu.add(renewPrescription);
-
-					JMenuItem viewPrescription=new JMenuItem("View Prescription");
-					viewPrescription.addMouseListener(new MouseAdapter() {
-
-						@Override
-						public void mousePressed(MouseEvent e) {
-							System.out.println("viewPrescription");
-
-							JFrame HistoryFrame = new JFrame("Prescription History");
-							// HistoryFrame .getContentPane().add(new HistoryWindow(temp.getPhysician(),temp.getIssueDate()), BorderLayout.CENTER);
-							HistoryFrame .getContentPane().add(new HistoryWindow(clickedPrescription), BorderLayout.CENTER);
-							HistoryFrame .pack(); 
-							HistoryFrame .setVisible(true);
-							HistoryFrame.setSize(new Dimension(500,500));
-
-						}
-					});
-					popupMenu.add(viewPrescription);
-
-
-					HistoryTable.setComponentPopupMenu(popupMenu);
-
-					popupMenu.show();
+			for(Prescription p: prescriptionHistory)
+			{
+				if(p.getIssueDate() == date)
+				{
+					prescriptionRenew.add(p);
+					clickedPrescription = p;
+					System.out.println(p.getIssueDate());
 				}
 			}
-		});
+
+			JPopupMenu popupMenu = new JPopupMenu();
+
+			JMenuItem renewDrug=new JMenuItem("Renew Drug");
+			renewDrug.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					String drugName = (String)historyTable.getModel().getValueAt(indexOfSelectedRow, 1);
+					for(String drugLine:clickedPrescription.getDrugLines()){
+						String[] drug=drugLine.split(" ");
+						if(drug[0].equals(drugName))
+						{
+							MainWindow.drugLineView.populate(drugLine,true);
+						}
+					}
+				}
+			});
+			popupMenu.add(renewDrug);
+
+			JMenuItem renewPrescription=new JMenuItem("Renew Prescription");
+			renewPrescription.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					System.out.println("Renew Prescription");
+					for(String p: clickedPrescription.getDrugLines())
+					{
+						MainWindow.drugLineView.populate(p,true);
+						System.out.println("Renew Prescription Drug"+p);
+					}
+				}
+			});
+			popupMenu.add(renewPrescription);
+
+			JMenuItem viewPrescription=new JMenuItem("View Prescription");
+			viewPrescription.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					System.out.println("viewPrescription");
+					JFrame historyFrame = new JFrame("Prescription History");
+					// HistoryFrame .getContentPane().add(new HistoryWindow(temp.getPhysician(),temp.getIssueDate()), BorderLayout.CENTER);
+					historyFrame.getContentPane().add(new HistoryWindow(clickedPrescription), BorderLayout.CENTER);
+					historyFrame.pack(); 
+					historyFrame.setVisible(true);
+					historyFrame.setSize(new Dimension(MainWindow.d.width*2/3,MainWindow.d.height*2/3));
+					historyFrame.setLocation(MainWindow.d.width*1/7, 30);
+				}
+			});
+			popupMenu.add(viewPrescription);
+			historyTable.setComponentPopupMenu(popupMenu);
+			popupMenu.setVisible(true);
+		}
 
 	}
 
+	@Override
+	public void mouseReleased(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+
+	}
 }
 

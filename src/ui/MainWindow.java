@@ -29,7 +29,16 @@ public class MainWindow extends JPanel {
 	/**
 	 * size of the screen
 	 */
-	static Dimension d = Toolkit.getDefaultToolkit().getScreenSize(); 
+	static Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+	
+	/**
+	 *  Static jpanels for the views to be shown here.
+	 */
+	static ClinicInfoView clinicInfo;
+	static PatientSearchView patientSearch;
+	static NewDrugLineView drugLineView;
+	static PatientAllergyView patientAllergy;
+	static PrescriptionHistoryView patientPrescriptionHistory;
 	 /**
      * Create the GUI and show it.  For thread safety,
      * this method should be invoked from
@@ -63,12 +72,10 @@ public class MainWindow extends JPanel {
         
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.setBorder(BorderFactory.createLineBorder(Color.black));
-        tabbedPane.setPreferredSize(new Dimension(800, 600));
+//      tabbedPane.setPreferredSize(new Dimension(800, 600));
         tabbedPane.addTab("New Prescription",this.newPrescription());
   //    tabbedPane.addTab("Prescription History", this.prescriptionHistory());
-        
-        this.add(tabbedPane);
-         
+        this.add(tabbedPane);   
         //The following line enables to use scrolling tabs.
         tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 	}
@@ -87,17 +94,22 @@ public class MainWindow extends JPanel {
 		pv.setLayout(new MigLayout(""));
 		pv.setBorder(BorderFactory.createTitledBorder(""));
 		
-		pv.add(new ClinicInfoView(false),"wrap");
-		pv.add(new PatientSearchView(),"wrap");
-		pv.add(NewDrugLineView.getDrugLineView(),"wrap");
+		clinicInfo = new ClinicInfoView();
+		pv.add(clinicInfo,"wrap");
+		patientSearch = new PatientSearchView();
+		pv.add(patientSearch,"wrap");
+		drugLineView = new NewDrugLineView();
+		pv.add(drugLineView,"wrap");
 		return pv;
 	}
 	
 	private JPanel patientInfoView(){
 		JPanel pi = new JPanel();
 		pi.setLayout(new MigLayout(""));
-		pi.add(new PatientAllergyView(),"wrap");
-		pi.add(new PrescriptionHistoryView(),"wrap");
+		patientAllergy = new PatientAllergyView();
+		pi.add(patientAllergy,"wrap");
+		patientPrescriptionHistory = new PrescriptionHistoryView();
+		pi.add(patientPrescriptionHistory,"wrap");
 		return pi;
 	}
 	

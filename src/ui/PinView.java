@@ -1,21 +1,16 @@
 package ui;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Image;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 
 import control.MainControl;
 import net.miginfocom.swing.MigLayout;
@@ -75,7 +70,12 @@ public class PinView extends JFrame implements ActionListener,FocusListener {
 			if(pinPasswordField.getText().equals(MainControl.getMainControl().getPhysicianPassword()))
 			{
 				//Print report method for report
-
+				try {
+					MainControl.getMainControl().print(MainWindow.drugLineView.pull(), MainWindow.drugLineView.getEffectiveDate());
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		}
 		if(e.getSource()==cancelButton){

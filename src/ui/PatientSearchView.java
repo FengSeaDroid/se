@@ -3,7 +3,6 @@ package ui;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -11,37 +10,33 @@ import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.StringTokenizer;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicComboBoxUI;
-import javax.swing.plaf.metal.MetalComboBoxUI;
 
 import control.MainControl;
 import domain.Patient;
 import domain.Prescription;
 import net.miginfocom.swing.MigLayout;
 
-@SuppressWarnings("serial")
+@SuppressWarnings({"serial","rawtypes"})
 public class PatientSearchView extends JPanel implements ActionListener, Filler{
 
 
-	Set<Prescription> prescriptionHistory = new HashSet<Prescription>();
-	Set<String>allergy = new HashSet<String>();
-	@SuppressWarnings("rawtypes")
-	JComboBox nameField = new JComboBox();
+	private Set<Prescription> prescriptionHistory = new HashSet<Prescription>();
+	private Set<String> allergy = new HashSet<String>();
+	private JComboBox nameField = new JComboBox();
 
-	JTextField mcpField = new JTextField(20);
-	JLabel DOB = new JLabel();
-	JLabel weight = new JLabel();
-	JLabel address = new JLabel();
-	JLabel tel = new JLabel();
+	private JTextField mcpField = new JTextField(20);
+	private JLabel DOB = new JLabel();
+	private JLabel weight = new JLabel();
+	private JLabel address = new JLabel();
+	private JLabel tel = new JLabel();
 
-	static ArrayList<String> DrugsInHistory;
-	static String patient_ID;
 
 	/**
 	 * create the view
@@ -59,7 +54,7 @@ public class PatientSearchView extends JPanel implements ActionListener, Filler{
 		//set size
 		nameField.setPrototypeDisplayValue("1234567890123456789012345678");
 
-		//delete the arraw
+		//delete the arrow
 		nameField.setUI(new BasicComboBoxUI() {
 			@Override
 			protected JButton createArrowButton() {
@@ -103,6 +98,11 @@ public class PatientSearchView extends JPanel implements ActionListener, Filler{
 		add(weight, "cell 4 3,growx");
 		mcpField.addActionListener(this);
 	}
+	
+	public void setEdible(boolean edible){
+		this.nameField.setEnabled(edible);
+		this.mcpField.setEnabled(edible);
+	}
 
 	public void actionPerformed(ActionEvent e){
 		this.fill(mcpField.getText());
@@ -123,21 +123,20 @@ public class PatientSearchView extends JPanel implements ActionListener, Filler{
 		
 		//take care below
 		prescriptionHistory = patient.getPrescriptionHistory();
-		DrugsInHistory = new ArrayList<String>();
+		List <String> drugsInHistory = new ArrayList<String>();
 		for(Prescription p: prescriptionHistory)
 
 		{
 			for(String s:p.getDrugLines()) {
-				DrugsInHistory.add(s);
+				drugsInHistory.add(s);
 				StringTokenizer st = new StringTokenizer(s, " "); 
 				String key = st.nextToken(); 
 				String[] data = {p.getIssueDate(),key};
-				PrescriptionHistoryView.model.addRow(data);
+				MainWindow.patientPrescriptionHistory.getModel().addRow(data);
 			}
 		}
 	}
 
-	@SuppressWarnings("rawtypes")
 	public class SearchNameModel extends AbstractListModel
 	implements ComboBoxModel, KeyListener, ItemListener{
 		private Set<String> db = new HashSet<String>();

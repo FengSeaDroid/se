@@ -241,5 +241,6 @@ public class MainControl {
 		});//create window
 		
 		MainControl.getMainControl().setPhysicianID("1");
+		MainControl.getMainControl().locum="0";
 	}
 }

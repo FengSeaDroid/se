@@ -19,33 +19,29 @@ import domain.PatientManager;
 import domain.Prescription;
 
 public class HistoryWindow extends JPanel {
-	private ClinicInfoView clinicInfoView;
-	private PatientSearchView patientSearchView;
-	private DrugLineView drugLineView;
+	
+	static ClinicInfoView clinicInfoView;
+	static PatientSearchView patientSearchView;
+	static NewDrugLineView drugLineView;
 
 	public HistoryWindow(Prescription currentPrescription)
 	{
 		super.setLayout(new MigLayout("","[]","[][][]"));
-		clinicInfoView=new ClinicInfoView(false);
-		patientSearchView=new PatientSearchView();
+		clinicInfoView = new ClinicInfoView();
+		patientSearchView = new PatientSearchView();
 		patientSearchView.fill(MainControl.getMainControl().getCurrentPatient().getMCP());
-		drugLineView=new DrugLineView();
-		patientSearchView.mcpField.setEditable(false);
-		drugLineView.printbutton.setVisible(false);
+		drugLineView = new NewDrugLineView();
+		//Disable patient search view
+		patientSearchView.setEdible(false);
+		drugLineView.setEdible(false);
 
-		JTextField jt =(JTextField)patientSearchView.nameField.getEditor().getEditorComponent();
-		jt.setText(MainControl.getMainControl().getCurrentPatient().getName());
-//		patientSearchView.nameField.setEditable(false);
-		jt.setEditable(false);
 		this.add(clinicInfoView,"cell 0 0, center, wrap");
 		this.add(patientSearchView, "cell 0 1, center, wrap");
 		this.add(drugLineView, "cell 0 2,  center, wrap");
-		drugLineView.setBorder(BorderFactory.createLineBorder(Color.red));
-		
-		
+
 		for(String p: currentPrescription.getDrugLines())
 		{
-			drugLineView.renewToDrugLineView(p);
+			drugLineView.populate(p,false);
 		}
 	}
 }
