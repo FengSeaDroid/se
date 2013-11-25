@@ -4,11 +4,15 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.swing.*;
 
+import uiapi.DateChooser;
+import uiapi.TextPrompt;
 import net.miginfocom.swing.MigLayout;
 import control.MainControl;
 
@@ -72,7 +76,12 @@ public class NewDrugLineView extends JPanel implements ActionListener{
 		
 		JPanel effectiveDatePanel = new JPanel(new MigLayout("wrap 2","[]","[][]"));
 		effectiveDatePanel.add(new JLabel("Effective Date:"),"align left");
-		effectiveDate=new JTextField(9);
+		effectiveDate=new JTextField(10);
+		String date = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+		TextPrompt effectiveDatePrompt =new TextPrompt(date,effectiveDate);
+		effectiveDatePrompt.setShow(uiapi.TextPrompt.Show.FOCUS_LOST);
+		effectiveDatePrompt.changeAlpha(0.5f);
+		effectiveDate.setToolTipText("Input format: YYYY-MM-DD");
 //		effectiveDate.setName("effectiveDateView");
 		//datechooser here
 		DateChooser dateChooser = DateChooser.getInstance("yyyy-MM-dd");
