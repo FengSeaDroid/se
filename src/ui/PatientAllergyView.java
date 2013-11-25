@@ -19,7 +19,6 @@ public class PatientAllergyView extends JPanel {
 		innerPanels = MousePanel.fillerWithScroll(MainWindow.d.width/3-80,MainWindow.d.height/2-150);
 		this.add(innerPanels[0]);
 		this.setBorder(BorderFactory.createTitledBorder("Patient Allergy"));
-		
 	}
 
 	public void populate(Set<String> allergy, boolean editable) {
@@ -28,7 +27,7 @@ public class PatientAllergyView extends JPanel {
 	}
 
 	public void clear() {
-		((VanillaPanel) this.innerPanels[1]).populate(null,false);
+		((VanillaPanel) this.innerPanels[1]).clear();
 		
 	}
 }

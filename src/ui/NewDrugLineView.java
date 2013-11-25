@@ -123,6 +123,6 @@ public class NewDrugLineView extends JPanel implements ActionListener{
 	}
 
 	public void clear() {
-		((VanillaPanel) this.innerPanels[1]).populate(null,true);
+		((VanillaPanel) this.innerPanels[1]).clear();
 	}
 }
