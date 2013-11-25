@@ -252,7 +252,7 @@ public class PatientManager {
 
 	public void addAllergy(Set<String> allergySet) throws Exception{
 		//Allergy table description (patient_id,allergy_agent)
-		ResultSet allergyResult=dbconnection.execQuery("SELECT allergy_agent FROM prescriptionsys.allergy where patient_id="
+		ResultSet allergyResult=dbconnection.execQuery("SELECT allergy_agent FROM allergy where patient_id="
 				+MainControl.getMainControl().getCurrentPatient().getPatientID() );
 		Set<String> dbAllergySet=new HashSet<String>();
 		while(allergyResult.next()){
@@ -275,7 +275,5 @@ public class PatientManager {
 				System.out.println("allergy is already in DB nothing to update");
 			}
 		}
-		
-
 	}
 }
