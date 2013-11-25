@@ -116,6 +116,7 @@ public class PatientSearchView extends JPanel implements ActionListener, Filler{
 	public void fill(String mcp){
 		Patient patient = MainControl.getMainControl().lookupPatient(mcp);
 		MainWindow.clear();
+		this.clear();
 		if (patient != null){
 			this.nameField.getEditor().setItem(patient.getName());
 			this.mcpField.setText(patient.getMCP());
@@ -144,8 +145,7 @@ public class PatientSearchView extends JPanel implements ActionListener, Filler{
 		}
 	}
 
-	public class SearchNameModel extends AbstractListModel
-	implements ComboBoxModel, KeyListener, ItemListener{
+	public class SearchNameModel extends AbstractListModel implements ComboBoxModel, KeyListener, ItemListener{
 		private Set<String> db = new HashSet<String>();
 		private ArrayList<String> data = new ArrayList<String>();
 		private String selection;
@@ -265,6 +265,8 @@ public class PatientSearchView extends JPanel implements ActionListener, Filler{
 		this.weight.setText("");
 		this.address.setText("");
 		this.tel.setText("");
+		this.prescriptionHistory.clear();
+		this.allergy.clear();
 	}
 
 }//class

@@ -190,7 +190,7 @@ public class MainControl {
 
 	public Patient lookupPatient (String MCP){
 		setCurrentPatient(patientManager.lookupPatient(MCP));
-		if (getCurrentPatient() == null){
+		if (getCurrentPatient() != null){
 			this.setPrescription(new Prescription(this.getPhysicianName()));
 		}
 		return getCurrentPatient();
