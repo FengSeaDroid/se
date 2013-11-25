@@ -154,8 +154,8 @@ public class SuggestionPanel extends VanillaPanel {
 
 	        //this is a hack to get around redraw problems when changing the list length of the displayed popups
 	        cb.hidePopup();
-	        cb.showPopup();
 	        if(data.size() != 0){
+	        	cb.showPopup();
 	            cb.setSelectedIndex(-1);
 	        }
 	    }

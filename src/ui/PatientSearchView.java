@@ -195,9 +195,10 @@ public class PatientSearchView extends JPanel implements ActionListener{
 
 			//this is a hack to get around redraw problems when changing the list length of the displayed popups
 			cb.hidePopup();
-			cb.showPopup();
+//			cb.showPopup();
 			if(data.size() != 0)
-				cb.setSelectedIndex(0);
+				cb.showPopup();
+				cb.setSelectedIndex(-1);
 		}
 
 		public int getSize(){
