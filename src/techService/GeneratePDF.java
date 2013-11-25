@@ -8,9 +8,11 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Date;
 import java.util.Set;
+
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Anchor;
 import com.itextpdf.text.BadElementException;
@@ -29,6 +31,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.codec.Base64.InputStream;
+
 import control.MainControl;
 import domain.Patient;
 import domain.Prescription;
@@ -68,6 +71,7 @@ public static void generateReport() throws Exception{
       creatRxImage();
       createDrugLine();
       if(!MainControl.getMainControl().isLocum()){
+    	  System.out.println(MainControl.getMainControl().isLocum());
           createSignature();
       }
       createDate();
