@@ -1,20 +1,16 @@
 package ui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 
 import javax.swing.BorderFactory;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
-import javax.swing.JTabbedPane;
 
 import net.miginfocom.swing.MigLayout;
-
 import control.MainControl;
 
 public class MainWindow extends JPanel {
@@ -97,7 +93,7 @@ public class MainWindow extends JPanel {
 		newPrescription.setEnabled( false );
 		this.add(newPrescription);
         patientSearch.setFocus();
-	}
+ 	}
 	
 //	protected JComponent newPrescription() {
 //		
@@ -131,5 +127,4 @@ public class MainWindow extends JPanel {
 		pi.add(patientPrescriptionHistory,"wrap");
 		return pi;
 	}
-	
 }

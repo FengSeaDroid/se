@@ -3,12 +3,14 @@ package ui;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 
 import control.MainControl;
 import net.miginfocom.swing.MigLayout;
@@ -16,6 +18,10 @@ import net.miginfocom.swing.MigLayout;
 
 public class PatientAllergyView extends JPanel implements ActionListener {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel[] innerPanels;
 	private JButton addAllergyButton;
 	
@@ -24,11 +30,16 @@ public class PatientAllergyView extends JPanel implements ActionListener {
 		this.setPreferredSize(new Dimension(MainWindow.d.width/3,MainWindow.d.height/2-100));
 		innerPanels = MousePanel.fillerWithScroll(MainWindow.d.width/3-80,MainWindow.d.height/2-150);
 		this.add(innerPanels[0],"wrap");
-		addAllergyButton = new JButton("Save Allergy");
+		addAllergyButton = new EnterButton("Save Allergy");
 		addAllergyButton.setPreferredSize(new Dimension((int) (MainWindow.d.width*0.75/3),20));
 		addAllergyButton.addActionListener(this);
 		this.add(addAllergyButton,"wrap, center");
 		this.setBorder(BorderFactory.createTitledBorder("Patient Allergy"));
+		
+		// save the command mapping for space
+		Object spaceMap = addAllergyButton.getInputMap().get(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0, true));
+		// add a mapping from enter to the same command.
+		addAllergyButton.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, true),spaceMap);
 	}
 
 	public void populate(Set<String> allergy, boolean editable) {

@@ -114,7 +114,7 @@ public class NewDrugLineView extends JPanel implements ActionListener{
 	//print button here.add function now
 	private JPanel buttonView(){
 		JPanel printView = new JPanel(new MigLayout());
-		JButton printButton = new JButton("Print");
+		JButton printButton = new EnterButton("Print");
 		printButton.addActionListener(this);
 		printView.add(printButton);
 		return printView;
