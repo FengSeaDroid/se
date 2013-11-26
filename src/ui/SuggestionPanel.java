@@ -102,7 +102,8 @@ public class SuggestionPanel extends VanillaPanel {
 		String[] drugSpec = eventField.getText().split(" ");
 		if (drugSpec.length>1 && !tempBox.isFired()){
 			for (String s: MainWindow.patientAllergy.pull()){
-				if (s.equals(drugSpec[0])){
+				//testing here, all lower case so case insensitive
+				if (s.toLowerCase().equals(drugSpec[0].toLowerCase())){
 					tempBox.setFired(true);
 					new AlertPopup(s);
 				}

@@ -121,7 +121,8 @@ public class VanillaPanel extends JPanel implements KeyListener  {
 			}
 		}
 		reDraw();
-		enterPress(this.boxList.size()-1,((JTextComponent) this.boxList.get(this.boxList.size()-1).getEditor().getEditorComponent()).getText().length());
+		this.boxList.get(this.boxList.size()-1).requestFocusInWindow();
+//		enterPress(this.boxList.size()-1,((JTextComponent) this.boxList.get(this.boxList.size()-1).getEditor().getEditorComponent()).getText().length());
 		
 		//sorted way will ruin the flag
 //		for (int i = 0; i<this.boxList.size();i++){

@@ -48,8 +48,9 @@ public class MousePanel extends VanillaPanel implements MouseListener {
 		this.originalSize = this.boxList.size();
 		for (int i = 0; i<this.boxList.size();i++){
 			JTextField jt = (JTextField)this.boxList.get(i).getEditor().getEditorComponent();
-//			jt.setEnabled(false);
-//			jt.setDisabledTextColor(Color.BLACK);
+			//This part must be here, or not working
+			jt.setEnabled(false);
+			jt.setDisabledTextColor(Color.BLACK);
 			jt.addMouseListener(this);
 		}
 	}
