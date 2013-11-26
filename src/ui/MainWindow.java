@@ -92,6 +92,7 @@ public class MainWindow extends JPanel {
 		newPrescription.setBorder(BorderFactory.createTitledBorder("New Prescription"));
 		newPrescription.setEnabled( false );
 		this.add(newPrescription);
+		this.revalidate();
         patientSearch.setFocus();
  	}
 	

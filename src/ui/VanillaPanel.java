@@ -190,6 +190,7 @@ public class VanillaPanel extends JPanel implements KeyListener  {
 		this.boxList.get(newRow).requestFocus();
 		jt = (JTextField)this.boxList.get(index+1).getEditor().getEditorComponent();
 		jt.setCaretPosition(0);
+//		((JComponent) this.getParent()).scrollRectToVisible(jt.getBounds());
 	}
 	
 	/**
@@ -242,7 +243,10 @@ public class VanillaPanel extends JPanel implements KeyListener  {
 			if (tempBox.getModel().getSize()==0 || tempBox.getSelectedIndex()==-1){
 				enterPress(i,pos);
 			}
-			
+			JScrollBar sb = ((JScrollPane) tempBox.getParent().getParent().getParent()).getVerticalScrollBar();
+			System.out.println(sb.getMaximum() );
+			sb.setMaximum(sb.getMaximum()+20);
+			sb.setValue( sb.getMaximum()+190 );
 		}
 		
 		if(e.getKeyCode() == KeyEvent.VK_BACK_SPACE){

@@ -8,7 +8,9 @@ import java.awt.event.MouseListener;
 import java.util.Set;
 
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
@@ -28,7 +30,7 @@ public class MousePanel extends VanillaPanel implements MouseListener {
 	 * @return
 	 */
 	public static JPanel[] fillerWithScroll(int width, int height){
-		JPanel[] panels ={null,null};
+		JPanel[] panels ={null,null,null};
 		panels[0] = new JPanel();
 		panels[1] = new MousePanel(width);
 		panels[0].addMouseListener((MouseListener)panels[1]);
@@ -73,6 +75,16 @@ public class MousePanel extends VanillaPanel implements MouseListener {
 		if(e.getClickCount()==2){
 			JTextField tempJT = (JTextField)this.boxList.get(this.boxList.size()-1).getEditor().getEditorComponent();
 			enterPress(this.boxList.size()-1,tempJT.getText().length());
+//			JComponent source = (JComponent) e.getSource();
+////			System.out.println(source.getParent().getParent().getParent().getParent().getClass().toString());
+//			if ( source.getParent().getClass() == JComboBox.class){
+////				System.out.println("JScrollPane");
+////				JScrollBar vertical = ((JScrollPane) source.getParent().getParent().getParent().getParent()).getVerticalScrollBar();
+////				vertical.setValue( vertical.getMaximum());
+////				((JScrollPane) source.getParent().getParent().getParent().getParent()).setViewportView(this);
+//				((JScrollPane) source.getParent().getParent().getParent().getParent()).setViewportView(this);
+//
+//			}
 		}
 //		System.out.println("clicked");
 		

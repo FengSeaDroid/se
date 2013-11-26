@@ -23,6 +23,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import net.miginfocom.swing.MigLayout;
 import control.MainControl;
 import domain.Patient;
 import domain.Prescription;
@@ -41,14 +42,16 @@ public class PrescriptionHistoryView extends JPanel implements MouseListener {
 
 	public PrescriptionHistoryView()
 	{
+		super.setLayout(new MigLayout("","0[]0","0[]0"));
 		this.setBorder(BorderFactory.createTitledBorder("Patient History Prescription"));
 		historyTable = new JTable(model);
 		historyTable.getColumnModel().getColumn(1).setPreferredWidth(100);
+		historyTable.setAutoCreateRowSorter(true);
 	
 		JScrollPane scrollPane = new JScrollPane(historyTable); 
-		scrollPane.setPreferredSize(new Dimension(MainWindow.d.width/3-80,MainWindow.d.height/2-150));
+		scrollPane.setPreferredSize(new Dimension(MainWindow.d.width/3-80,MainWindow.d.height/2-90));
 		this.add(scrollPane);
-	
+		this.setPreferredSize(new Dimension(MainWindow.d.width/3,MainWindow.d.height/2+10));
 		historyTable.addMouseListener(this);
 	}
 

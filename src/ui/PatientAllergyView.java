@@ -27,7 +27,7 @@ public class PatientAllergyView extends JPanel implements ActionListener {
 	
 	public PatientAllergyView(){
 		super.setLayout(new MigLayout("","0[]0[]0","0[]0[]0"));
-		this.setPreferredSize(new Dimension(MainWindow.d.width/3,MainWindow.d.height/2-100));
+		this.setPreferredSize(new Dimension(MainWindow.d.width/3,MainWindow.d.height/2));
 		innerPanels = MousePanel.fillerWithScroll(MainWindow.d.width/3-80,MainWindow.d.height/2-150);
 		this.add(innerPanels[0],"wrap");
 		addAllergyButton = new EnterButton("Save Allergy");
