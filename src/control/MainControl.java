@@ -190,7 +190,6 @@ public class MainControl {
 
 	public Patient lookupPatient (String MCP){
 		setCurrentPatient(patientManager.lookupPatient(MCP));
-
 		return getCurrentPatient();
 	}
 

@@ -35,6 +35,7 @@ public class PatientSearchView extends JPanel implements ActionListener{
 	private JComboBox nameField = new JComboBox();
 
 	private JTextField mcpField = new JTextField(20);
+	private JLabel searchFail = new JLabel();
 	private JLabel DOB = new JLabel();
 	private JLabel weight = new JLabel();
 	private JLabel address = new JLabel();
@@ -81,8 +82,11 @@ public class PatientSearchView extends JPanel implements ActionListener{
 		this.add(mcpLabel,"cell 0 1,align right");
 		mcpField.setPreferredSize(new Dimension(this.getMaximumSize().width,30));
 		mcpField.setBorder(BorderFactory.createEmptyBorder(2,10, 2, 2));
-		this.add(mcpField, "cell 1 1 2 1");
+		this.add(mcpField, "cell 1 1");
 		mcpField.addActionListener(this);
+		
+		searchFail.setForeground(Color.RED);
+		this.add(searchFail,"cell 2 1, span 2");
 
 		JLabel lblAddress = new JLabel("Address: ");
 		add(lblAddress, "cell 0 2,align right");
@@ -117,6 +121,7 @@ public class PatientSearchView extends JPanel implements ActionListener{
 		MainWindow.clear();
 		Patient patient = MainControl.getMainControl().lookupPatient(mcp);
 		this.clear();
+//		System.out.println("it should be cleared");
 		if (patient != null){
 			this.nameField.getEditor().setItem(patient.getName());
 			this.mcpField.setText(patient.getMCP());
@@ -142,6 +147,10 @@ public class PatientSearchView extends JPanel implements ActionListener{
 					MainWindow.patientPrescriptionHistory.getModel().addRow(data);
 				}
 			}
+		}
+		else {
+			this.searchFail.setText("Patient is not found");
+			this.revalidate();
 		}
 	}
 
@@ -232,13 +241,16 @@ public class PatientSearchView extends JPanel implements ActionListener{
 					jtf.setCaretPosition(currPos);
 				}
 			}
-			else if(e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_SPACE){
+			else if(e.getKeyCode() == KeyEvent.VK_ENTER){
 				cb.setSelectedIndex(cb.getSelectedIndex());
 				JTextField jt = (JTextField)cb.getEditor().getEditorComponent();
 				System.out.println(jt.getText());
 				if (jt.getText().split(";").length==3){
 					mcp=jt.getText().split(";")[2];
 					filler.fill(mcp);
+				}
+				else{
+					filler.fill("000000000000");
 				}
 			}
 			else {

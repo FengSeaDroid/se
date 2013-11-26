@@ -88,6 +88,7 @@ public class PatientManager {
 		}
 		catch (Exception e){
 			System.out.println(e.getMessage());
+			patient = null;
 		}
 		return patient;
 	}
