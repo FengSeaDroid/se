@@ -29,9 +29,9 @@ public class PatientManager {
 		try 
 		{
 			//Connection to University DB server
-//			dbconnection=new DBConnection("jdbc:mysql://mysql.cs.mun.ca:3306/cs6713","cs6713","3176sc!");
+			dbconnection=new DBConnection("jdbc:mysql://mysql.cs.mun.ca:3306/cs6713","cs6713","3176sc!");
 			//local connection to my DB server
-			dbconnection=new DBConnection("jdbc:mysql://localhost:3306/cs6713","root","");
+			//dbconnection=new DBConnection("jdbc:mysql://localhost:3306/prescriptionsys","root","System");
 		}
 		catch ( Exception e ) {
 			System.out.println(e.getMessage());
@@ -256,25 +256,17 @@ public class PatientManager {
 		ResultSet allergyResult=dbconnection.execQuery("SELECT allergy_agent FROM allergy where patient_id="
 				+MainControl.getMainControl().getCurrentPatient().getPatientID() );
 		Set<String> dbAllergySet=new HashSet<String>();
+
 		while(allergyResult.next()){
 			dbAllergySet.add(allergyResult.getString("allergy_agent"));
 		}
-		boolean allergyFound=false;
-		int counter=0;
-		for (String allergy : allergySet){
-			for(String dballergy: dbAllergySet){
-				if(!allergy.equals(dballergy)){
-					counter++;
-				}
-			}
-			if (counter==dbAllergySet.size()){
-				System.out.println("Allergy will be added to DB"+allergy);
-				dbconnection.manipulateData("insert into allergy(patient_id,allergy_agent) values"
-						+ " ('"+MainControl.getMainControl().getCurrentPatient().getPatientID()+"','"+allergy+"')");
-			}
-			else{
-				System.out.println("allergy is already in DB nothing to update");
-			}
+
+		allergySet.removeAll(dbAllergySet);
+		for(String allergy: allergySet){
+			System.out.println("allergy to be added "+allergy);
+			dbconnection.manipulateData("insert into allergy(patient_id,allergy_agent) values"
+					+ " ('"+MainControl.getMainControl().getCurrentPatient().getPatientID()+"','"+allergy+"')");
+
 		}
 	}
 }
