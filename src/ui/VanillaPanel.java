@@ -15,6 +15,7 @@ import java.util.Set;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.JTextComponent;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -103,20 +104,40 @@ public class VanillaPanel extends JPanel implements KeyListener  {
 		if (drugLines == null){
 			drugLines = new HashSet<String>();
 		}
+		
+		Set<String> currentSet = new HashSet<String>();
 		for (int i = 0; i<this.boxList.size();i++){
 			JTextField jt = (JTextField)this.boxList.get(i).getEditor().getEditorComponent();
 			if (!jt.getText().equals("")){
-				drugLines.add(jt.getText().trim());
+				currentSet.add(jt.getText());
+			}
+			else {
+				this.boxList.remove(i);
 			}
 		}
-		this.boxList.clear();
-		List<String> sort = new ArrayList<String>(drugLines);
-		Collections.sort(sort);
-		for (int i=0; i<sort.size(); i++){
-			this.boxList.add(drugLine(sort.get(i).trim(),edible));
+		for (String s : drugLines){
+			if (!currentSet.contains(s)&&!s.equals("")){
+				this.boxList.add(drugLine(s,edible));
+			}
 		}
 		reDraw();
-		this.boxList.get(this.boxList.size()-1).requestFocus();
+		enterPress(this.boxList.size()-1,((JTextComponent) this.boxList.get(this.boxList.size()-1).getEditor().getEditorComponent()).getText().length());
+		
+		//sorted way will ruin the flag
+//		for (int i = 0; i<this.boxList.size();i++){
+//			JTextField jt = (JTextField)this.boxList.get(i).getEditor().getEditorComponent();
+//			if (!jt.getText().equals("")){
+//				drugLines.add(jt.getText().trim());
+//			}
+//		}
+//		this.boxList.clear();
+//		List<String> sort = new ArrayList<String>(drugLines);
+//		Collections.sort(sort);
+//		for (int i=0; i<sort.size(); i++){
+//			this.boxList.add(drugLine(sort.get(i).trim(),edible));
+//		}
+//		reDraw();
+//		this.boxList.get(this.boxList.size()-1).requestFocusInWindow();
 	}
 	
 	/**
