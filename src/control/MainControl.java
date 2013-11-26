@@ -200,6 +200,9 @@ public class MainControl {
 	 * @throws Exception 
 	 */
 	public void print(Set<String> drugLines, String effectiveDate) throws Exception{
+		if (drugLines==null || drugLines.size()==0){
+			throw new IllegalArgumentException();
+		}
 		if (getCurrentPatient() != null){
 			this.setPrescription(new Prescription(this.getPhysicianName()));
 		} else System.out.println("even no patient yet");

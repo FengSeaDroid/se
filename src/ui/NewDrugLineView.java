@@ -1,9 +1,12 @@
 package ui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashSet;
@@ -17,13 +20,12 @@ import net.miginfocom.swing.MigLayout;
 import control.MainControl;
 
 @SuppressWarnings("serial")
-public class NewDrugLineView extends JPanel implements ActionListener{
+public class NewDrugLineView extends JPanel implements ActionListener, FocusListener{
 	
 	private JPanel buttonView;
-	
 	private JPanel dateView;
-	
 	private JTextField effectiveDate;
+	private JLabel printMessage;
 	
 	public String getEffectiveDate(){
 		if (effectiveDate.getText().equals("")||effectiveDate.getText().equals(new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()))){
@@ -114,34 +116,55 @@ public class NewDrugLineView extends JPanel implements ActionListener{
 	//print button here.add function now
 	private JPanel buttonView(){
 		JPanel printView = new JPanel(new MigLayout());
+		printMessage = new JLabel(" ");
+		printMessage.setForeground(Color.RED);
+		printView.add(printMessage,"wrap,center");
+		
 		JButton printButton = new EnterButton("Print");
 		printButton.addActionListener(this);
-		printView.add(printButton);
+		printButton.addFocusListener(this);
+		printView.add(printButton,"center");
 		return printView;
 	
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(MainControl.getMainControl().isLocum())
-		{
-			//Call print PDF directly without showing the pin
-			try {
-				MainControl.getMainControl().print(MainWindow.drugLineView.pull(), MainWindow.drugLineView.getEffectiveDate());
-				MainWindow.clear();
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+		if (pull().size()==0||MainControl.getMainControl().getCurrentPatient()==null){
+			printMessage.setText("Cannot print empty prescription.");
 		}
-		else
-		{
-			new PinView();
-
+		else{
+			if(MainControl.getMainControl().isLocum())
+			{
+				//Call print PDF directly without showing the pin
+				try {
+					MainControl.getMainControl().print(MainWindow.drugLineView.pull(), MainWindow.drugLineView.getEffectiveDate());
+					MainWindow.clear();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+			else
+			{
+				new PinView();
+	
+			}
 		}
 	}
 
 	public void clear() {
 		((VanillaPanel) this.innerPanels[1]).clear();
+	}
+
+	@Override
+	public void focusGained(FocusEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void focusLost(FocusEvent e) {
+		this.printMessage.setText(" ");
 	}
 }
