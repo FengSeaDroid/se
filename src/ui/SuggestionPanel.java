@@ -10,6 +10,7 @@ import java.awt.event.KeyListener;
 import java.util.*;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 
 import control.MainControl;
@@ -96,6 +97,7 @@ public class SuggestionPanel extends VanillaPanel {
 
 	/**
 	 * testing allergy.
+	 * and testing for formulary
 	 */
 	public void allergyTest(JTextField eventField){
 		FirableBox tempBox = (FirableBox)eventField.getParent();
@@ -106,11 +108,34 @@ public class SuggestionPanel extends VanillaPanel {
 				if (s.toLowerCase().equals(drugSpec[0].toLowerCase())){
 					tempBox.setFired(true);
 					new AlertPopup(s);
+					break;
+//					ImageIcon icon = new ImageIcon("wavy.png", "wavy-line border icon"); //56x20
+//					Border border = BorderFactory.createMatteBorder(0,0,1,0,Color.RED);
 				}
 			}
+			//test if in the formulary
+
 		}
 		if (drugSpec.length<=1 && tempBox.isFired()){
 			tempBox.setFired(false);
+		}
+		
+		//testing for formulary
+		if (drugSpec.length>1){
+			for (String s : MainControl.getMainControl().getFormulary().getAllDrugSet()){
+				String[] formularyEntry = s.split(" ");
+				if (formularyEntry[0].toLowerCase().equals(drugSpec[0].toLowerCase())){
+					tempBox.setBorder(BorderFactory.createEmptyBorder());
+					break;
+				}
+				else{
+					tempBox.setBorder(BorderFactory.createMatteBorder(0,0,1,0,Color.RED));
+//					tempBox.setBorder(BorderFactory.createEmptyBorder());
+				}
+			}
+		}
+		else {
+			tempBox.setBorder(BorderFactory.createEmptyBorder());
 		}
 	}
 	
@@ -273,6 +298,11 @@ public class SuggestionPanel extends VanillaPanel {
 		}  
 	}  //inner class
 
+	/**
+	 * This class is for the purpose of allergy testing
+	 * @author Fred
+	 *
+	 */
 	public class FirableBox extends JComboBox<JTextField>{
 
 		private static final long serialVersionUID = -5970625848197390449L;

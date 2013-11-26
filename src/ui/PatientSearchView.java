@@ -6,8 +6,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
@@ -19,7 +17,6 @@ import java.util.Set;
 import java.util.StringTokenizer;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 import javax.swing.text.JTextComponent;
 
@@ -71,8 +68,10 @@ public class PatientSearchView extends JPanel implements ActionListener{
 			}
 		});
 		nameField.setRenderer(new ComboBoxRenderer());
+//		ImageIcon icon = new ImageIcon("wavy.png", "wavy-line border icon"); //56x20
+//		Border border = BorderFactory.createMatteBorder(0,0,3,0, icon);
+//		nameField.setBorder(border);
 		((JComponent) nameField.getEditor().getEditorComponent()).setBorder(BorderFactory.createEmptyBorder(2,10, 2, 2));
-
 		//create the model
 		SearchNameModel sbm = new SearchNameModel(this,nameField,MainControl.getMainControl().getPatientManager().getPatientList());
 		//set the model on the combobox
