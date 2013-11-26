@@ -1,6 +1,7 @@
 package ui;
 
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -20,16 +21,17 @@ public class PinView extends JFrame implements ActionListener,FocusListener {
 	private JPanel pinPanel=new JPanel(new MigLayout("wrap 3","[grow][grow][grow]","[][][][]"));
 	private JButton printButton;
 	private JButton cancelButton;
-	private JLabel msgLabel=new JLabel("Please type in your pin number:");
+	private JLabel pinLabel=new JLabel("Please type in your pin number:");
 	private JPasswordField pinPasswordField=new JPasswordField(20);
+	private JLabel msgLabel=new JLabel();
 
 	public PinView() {
 
 		super("Print Authentication Window");
-		this.setSize(250, 100);
+		this.setSize(260, 100);
 
 		pinPanel.setLayout (new MigLayout()); 
-		pinPanel.add(msgLabel,"span 5,align center");
+		pinPanel.add(pinLabel,"span 2,align center");
 
 		pinPasswordField=new JPasswordField(10);
 		//pinPanel.add(pinPasswordField);
@@ -38,13 +40,16 @@ public class PinView extends JFrame implements ActionListener,FocusListener {
 		pinPasswordField.addActionListener(this);
 
 
-		printButton=new JButton("print");
+		printButton=new JButton("Print");
 		pinPanel.add(printButton,"left");
 		printButton.addActionListener(this);
 
-		cancelButton=new JButton("cancel");
+		cancelButton=new JButton("Cancel");
 		pinPanel.add(cancelButton,"right");
 		cancelButton.addActionListener(this);
+		
+		pinPanel.add(msgLabel,"span");
+		msgLabel.setForeground(Color.red);
 
 //		no close the whole program Safwan the terrorist!!!
 //		Safwan Alquraan close JFrame
@@ -84,6 +89,11 @@ public class PinView extends JFrame implements ActionListener,FocusListener {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+			}
+			else
+			{
+				msgLabel.setText("Wrong Pin");
+				pinPasswordField.setText("");
 			}
 		}
 		if(e.getSource()==cancelButton){

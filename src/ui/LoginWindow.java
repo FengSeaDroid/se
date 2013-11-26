@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -29,17 +30,22 @@ public class LoginWindow extends JFrame implements ActionListener,FocusListener{
 	private JPasswordField passwordTextField=new JPasswordField(10);
 	private JButton connectButton=new JButton("Connect");
 	private JButton cancelButton=new JButton("Cancel");
+	private JLabel msgLabel=new JLabel("                ");
 
 	public LoginWindow() {
 		super("Login Window");
-		this.setSize(250,130);
+		this.setSize(250,150);
 		longinPanel.setLayout (new MigLayout()); 
 		longinPanel.add(userNameLabel,"alignx center,aligny center");
 		longinPanel.add(usernameTextField,"wrap,alignx center,aligny center");
 		longinPanel.add(passwordLabel,"center");
 		longinPanel.add(passwordTextField,"wrap, center");
 		longinPanel.add(connectButton,"left");
-		longinPanel.add(cancelButton, "right");
+		longinPanel.add(cancelButton, "wrap, right");
+		
+		longinPanel.add(msgLabel,"span");
+		msgLabel.setForeground(Color.red);
+
 
 		connectButton.addActionListener(this);
 		cancelButton.addActionListener(this);	
@@ -106,9 +112,11 @@ public class LoginWindow extends JFrame implements ActionListener,FocusListener{
 				}
 				else{
 					System.out.println("Wrong Password");
+					msgLabel.setText("Wrong Password");
 				}
 			}
 			else{
+				msgLabel.setText("Wrong UserName");
 				System.out.println("Wrong UserName");
 				System.out.println("User from textField"+userpassResult.getString("username"));
 				System.out.println("User from textField"+this.getUsername());
