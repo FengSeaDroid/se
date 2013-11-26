@@ -51,7 +51,7 @@ public class SuggestionPanel extends VanillaPanel {
 		panels[0].add(scroll);
 		return panels;
 	}
-
+	
 	/**
 	 * create the drugLines
 	 * @param s
@@ -125,6 +125,8 @@ public class SuggestionPanel extends VanillaPanel {
 //				System.out.println(((FirableBox) b).isFired());
 				allergyTest((JTextField) b.getEditor().getEditorComponent());
 			}
+			//if edible give a new line
+			enterPress(this.boxList.size()-1,((JTextField) this.boxList.get(this.boxList.size()-1).getEditor().getEditorComponent()).getText().length());			
 		}
 	}
 

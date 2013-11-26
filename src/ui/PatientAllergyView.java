@@ -59,9 +59,6 @@ public class PatientAllergyView extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		try {
 			MainControl.getMainControl().getPatientManager().addAllergy(pull());
-//			for (String s: pull()){
-//				System.out.println("this should be added: "+s);
-//			}
 			populate(pull(),false);
 //			System.out.println("this should be added: "+pull().size());
 		} catch (Exception e1) {
