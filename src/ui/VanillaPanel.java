@@ -3,6 +3,7 @@ package ui;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -191,6 +192,10 @@ public class VanillaPanel extends JPanel implements KeyListener  {
 		jt = (JTextField)this.boxList.get(index+1).getEditor().getEditorComponent();
 		jt.setCaretPosition(0);
 //		((JComponent) this.getParent()).scrollRectToVisible(jt.getBounds());
+		this.revalidate();
+		int height = (int)this.getPreferredSize().getHeight();
+		Rectangle rect = new Rectangle(0,height,10,10);
+        this.scrollRectToVisible(rect);
 	}
 	
 	/**
@@ -243,10 +248,10 @@ public class VanillaPanel extends JPanel implements KeyListener  {
 			if (tempBox.getModel().getSize()==0 || tempBox.getSelectedIndex()==-1){
 				enterPress(i,pos);
 			}
-			JScrollBar sb = ((JScrollPane) tempBox.getParent().getParent().getParent()).getVerticalScrollBar();
-			System.out.println(sb.getMaximum() );
-			sb.setMaximum(sb.getMaximum()+20);
-			sb.setValue( sb.getMaximum()+190 );
+//			JScrollBar sb = ((JScrollPane) tempBox.getParent().getParent().getParent()).getVerticalScrollBar();
+//			System.out.println(sb.getMaximum() );
+//			sb.setMaximum(sb.getMaximum()+20);
+//			sb.setValue( sb.getMaximum()+190 );
 		}
 		
 		if(e.getKeyCode() == KeyEvent.VK_BACK_SPACE){
