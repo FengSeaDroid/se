@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
@@ -58,12 +60,14 @@ public class PatientSearchView extends JPanel implements ActionListener{
 		nameField.setUI(new BasicComboBoxUI() {
 			@Override
 			protected JButton createArrowButton() {
-				return new JButton() {
+				JButton b = new JButton() {
 					@Override
 					public int getWidth() {
 						return 0;
 					}
 				};
+				b.setVisible(false);
+				return b;
 			}
 		});
 		nameField.setRenderer(new ComboBoxRenderer());
@@ -123,6 +127,7 @@ public class PatientSearchView extends JPanel implements ActionListener{
 		this.clear();
 //		System.out.println("it should be cleared");
 		if (patient != null){
+			this.searchFail.setText("");
 			this.nameField.getEditor().setItem(patient.getName());
 			this.mcpField.setText(patient.getMCP());
 			this.DOB.setText(patient.getDateOfBirth());
@@ -147,10 +152,12 @@ public class PatientSearchView extends JPanel implements ActionListener{
 					MainWindow.patientPrescriptionHistory.getModel().addRow(data);
 				}
 			}
+			MainWindow.drugLineView.clear();
 		}
 		else {
 			this.searchFail.setText("Patient is not found");
 			this.revalidate();
+			this.setFocus();
 		}
 	}
 
@@ -165,6 +172,10 @@ public class PatientSearchView extends JPanel implements ActionListener{
 		this.tel.setText("");
 		this.prescriptionHistory.clear();
 		this.allergy.clear();
+	}
+	
+	public void setFocus(){
+		this.nameField.requestFocusInWindow();
 	}
 
 	public class SearchNameModel extends AbstractListModel implements ComboBoxModel, KeyListener, ItemListener{
@@ -253,6 +264,9 @@ public class PatientSearchView extends JPanel implements ActionListener{
 					filler.fill("000000000000");
 				}
 			}
+//			else if(e.getKeyCode() == KeyEvent.VK_TAB){
+//				MainWindow.drugLineView.clear();
+//			}
 			else {
 				updateModel(cb.getEditor().getItem().toString());
 				cbe.setItem(str);
@@ -284,11 +298,7 @@ public class PatientSearchView extends JPanel implements ActionListener{
 			else {setBackground(Color.WHITE); setForeground(Color.BLACK);}
 			return this;  
 		}  
-	}
-	
-//	public static interface Filler {
-//		public void fill(String s);
-//	}
+	}//inner class
 
 }//class
 

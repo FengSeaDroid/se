@@ -3,11 +3,8 @@ package ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
-import java.awt.Window;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
@@ -18,13 +15,7 @@ import javax.swing.JTabbedPane;
 
 import net.miginfocom.swing.MigLayout;
 
-import java.awt.Component;
-
-import javax.swing.Box;
-
 import control.MainControl;
-
-import java.awt.FlowLayout;
 
 public class MainWindow extends JPanel {
 
@@ -74,7 +65,7 @@ public class MainWindow extends JPanel {
          
         mainFrame.setResizable(false);
 //      	Dimension d = Toolkit.getDefaultToolkit().getScreenSize();  
-        mainFrame.setPreferredSize(new Dimension(d.width, d.height-50));//<---take 30 off the height 
+        mainFrame.setPreferredSize(new Dimension(d.width, d.height-30));//<---take 30 off the height 
      
         //Display the window.
         mainFrame.pack();
@@ -90,24 +81,32 @@ public class MainWindow extends JPanel {
 	public MainWindow() {
 		super(new GridLayout(1, 1));
         
-        JTabbedPane tabbedPane = new JTabbedPane();
-        tabbedPane.setBorder(BorderFactory.createLineBorder(Color.black));
-//      tabbedPane.setPreferredSize(new Dimension(800, 600));
-        tabbedPane.addTab("New Prescription",this.newPrescription());
-  //    tabbedPane.addTab("Prescription History", this.prescriptionHistory());
-        this.add(tabbedPane);   
-        //The following line enables to use scrolling tabs.
-        tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-	}
-	
-	protected JComponent newPrescription() {
+//        JTabbedPane tabbedPane = new JTabbedPane();
+//        tabbedPane.setBorder(BorderFactory.createLineBorder(Color.black));
+////      tabbedPane.setPreferredSize(new Dimension(800, 600));
+//        tabbedPane.addTab("New Prescription",this.newPrescription());
+//  //    tabbedPane.addTab("Prescription History", this.prescriptionHistory());
+//        this.add(tabbedPane);   
+//        //The following line enables to use scrolling tabs.
+//        tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+//		this.add(this.newPrescription());
 		
 		JSplitPane newPrescription = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT ,prescriptionView(),patientInfoView());
 		newPrescription.setDividerLocation(d.width*2/3);
-//		newPrescription.setBorder(BorderFactory.createTitledBorder(""));
+		newPrescription.setBorder(BorderFactory.createTitledBorder("New Prescription"));
 		newPrescription.setEnabled( false );
-		return newPrescription;
+		this.add(newPrescription);
+        patientSearch.setFocus();
 	}
+	
+//	protected JComponent newPrescription() {
+//		
+//		JSplitPane newPrescription = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT ,prescriptionView(),patientInfoView());
+//		newPrescription.setDividerLocation(d.width*2/3);
+////		newPrescription.setBorder(BorderFactory.createTitledBorder(""));
+//		newPrescription.setEnabled( false );
+//		return newPrescription;
+//	}
 	
 	private JPanel prescriptionView(){
 		JPanel pv = new JPanel();

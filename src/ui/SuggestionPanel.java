@@ -69,12 +69,14 @@ public class SuggestionPanel extends VanillaPanel {
 		drug.setUI(new BasicComboBoxUI() {
 		    @Override
 		    protected JButton createArrowButton() {
-		    	return new JButton() {
+		    	JButton b = new JButton() {
 		    		@Override
 		    		public int getWidth() {
 		    			return 0;
 		    		}
 		    	};
+		    	b.setVisible(false);
+		    	return b;
 		    }
 		});
 

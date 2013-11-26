@@ -73,9 +73,11 @@ public class NewDrugLineView extends JPanel implements ActionListener{
 		JPanel jp=new JPanel(new MigLayout("wrap 2","[grow][grow]","[][]"));
 		jp.setPreferredSize(new Dimension(this.getMaximumSize().width, 100));
 		//jp.setBorder(BorderFactory.createLineBorder(Color.red));
-		
 		JPanel refillPanel = new JPanel(new MigLayout("wrap 2","[]","[][]"));
-		refillPanel.add(new JLabel("Refill:"),"align left");	
+
+		JLabel refillText = new JLabel("Refill:");
+		refillPanel.add(refillText,"align left");
+
 		JTextField refill=new JTextField(3);
 		refillPanel.add(refill,"align left");
 		jp.add(refillPanel,"align left");

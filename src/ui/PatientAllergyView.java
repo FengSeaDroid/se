@@ -38,7 +38,6 @@ public class PatientAllergyView extends JPanel implements ActionListener {
 
 	public void clear() {
 		((VanillaPanel) this.innerPanels[1]).clear();
-		
 	}
 	
 	public Set<String> pull(){

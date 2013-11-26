@@ -135,12 +135,14 @@ public class VanillaPanel extends JPanel implements KeyListener  {
 		drug.setUI(new BasicComboBoxUI() {
 		    @Override
 		    protected JButton createArrowButton() {
-		    	return new JButton() {
+		    	JButton b = new JButton() {
 		    		@Override
 		    		public int getWidth() {
 		    			return 0;
 		    		}
 		    	};
+		    	b.setVisible(false);
+		    	return b;
 		    }
 		});
 
