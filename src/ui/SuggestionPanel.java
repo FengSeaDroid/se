@@ -80,7 +80,10 @@ public class SuggestionPanel extends VanillaPanel {
 				return b;
 			}
 		});
-
+		
+		//set border for the red line
+		drug.setBorder(BorderFactory.createMatteBorder(0,0,1,0,new Color(214,217,223)));
+		// for the pupup color
 		drug.setRenderer(new ComboBoxRenderer());
 		SearchBoxModel sbm = new SearchBoxModel(drug,MainControl.getMainControl().getFormulary().getAllDrugSet());
 		drug.setModel(sbm);
@@ -125,7 +128,8 @@ public class SuggestionPanel extends VanillaPanel {
 			for (String s : MainControl.getMainControl().getFormulary().getAllDrugSet()){
 				String[] formularyEntry = s.split(" ");
 				if (formularyEntry[0].toLowerCase().equals(drugSpec[0].toLowerCase())){
-					tempBox.setBorder(BorderFactory.createEmptyBorder());
+					tempBox.setBorder(BorderFactory.createMatteBorder(0,0,1,0,new Color(214,217,223)));
+//					tempBox.setBorder(BorderFactory.createEmptyBorder());
 					break;
 				}
 				else{
@@ -135,7 +139,9 @@ public class SuggestionPanel extends VanillaPanel {
 			}
 		}
 		else {
-			tempBox.setBorder(BorderFactory.createEmptyBorder());
+//			tempBox.setBorder(BorderFactory.createEmptyBorder());
+			tempBox.setBorder(BorderFactory.createMatteBorder(0,0,1,0,new Color(214,217,223)));
+//			
 		}
 	}
 	
