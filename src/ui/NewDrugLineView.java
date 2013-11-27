@@ -7,10 +7,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.*;
 
@@ -21,13 +27,13 @@ import control.MainControl;
 
 @SuppressWarnings("serial")
 public class NewDrugLineView extends JPanel implements ActionListener, FocusListener{
-	
+
 	private JPanel buttonView;
 	private JPanel dateView;
 	private JTextField effectiveDate;
 	private JLabel printMessage;
 	private JTextField refill;
-	
+
 	public String getEffectiveDate(){
 		if (effectiveDate.getText().equals("")||effectiveDate.getText().equals(new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()))){
 			return new SimpleDateFormat("yyyy-MM-dd HH:mm").format(Calendar.getInstance().getTime());
@@ -40,17 +46,17 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 
 	public NewDrugLineView() {
 		super(new MigLayout("wrap 3","0[grow]0[grow]0[grow]0","0[]0[]0[]0[]0"));
-				innerPanels = SuggestionPanel.fillerWithScroll(MainWindow.d.width*2/3-80,200);
+		innerPanels = SuggestionPanel.fillerWithScroll(MainWindow.d.width*2/3-80,200);
 		innerPanels[0].setBorder(BorderFactory.createTitledBorder(""));
 		this.add(innerPanels[0],"wrap");
-		
+
 		dateView = sigAndDate();
 		buttonView = buttonView();
-				
+
 		this.add(dateView,"wrap");
 		this.add(buttonView,"wrap,span 3,center");
 	}
-	
+
 	/**
 	 * 
 	 * @param v
@@ -67,7 +73,7 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 		}
 		((VanillaPanel) this.innerPanels[1]).populate(stringSet,edible);
 	}
-	
+
 	public Set<String> pull(){
 		return new HashSet<String>(((VanillaPanel) innerPanels[1]).pull());
 	}
@@ -84,20 +90,95 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 		refill=new JTextField(3);
 		refillPanel.add(refill,"align left");
 		jp.add(refillPanel,"align left");
-		
+
 		JPanel effectiveDatePanel = new JPanel(new MigLayout("wrap 2","[]","[][]"));
 		effectiveDatePanel.add(new JLabel("Effective Date:"),"align left");
 		effectiveDate=new JTextField(10);
-		
+
 		String date = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
 		TextPrompt effectiveDatePrompt =new TextPrompt(date,effectiveDate);
 		effectiveDatePrompt.setShow(uiapi.TextPrompt.Show.FOCUS_LOST);
 		effectiveDatePrompt.changeAlpha(0.5f);
 		effectiveDate.setToolTipText("Input format: YYYY-MM-DD");
-//		effectiveDate.setName("effectiveDateView");
+		//		effectiveDate.setName("effectiveDateView");
 		//datechooser here
 		DateChooser dateChooser = DateChooser.getInstance("yyyy-MM-dd");
 		dateChooser.register(effectiveDate);
+
+		//add future date validate here
+		effectiveDate.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				String effdate=effectiveDate.getText();
+				//use regEx here.
+				String regEx = "[0-9]{4}\\-[0-9]{2}\\-[0-9]{2}"; //represent YYYY-MM-DD  
+				Pattern pat = Pattern.compile(regEx);  
+				Matcher mat = pat.matcher(effdate);  
+				boolean result = mat.matches();
+				//test based on result to validate the date is in the future.
+				if(result){
+					SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+					try {
+						Date dateGetted=sdf.parse(effdate);
+						Date current=Calendar.getInstance().getTime();
+						if (dateGetted.after(current)){
+							effectiveDate.setText(effdate);
+						}
+						else
+						{
+							printMessage.setText("illegal date input,reset to default");
+							effectiveDate.addFocusListener(new FocusListener() {
+								
+								@Override
+								public void focusLost(FocusEvent arg0) {
+									// TODO Auto-generated method stub
+									printMessage.setText(" ");
+								}
+								
+								@Override
+								public void focusGained(FocusEvent arg0) {
+									// TODO Auto-generated method stub
+									
+								}
+							});
+							effectiveDate.setText("");}
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				else{
+					effectiveDate.setText("");
+				}
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		//
 		effectiveDatePanel.add(effectiveDate,"align left");
 		jp.add(effectiveDatePanel,"align right,wrap");
 
@@ -128,13 +209,13 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 		printMessage = new JLabel(" ");
 		printMessage.setForeground(Color.RED);
 		printView.add(printMessage,"wrap,center");
-		
+
 		JButton printButton = new EnterButton("Print");
 		printButton.addActionListener(this);
 		printButton.addFocusListener(this);
 		printView.add(printButton,"center");
 		return printView;
-	
+
 	}
 
 	@Override
@@ -157,7 +238,7 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 			else
 			{
 				new PinView(this.getRefill());
-	
+
 			}
 		}
 	}
@@ -169,7 +250,7 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 	@Override
 	public void focusGained(FocusEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
