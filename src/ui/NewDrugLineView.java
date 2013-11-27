@@ -169,7 +169,7 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-
+				printMessage.setText("");
 			}
 
 			@Override
@@ -178,7 +178,7 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 
 			}
 		});
-		//
+		//validate ends here
 		effectiveDatePanel.add(effectiveDate,"align left");
 		jp.add(effectiveDatePanel,"align right,wrap");
 
