@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import com.itextpdf.awt.geom.Rectangle;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Anchor;
 import com.itextpdf.text.BadElementException;
@@ -24,6 +25,7 @@ import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.List;
 import com.itextpdf.text.ListItem;
+import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Section;
@@ -67,7 +69,9 @@ public class GeneratePDF {
 	public static void generateReport(String refillParam) throws Exception{
 		refill=refillParam;
 		document= new Document();
-		PdfWriter.getInstance(document, new FileOutputStream(File));
+		document.setPageSize(PageSize.A5 );
+		PdfWriter pdfReader=PdfWriter.getInstance(document, new FileOutputStream(File));
+		pdfReader.setViewerPreferences(PdfWriter.FitWindow);
 		document.open();
 		//addMetaData(document);
 		generatePrescriptionInformarmation();
