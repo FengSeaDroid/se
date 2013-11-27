@@ -210,7 +210,7 @@ public class MainControl {
 		for (String s: drugLines){
 			this.getPrescription().addDrugLine(s);
 		}
-		this.getPrescription().save();
+		this.getPrescription().save(refill);
 		GeneratePDF.generateReport(refill);
 	}
 

@@ -40,7 +40,7 @@ public class PatientManagerTest {
 	
 	@Test
 	public void testSavePrescription(){
-		PatientManager.getPatientManager().savePrescription(testP);
+		PatientManager.getPatientManager().savePrescription(testP,"sss");
 	}
 
 }

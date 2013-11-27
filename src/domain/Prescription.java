@@ -111,10 +111,10 @@ public class Prescription {
 		this.drugLines.add(drugLine);
 	}
 	
-	public void save() throws IllegalStateException{
+	public void save(String refill) throws IllegalStateException{
 		if (this.isActive() == false) throw new IllegalStateException();
 		this.achieve();
 		this.issue();
-		MainControl.getMainControl().getPatientManager().savePrescription(this);
+		MainControl.getMainControl().getPatientManager().savePrescription(this,refill);
 	}
 }
