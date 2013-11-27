@@ -102,15 +102,20 @@ public class SuggestionPanel extends VanillaPanel {
 	 * testing allergy.
 	 * and testing for formulary
 	 */
-	public void allergyTest(JTextField eventField){
+	public void allergyTest(final JTextField eventField){
 		FirableBox tempBox = (FirableBox)eventField.getParent();
 		String[] drugSpec = eventField.getText().split(" ");
 		if (drugSpec.length>1 && !tempBox.isFired()){
-			for (String s: MainWindow.patientAllergy.pull()){
+			for (final String s: MainWindow.patientAllergy.pull()){
 				//testing here, all lower case so case insensitive
 				if (s.toLowerCase().equals(drugSpec[0].toLowerCase())){
 					tempBox.setFired(true);
-					new AlertPopup(s);
+//					SwingUtilities.invokeLater(new Runnable() {
+//						public void run() {
+//							new AlertPopup(s,eventField);
+//						}
+//					});//create window
+					new AlertPopup(s,eventField,tempBox);
 					break;
 //					ImageIcon icon = new ImageIcon("wavy.png", "wavy-line border icon"); //56x20
 //					Border border = BorderFactory.createMatteBorder(0,0,1,0,Color.RED);
