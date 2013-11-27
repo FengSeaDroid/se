@@ -117,8 +117,6 @@ public class SuggestionPanel extends VanillaPanel {
 //					});//create window
 					new AlertPopup(s,eventField,tempBox);
 					break;
-//					ImageIcon icon = new ImageIcon("wavy.png", "wavy-line border icon"); //56x20
-//					Border border = BorderFactory.createMatteBorder(0,0,1,0,Color.RED);
 				}
 			}
 			//test if in the formulary
@@ -138,7 +136,8 @@ public class SuggestionPanel extends VanillaPanel {
 					break;
 				}
 				else{
-					tempBox.setBorder(BorderFactory.createMatteBorder(0,0,1,0,Color.RED));
+					ImageIcon icon = new ImageIcon("wavy.png", "wavy-line border icon"); //56x20
+					tempBox.setBorder(BorderFactory.createMatteBorder(0,0,1,0,icon));
 //					tempBox.setBorder(BorderFactory.createEmptyBorder());
 				}
 			}
