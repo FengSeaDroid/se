@@ -26,6 +26,7 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 	private JPanel dateView;
 	private JTextField effectiveDate;
 	private JLabel printMessage;
+	private JTextField refill;
 	
 	public String getEffectiveDate(){
 		if (effectiveDate.getText().equals("")||effectiveDate.getText().equals(new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()))){
@@ -80,7 +81,7 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 		JLabel refillText = new JLabel("Refill:");
 		refillPanel.add(refillText,"align left");
 
-		JTextField refill=new JTextField(3);
+		refill=new JTextField(3);
 		refillPanel.add(refill,"align left");
 		jp.add(refillPanel,"align left");
 		
@@ -113,6 +114,14 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 		return jp;
 	}
 
+	public String getRefill() {
+		return this.refill.getText();
+	}
+
+	public void setRefill(String refill) {
+		this.refill.setText(refill);
+	}
+
 	//print button here.add function now
 	private JPanel buttonView(){
 		JPanel printView = new JPanel(new MigLayout());
@@ -138,7 +147,7 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 			{
 				//Call print PDF directly without showing the pin
 				try {
-					MainControl.getMainControl().print(MainWindow.drugLineView.pull(), MainWindow.drugLineView.getEffectiveDate());
+					MainControl.getMainControl().print(MainWindow.drugLineView.pull(), MainWindow.drugLineView.getEffectiveDate(),this.getRefill());
 					MainWindow.clear();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
@@ -147,7 +156,7 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 			}
 			else
 			{
-				new PinView();
+				new PinView(this.getRefill());
 	
 			}
 		}

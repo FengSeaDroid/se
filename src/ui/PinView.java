@@ -24,11 +24,15 @@ public class PinView extends JFrame implements ActionListener,FocusListener {
 	private JLabel pinLabel=new JLabel("Please type in your pin number:");
 	private JPasswordField pinPasswordField=new JPasswordField(20);
 	private JLabel msgLabel=new JLabel();
+	private String refill;
 
-	public PinView() {
+	public PinView(String refill) {
 
 		super("Print Authentication Window");
 		this.setSize(260, 100);
+		
+		this.refill=refill;
+
 
 		pinPanel.setLayout (new MigLayout()); 
 		pinPanel.add(pinLabel,"span 2,align center");
@@ -69,11 +73,11 @@ public class PinView extends JFrame implements ActionListener,FocusListener {
 		this.setVisible(true);
 	}
 
-	public static void main(String[] args){
-		JFrame jf=new PinView();
-		//jf.setVisible(true);
-		jf.setLocationRelativeTo(null);
-	}
+//	public static void main(String[] args){
+//		JFrame jf=new PinView(this.refill);
+//		//jf.setVisible(true);
+//		jf.setLocationRelativeTo(null);
+//	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -82,7 +86,7 @@ public class PinView extends JFrame implements ActionListener,FocusListener {
 			{
 				//Print report method for report
 				try {
-					MainControl.getMainControl().print(MainWindow.drugLineView.pull(), MainWindow.drugLineView.getEffectiveDate());
+					MainControl.getMainControl().print(MainWindow.drugLineView.pull(), MainWindow.drugLineView.getEffectiveDate(),refill);
 					MainWindow.clear();
 					this.dispose();
 				} catch (Exception e1) {

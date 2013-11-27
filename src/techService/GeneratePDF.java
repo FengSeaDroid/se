@@ -45,6 +45,7 @@ public class GeneratePDF {
 
 	private static String temp_file = MainControl.getMainControl().getPrescription().getEffectiveDate()+".pdf";
 	private static String File=temp_file.replaceAll(":", "-");
+	private static String refill;
 	private static Font titleFont = new Font(Font.FontFamily.TIMES_ROMAN, 16,
 			Font.BOLD);
 	private static Font rxFont = new Font(Font.FontFamily.TIMES_ROMAN, 20,
@@ -63,8 +64,8 @@ public class GeneratePDF {
 	 * the only public method that can be called\
 	 * to generate the PDF report
 	 */
-	public static void generateReport() throws Exception{
-
+	public static void generateReport(String refillParam) throws Exception{
+		refill=refillParam;
 		document= new Document();
 		PdfWriter.getInstance(document, new FileOutputStream(File));
 		document.open();
@@ -73,6 +74,7 @@ public class GeneratePDF {
 		//createTable();
 		creatRxImage();
 		createDrugLine();
+		createRefill();
 		if(!MainControl.getMainControl().isLocum()){
 			System.out.println(MainControl.getMainControl().isLocum());
 			createSignature();
@@ -218,6 +220,13 @@ public class GeneratePDF {
 		Paragraph issueDate=new Paragraph("Date: "+MainControl.getMainControl().getPrescription().getEffectiveDate(),tableFont);
 		issueDate.setAlignment(Element.ALIGN_RIGHT);
 		document.add(issueDate);
+	}
+	
+	private static void createRefill() throws DocumentException{
+		Paragraph refillParagraph=new Paragraph("Refill: "+refill,tableFont);
+		refillParagraph.setAlignment(Element.ALIGN_LEFT);
+		refillParagraph.setIndentationLeft(5);
+		document.add(refillParagraph);
 	}
 
 	private static void addEmptyLine(Paragraph paragraph, int number) {

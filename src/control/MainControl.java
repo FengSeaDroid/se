@@ -199,7 +199,7 @@ public class MainControl {
 	 * @param effectiveDate
 	 * @throws Exception 
 	 */
-	public void print(Set<String> drugLines, String effectiveDate) throws Exception{
+	public void print(Set<String> drugLines, String effectiveDate,String refill) throws Exception{
 		if (drugLines==null || drugLines.size()==0){
 			throw new IllegalArgumentException();
 		}
@@ -211,7 +211,7 @@ public class MainControl {
 			this.getPrescription().addDrugLine(s);
 		}
 		this.getPrescription().save();
-		GeneratePDF.generateReport();
+		GeneratePDF.generateReport(refill);
 	}
 
 	/**
