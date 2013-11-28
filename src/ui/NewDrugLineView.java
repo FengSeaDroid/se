@@ -52,6 +52,9 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 		
 		dateView = sigAndDate();
 		buttonView = buttonView();
+		
+		refill.setDocument(new JTextFieldLimit(3));
+		effectiveDate.setDocument(new JTextFieldLimit(12));
 				
 		this.add(dateView,"wrap");
 		this.add(buttonView,"wrap,span 3,center");

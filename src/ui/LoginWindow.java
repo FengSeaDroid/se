@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.beans.Beans;
 import java.sql.ResultSet;
 
 import javax.swing.JButton;
@@ -16,6 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.text.AbstractDocument;
 
 import control.MainControl;
 import domain.PatientManager;
@@ -42,6 +44,9 @@ public class LoginWindow extends JFrame implements ActionListener,FocusListener{
 		longinPanel.add(passwordTextField,"wrap, center");
 		longinPanel.add(connectButton,"left");
 		longinPanel.add(cancelButton, "wrap, right");
+		
+		usernameTextField.setDocument(new JTextFieldLimit(10));
+		passwordTextField.setDocument(new JTextFieldLimit(10));
 		
 		longinPanel.add(msgLabel,"span");
 		msgLabel.setForeground(Color.red);
