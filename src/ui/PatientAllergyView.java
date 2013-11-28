@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
 import control.MainControl;
+import domain.PatientManager;
 import net.miginfocom.swing.MigLayout;
 
 
@@ -68,6 +69,10 @@ public class PatientAllergyView extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		//handle empty patient exception
+		if(MainControl.getMainControl().getCurrentPatient()!=null){
+		
 		if(e.getSource()==saveAllergyButton){
 
 			try {
@@ -85,6 +90,6 @@ public class PatientAllergyView extends JPanel implements ActionListener {
 			((VanillaPanel) this.innerPanels[1]).enterPress(((VanillaPanel) this.innerPanels[1]).boxList.size()-1,tempJT.getText().length());
 		}
 
-
+		}
 	}
 }
