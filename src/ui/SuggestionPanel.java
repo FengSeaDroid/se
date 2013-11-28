@@ -11,6 +11,8 @@ import java.util.*;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 
 import control.MainControl;
@@ -89,12 +91,30 @@ public class SuggestionPanel extends VanillaPanel {
 		drug.setModel(sbm);
 		drug.addItemListener(sbm);
 		//JTextField must under model or not working
-		JTextField jt = (JTextField)drug.getEditor().getEditorComponent();
+		final JTextField jt = (JTextField)drug.getEditor().getEditorComponent();
 		jt.setBorder(BorderFactory.createEmptyBorder(2,10, 2, 2));
 		jt.addKeyListener(this);
 		jt.setText(s);
 		jt.setEnabled(edible);
 		jt.setDisabledTextColor(Color.BLACK);
+		jt.getDocument().addDocumentListener(new DocumentListener(){
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				allergyTest(jt);
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+//				allergyTest(jt);
+			}
+		});
 		return drug;
 	}
 
@@ -104,23 +124,21 @@ public class SuggestionPanel extends VanillaPanel {
 	 */
 	public void allergyTest(final JTextField eventField){
 		FirableBox tempBox = (FirableBox)eventField.getParent();
-		String[] drugSpec = eventField.getText().split(" ");
+		String input = eventField.getText();
+		if (input.charAt(input.length()-1) == ' '){
+			input = input + "!";
+		}
+		String[] drugSpec = input.split(" ");
 		if (drugSpec.length>1 && !tempBox.isFired()){
 			for (final String s: MainWindow.patientAllergy.pull()){
 				//testing here, all lower case so case insensitive
 				if (s.toLowerCase().equals(drugSpec[0].toLowerCase())){
 					tempBox.setFired(true);
-//					SwingUtilities.invokeLater(new Runnable() {
-//						public void run() {
-//							new AlertPopup(s,eventField);
-//						}
-//					});//create window
+
 					new AlertPopup(s,eventField,tempBox);
 					break;
 				}
 			}
-			//test if in the formulary
-
 		}
 		if (drugSpec.length<=1 && tempBox.isFired()){
 			tempBox.setFired(false);
@@ -164,31 +182,51 @@ public class SuggestionPanel extends VanillaPanel {
 			enterPress(this.boxList.size()-1,((JTextField) this.boxList.get(this.boxList.size()-1).getEditor().getEditorComponent()).getText().length());			
 		}
 	}
+//
+//	@Override
+//	public void changedUpdate(DocumentEvent arg0) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//	@Override
+//	public void insertUpdate(DocumentEvent arg0) {
+//		JTextField jt = (JTextField)arg0.getSource();
+//		allergyTest(jt);
+//		
+//	}
+//
+//	@Override
+//	public void removeUpdate(DocumentEvent arg0) {
+//		JTextField jt = (JTextField)arg0.getSource();
+//		allergyTest(jt);
+//		
+//	}
 
-	/**
-	 * test if the drug is allergy agent when keyboard input.
-	 */
-	@Override
-	public void keyPressed(KeyEvent e) {
-		super.keyPressed(e);
-		JTextField jt = (JTextField)e.getSource();
-		allergyTest(jt);
-//		FirableBox tempBox = (FirableBox)jt.getParent();
-//		//		int i = this.boxList.indexOf(tempBox);
-//		//		int pos = jt.getCaretPosition();
-//		String[] drugSpec = jt.getText().split(" ");
-//		if (drugSpec.length>1 && !tempBox.isFired()){
-//			for (String s: MainWindow.patientAllergy.pull()){
-//				if (s.equals(drugSpec[0])){
-//					new AlertPopup(s);
-//					tempBox.setFired(true);
-//				}
-//			}
-//		}
-//		if (drugSpec.length<=1 && tempBox.isFired()){
-//			tempBox.setFired(false);
-//		}
-	}
+//	/**
+//	 * test if the drug is allergy agent when keyboard input.
+//	 */
+//	@Override
+//	public void keyPressed(KeyEvent e) {
+//		super.keyPressed(e);
+//		JTextField jt = (JTextField)e.getSource();
+//		allergyTest(jt);
+////		FirableBox tempBox = (FirableBox)jt.getParent();
+////		//		int i = this.boxList.indexOf(tempBox);
+////		//		int pos = jt.getCaretPosition();
+////		String[] drugSpec = jt.getText().split(" ");
+////		if (drugSpec.length>1 && !tempBox.isFired()){
+////			for (String s: MainWindow.patientAllergy.pull()){
+////				if (s.equals(drugSpec[0])){
+////					new AlertPopup(s);
+////					tempBox.setFired(true);
+////				}
+////			}
+////		}
+////		if (drugSpec.length<=1 && tempBox.isFired()){
+////			tempBox.setFired(false);
+////		}
+//	}
 
 	public class SearchBoxModel extends AbstractListModel
 	implements ComboBoxModel, KeyListener, ItemListener{

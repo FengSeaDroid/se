@@ -61,6 +61,7 @@ public class VanillaPanel extends JPanel implements KeyListener  {
 		JPanel[] panels ={null,null};
 		panels[0] = new JPanel();
 		panels[1] = new VanillaPanel(width);
+		
 		JScrollPane scroll = new JScrollPane(panels[1]);
 		scroll.setBorder(null);
 		scroll.setPreferredSize(new Dimension(width,height));
