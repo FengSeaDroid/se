@@ -32,7 +32,8 @@ public class PinView extends JFrame implements ActionListener,FocusListener {
 		this.setSize(260, 100);
 		
 		this.refill=refill;
-
+		
+		pinPasswordField.setDocument(new JTextFieldLimit(10));
 
 		pinPanel.setLayout (new MigLayout()); 
 		pinPanel.add(pinLabel,"span 2,align center");

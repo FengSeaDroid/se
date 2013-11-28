@@ -47,6 +47,7 @@ public class PatientSearchView extends JPanel implements ActionListener{
 	@SuppressWarnings("unchecked")
 	public PatientSearchView() {
 		super(new MigLayout("", "50[100][250][100][250]50", ""));
+		mcpField.setDocument(new JTextFieldLimit(12));
 
 		JLabel nameLabel = new JLabel("Name: ");
 		nameLabel.setFont(new Font(nameLabel.getFont().getFontName(),Font.BOLD,nameLabel.getFont().getSize()+2));
