@@ -207,11 +207,12 @@ public class MainControl {
 			this.setPrescription(new Prescription(this.getPhysicianName()));
 		} else System.out.println("even no patient yet");
 		this.getPrescription().setEffectiveDate(effectiveDate);
+		this.getPrescription().setRefill(refill);
 		for (String s: drugLines){
 			this.getPrescription().addDrugLine(s);
 		}
-		this.getPrescription().save(refill);
-		GeneratePDF.generateReport(refill);
+		this.getPrescription().save();
+		GeneratePDF.generateReport();
 	}
 
 	/**

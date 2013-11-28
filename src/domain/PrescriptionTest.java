@@ -62,7 +62,7 @@ public class PrescriptionTest {
 		assertEquals(testPrescription.getDrugLines().size(),2);
 		testPrescription.setEffectiveDate("2014-05-31");
 		assertTrue(testPrescription.getEffectiveDate().equals("2014-05-31"));
-		testPrescription.save("11");
+		testPrescription.save();
 		assertFalse(testPrescription.isActive());
 	}
 	
@@ -73,7 +73,7 @@ public class PrescriptionTest {
 	public void testSaveFailCase(){
 		Prescription testP = new Prescription("physician","1999-9-9","1999-9-9",new HashSet<String>(Arrays.asList("Viagra 312 mg","testDrug 12 mg")));
 		assertFalse(testP.isActive());
-		testP.save("11");
+		testP.save();
 	}
 
 }
