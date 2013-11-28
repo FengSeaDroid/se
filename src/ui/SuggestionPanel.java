@@ -267,14 +267,22 @@ public class SuggestionPanel extends VanillaPanel {
 					jtf.setCaretPosition(currPos);
 				}
 			}
-			else if(e.getKeyCode() == KeyEvent.VK_ENTER)
-				cb.setSelectedIndex(cb.getSelectedIndex());
-			else if (cb.getEditor().getItem().toString().length()>4)
-			{
+			else if(e.getKeyCode() == KeyEvent.VK_ENTER){
+				// added this test so that enter can create new line
+				if (cb.getSelectedIndex()!= -1)
+					cb.setSelectedIndex(cb.getSelectedIndex());
+				cb.setSelectedIndex(-1);
+//				String s = (String)cbe.getItem();
+//				if (s.length()>4){//test if length = 5
+//					cbe.setItem(s+" ");
+//				}
+			}
+			else if (cb.getEditor().getItem().toString().length()>4){//this part is to test if length is 5
 				updateModel(cb.getEditor().getItem().toString());
 				cbe.setItem(str);
 				jtf.setCaretPosition(currPos);
-			}else{
+			}
+			else{//this part is to hide the box
 				updateModel("!@dummy item");
 				cbe.setItem(str);
 				jtf.setCaretPosition(currPos);
