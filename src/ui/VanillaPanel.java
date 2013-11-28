@@ -91,7 +91,7 @@ public class VanillaPanel extends JPanel implements KeyListener  {
 				
 			}
 		}
-		System.out.println("pulled size: "+output.size());
+//		System.out.println("pulled size: "+output.size());
 		return output;
 	}
 	
@@ -131,7 +131,7 @@ public class VanillaPanel extends JPanel implements KeyListener  {
 
 //		System.out.println("boxList size after: "+this.boxList.size());
 		for (String s : drugLines){
-			System.out.println("testing: "+s);
+//			System.out.println("testing: "+s);
 			if ((!currentSet.contains(s.trim()))&&(!s.trim().equals(""))){
 				currentSet.add(s.trim());
 				this.boxList.add(drugLine(s,edible));
