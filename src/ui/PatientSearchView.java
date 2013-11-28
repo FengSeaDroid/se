@@ -139,23 +139,27 @@ public class PatientSearchView extends JPanel implements ActionListener{
 			this.tel.setText(patient.getTel());
 			this.allergy = patient.getAllergy();
 			this.revalidate();
-			MainWindow.patientAllergy.populate(allergy, false);
 			
-			//take care below
-			this.prescriptionHistory = patient.getPrescriptionHistory();
-			List <String> drugsInHistory = new ArrayList<String>();
-			for(Prescription p: prescriptionHistory)
-
-			{
-				for(String s:p.getDrugLines()) {
-					drugsInHistory.add(s);
-					StringTokenizer st = new StringTokenizer(s, " "); 
-					String key = st.nextToken(); 
-					String[] data = {p.getIssueDate(),key};
-					MainWindow.patientPrescriptionHistory.getModel().addRow(data);
+			//if not, it's used for the history window
+			if (this == MainWindow.patientSearch){
+				MainWindow.patientAllergy.populate(allergy, false);	
+				//populate the history table
+				this.prescriptionHistory = patient.getPrescriptionHistory();
+				List <String> drugsInHistory = new ArrayList<String>();
+				for(Prescription p: prescriptionHistory)
+	
+				{
+					for(String s:p.getDrugLines()) {
+						drugsInHistory.add(s);
+						StringTokenizer st = new StringTokenizer(s, " "); 
+						String key = st.nextToken(); 
+						String[] data = {p.getIssueDate(),key};
+						MainWindow.patientPrescriptionHistory.getModel().addRow(data);
+					}
 				}
+				//to give the focus
+				MainWindow.drugLineView.clear();
 			}
-			MainWindow.drugLineView.clear();
 		}
 		else {
 			this.searchFail.setText("Patient is not found");
