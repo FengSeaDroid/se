@@ -73,22 +73,22 @@ public class PatientAllergyView extends JPanel implements ActionListener {
 		//handle empty patient exception
 		if(MainControl.getMainControl().getCurrentPatient()!=null){
 		
-		if(e.getSource()==saveAllergyButton){
-
-			try {
-				MainControl.getMainControl().getPatientManager().addAllergy(pull());
-				populate(pull(),false);
-				//			System.out.println("each click should pull twice ");
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+			if(e.getSource()==saveAllergyButton){
+	
+				try {
+					MainControl.getMainControl().getPatientManager().addAllergy(pull());
+					populate(pull(),false);
+					//			System.out.println("each click should pull twice ");
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
-		}
-		if(e.getSource()==addAllergyButton){
-			System.out.println("AddAllergyButton pressed");
-			JTextField tempJT = (JTextField)((VanillaPanel) this.innerPanels[1]).boxList.get(((VanillaPanel)this.innerPanels[1]).boxList.size()-1).getEditor().getEditorComponent();
-			((VanillaPanel) this.innerPanels[1]).enterPress(((VanillaPanel) this.innerPanels[1]).boxList.size()-1,tempJT.getText().length());
-		}
+			if(e.getSource()==addAllergyButton){
+				System.out.println("AddAllergyButton pressed");
+				JTextField tempJT = (JTextField)((VanillaPanel) this.innerPanels[1]).boxList.get(((VanillaPanel)this.innerPanels[1]).boxList.size()-1).getEditor().getEditorComponent();
+				((VanillaPanel) this.innerPanels[1]).enterPress(((VanillaPanel) this.innerPanels[1]).boxList.size()-1,tempJT.getText().length());
+			}
 
 		}
 	}
