@@ -86,10 +86,12 @@ public class VanillaPanel extends JPanel implements KeyListener  {
 		Set<String> output = new HashSet<String>();
 		for (int i = 0; i<this.boxList.size();i++){
 			JTextField jt = (JTextField)this.boxList.get(i).getEditor().getEditorComponent();
-			if (!jt.getText().equals("")){
-				output.add(jt.getText());
+			if (!jt.getText().trim().equals("")){
+				output.add(jt.getText().trim());
+				
 			}
 		}
+		System.out.println("pulled size: "+output.size());
 		return output;
 	}
 	
@@ -104,27 +106,43 @@ public class VanillaPanel extends JPanel implements KeyListener  {
 		if (drugLines == null){
 			drugLines = new HashSet<String>();
 		}
-		
 		Set<String> currentSet = new HashSet<String>();
-		for (int i = 0; i<this.boxList.size();i++){
-			JTextField jt = (JTextField)this.boxList.get(i).getEditor().getEditorComponent();
-			if (!jt.getText().equals("")){
-				currentSet.add(jt.getText());
+//		for (int i = 0; i<this.boxList.size();i++){
+//			JTextField jt = (JTextField)this.boxList.get(i).getEditor().getEditorComponent();
+//			if (jt.getText().trim().equals("")||currentSet.contains(jt.getText().trim())){
+////				this.boxList.remove(i);
+//			}
+//			else {
+//				currentSet.add(jt.getText().trim());
+//			}
+//		}
+		// use while loop coz the size of the arraylist may change.
+		int index = 0;
+		while (index < this.boxList.size()){
+			JTextField jt = (JTextField)this.boxList.get(index).getEditor().getEditorComponent();
+			if (jt.getText().trim().equals("")||currentSet.contains(jt.getText().trim())){
+				this.boxList.remove(index);
 			}
 			else {
-				this.boxList.remove(i);
+				currentSet.add(jt.getText().trim());
+				index++;
 			}
 		}
+
+//		System.out.println("boxList size after: "+this.boxList.size());
 		for (String s : drugLines){
-			if (!currentSet.contains(s)&&!s.equals("")){
+			System.out.println("testing: "+s);
+			if ((!currentSet.contains(s.trim()))&&(!s.trim().equals(""))){
+				currentSet.add(s.trim());
 				this.boxList.add(drugLine(s,edible));
+//				System.out.println("added");
 			}
 		}
 		reDraw();
 		this.boxList.get(this.boxList.size()-1).requestFocusInWindow();
 //		enterPress(this.boxList.size()-1,((JTextComponent) this.boxList.get(this.boxList.size()-1).getEditor().getEditorComponent()).getText().length());
 		
-		//sorted way will ruin the flag
+		//sorted way will ruin the allergy check flag
 //		for (int i = 0; i<this.boxList.size();i++){
 //			JTextField jt = (JTextField)this.boxList.get(i).getEditor().getEditorComponent();
 //			if (!jt.getText().equals("")){

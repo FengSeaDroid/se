@@ -60,7 +60,7 @@ public class PatientAllergyView extends JPanel implements ActionListener {
 		try {
 			MainControl.getMainControl().getPatientManager().addAllergy(pull());
 			populate(pull(),false);
-//			System.out.println("this should be added: "+pull().size());
+//			System.out.println("each click should pull twice ");
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
