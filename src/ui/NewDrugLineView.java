@@ -33,6 +33,7 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 	private JLabel printMessage;
 	private JLabel dateMessage;
 	private JTextField refill;
+	private DateChooser dateChooser;
 	
 	public String getEffectiveDate(){
 		if (effectiveDate.getText().equals("")||effectiveDate.getText().equals(new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()))){
@@ -66,7 +67,11 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 	 */
 	public void setEdible(boolean v){
 		this.buttonView.setVisible(v);
-		this.dateView.setVisible(v);
+		this.dateView.setVisible(true);
+		this.effectiveDate.setEditable(false);
+		this.refill.setEditable(false);
+//		dateChooser.disable();
+
 	}
 
 	public void populate(String s,boolean edible){
@@ -97,7 +102,6 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 		JPanel effectiveDatePanel = new JPanel(new MigLayout("wrap 2","[]","[][]"));
 		effectiveDatePanel.add(new JLabel("Effective Date:  "),"align left");
 		
-		
 		effectiveDate=new JTextField(10);
 		String date = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
 		TextPrompt effectiveDatePrompt =new TextPrompt(date,effectiveDate);
@@ -110,7 +114,7 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 		effectiveDate.addFocusListener(dateListener);
 //		effectiveDate.setName("effectiveDateView");
 		//datechooser here
-		DateChooser dateChooser = DateChooser.getInstance("yyyy-MM-dd");
+		dateChooser = DateChooser.getInstance("yyyy-MM-dd");
 		dateChooser.register(effectiveDate);
 		effectiveDatePanel.add(effectiveDate,"align left, wrap");
 		dateMessage = new JLabel(" ");

@@ -193,7 +193,7 @@ public class PatientManager {
 					System.out.println("prescriptiob details not addes"+maxID+" "+medicine[0]);
 
 					dbconnection.manipulateData("insert into prescription_spec(prescription_id,medicine_name,medicine_spec) "
-							+ "values ('"+maxID+"','"+medicine[0]+"','"+null+"')");
+							+ "values ('"+maxID+"','"+medicine[0]+"','"+""+"')");
 					
 					//throw new IllegalArgumentException("Drug specification not exists.");
 				}
