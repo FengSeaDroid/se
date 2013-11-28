@@ -82,7 +82,7 @@ public class PinView extends JFrame implements ActionListener,FocusListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==printButton || e.getSource()==pinPasswordField){
-			if(pinPasswordField.getText().equals(MainControl.getMainControl().getPhysicianPassword()))
+			if(pinPasswordField.getText().equals(MainControl.getMainControl().getPhysicianPin()))
 			{
 				//Print report method for report
 				try {

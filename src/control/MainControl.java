@@ -85,6 +85,15 @@ public class MainControl {
 		System.out.println("Thats the physician Password"+physicianPassword);
 		this.physicianPassword = physicianPassword;
 	}
+	
+	public String physicianPin;
+	
+	public String getPhysicianPin() {
+		return physicianPin;
+	}
+	public void setPhysicianPin(String physicianPin) {
+		this.physicianPin = physicianPin;
+	}
 	/**
 	 * When the controller is needed, call this to get it.
 	 * 
