@@ -46,7 +46,7 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 
 	public NewDrugLineView() {
 		super(new MigLayout("wrap 3","0[grow]0[grow]0[grow]0","0[]0[]0[]0[]0"));
-				innerPanels = SuggestionPanel.fillerWithScroll(MainWindow.d.width*2/3-80,200);
+				innerPanels = SuggestionPanel.fillerWithScroll(MainWindow.d.width*2/3-80, MainWindow.d.height*3/7);
 		innerPanels[0].setBorder(BorderFactory.createTitledBorder(""));
 		this.add(innerPanels[0],"wrap");
 		

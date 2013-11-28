@@ -37,7 +37,7 @@ public class MainWindow extends JPanel {
 				drugLineView != null &&
 				patientAllergy != null &&
 				patientPrescriptionHistory != null){
-//			patientSearch.clear();
+			patientSearch.clear();
 			drugLineView.clear();
 			patientAllergy.clear();
 			patientPrescriptionHistory.clear();
