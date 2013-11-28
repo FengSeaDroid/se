@@ -46,11 +46,11 @@ public class PinView extends JFrame implements ActionListener,FocusListener {
 
 
 		printButton=new JButton("Print");
-		pinPanel.add(printButton,"left");
+		pinPanel.add(printButton,"left,,width :80:");
 		printButton.addActionListener(this);
 
 		cancelButton=new JButton("Cancel");
-		pinPanel.add(cancelButton,"right");
+		pinPanel.add(cancelButton,"right,,width :80:");
 		cancelButton.addActionListener(this);
 		
 		pinPanel.add(msgLabel,"span");
