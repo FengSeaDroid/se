@@ -21,7 +21,7 @@ public class PinView extends JFrame implements ActionListener,FocusListener {
 	private JPanel pinPanel=new JPanel(new MigLayout("wrap 3","[grow][grow][grow]","[][][][]"));
 	private JButton printButton;
 	private JButton cancelButton;
-	private JLabel pinLabel=new JLabel("Please type in your pin number:");
+	private JLabel pinLabel=new JLabel("Please type in your pin number: ");
 	private JPasswordField pinPasswordField=new JPasswordField(20);
 	private JLabel msgLabel=new JLabel();
 	private String refill;
@@ -36,17 +36,17 @@ public class PinView extends JFrame implements ActionListener,FocusListener {
 		pinPasswordField.setDocument(new JTextFieldLimit(10));
 
 		pinPanel.setLayout (new MigLayout()); 
-		pinPanel.add(pinLabel,"span 2,align center");
+		pinPanel.add(pinLabel,"right");
 
 		pinPasswordField=new JPasswordField(10);
 		//pinPanel.add(pinPasswordField);
 		//pinPasswordField.setSize(100, 100);
-		pinPanel.add(pinPasswordField,"wrap, center");	
+		pinPanel.add(pinPasswordField,"wrap");	
 		pinPasswordField.addActionListener(this);
 
 
 		printButton=new JButton("Print");
-		pinPanel.add(printButton,"left,,width :80:");
+		pinPanel.add(printButton,"right,,width :80:");
 		printButton.addActionListener(this);
 
 		cancelButton=new JButton("Cancel");
@@ -74,11 +74,6 @@ public class PinView extends JFrame implements ActionListener,FocusListener {
 		this.setVisible(true);
 	}
 
-//	public static void main(String[] args){
-//		JFrame jf=new PinView(this.refill);
-//		//jf.setVisible(true);
-//		jf.setLocationRelativeTo(null);
-//	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

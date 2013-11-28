@@ -69,10 +69,9 @@ public class PatientSearchView extends JPanel implements ActionListener{
 			}
 		});
 		nameField.setRenderer(new ComboBoxRenderer());
-//		ImageIcon icon = new ImageIcon("wavy.png", "wavy-line border icon"); //56x20
-//		Border border = BorderFactory.createMatteBorder(0,0,3,0, icon);
-//		nameField.setBorder(border);
-		((JComponent) nameField.getEditor().getEditorComponent()).setBorder(BorderFactory.createEmptyBorder(2,10, 2, 2));
+		JTextField jt = (JTextField) nameField.getEditor().getEditorComponent();
+		jt.setBorder(BorderFactory.createEmptyBorder(2,10, 2, 2));
+//		jt.setDocument(new JTextFieldLimit(30));
 		//create the model
 		SearchNameModel sbm = new SearchNameModel(this,nameField,MainControl.getMainControl().getPatientManager().getPatientList());
 		//set the model on the combobox
@@ -139,23 +138,27 @@ public class PatientSearchView extends JPanel implements ActionListener{
 			this.tel.setText(patient.getTel());
 			this.allergy = patient.getAllergy();
 			this.revalidate();
-			MainWindow.patientAllergy.populate(allergy, false);
 			
-			//take care below
-			this.prescriptionHistory = patient.getPrescriptionHistory();
-			List <String> drugsInHistory = new ArrayList<String>();
-			for(Prescription p: prescriptionHistory)
-
-			{
-				for(String s:p.getDrugLines()) {
-					drugsInHistory.add(s);
-					StringTokenizer st = new StringTokenizer(s, " "); 
-					String key = st.nextToken(); 
-					String[] data = {p.getIssueDate(),key};
-					MainWindow.patientPrescriptionHistory.getModel().addRow(data);
+			//if not, it's used for the history window
+			if (this == MainWindow.patientSearch){
+				MainWindow.patientAllergy.populate(allergy, false);	
+				//populate the history table
+				this.prescriptionHistory = patient.getPrescriptionHistory();
+				List <String> drugsInHistory = new ArrayList<String>();
+				for(Prescription p: prescriptionHistory)
+	
+				{
+					for(String s:p.getDrugLines()) {
+						drugsInHistory.add(s);
+						StringTokenizer st = new StringTokenizer(s, " "); 
+						String key = st.nextToken(); 
+						String[] data = {p.getIssueDate(),key};
+						MainWindow.patientPrescriptionHistory.getModel().addRow(data);
+					}
 				}
+				//to give the focus
+				MainWindow.drugLineView.clear();
 			}
-			MainWindow.drugLineView.clear();
 		}
 		else {
 			this.searchFail.setText("Patient is not found");
@@ -251,14 +254,20 @@ public class PatientSearchView extends JPanel implements ActionListener{
 
 			if(e.getKeyChar() == KeyEvent.CHAR_UNDEFINED){
 				if(e.getKeyCode() != KeyEvent.VK_ENTER ){
+					//limit the length
+					if(str.length()>30){
+						str = str.substring(0, 30);
+					}
+
 					cbe.setItem(str);
 					jtf.setCaretPosition(currPos);
+
 				}
 			}
 			else if(e.getKeyCode() == KeyEvent.VK_ENTER){
 				cb.setSelectedIndex(cb.getSelectedIndex());
 				JTextField jt = (JTextField)cb.getEditor().getEditorComponent();
-				System.out.println(jt.getText());
+//				System.out.println(jt.getText());
 				if (jt.getText().split(";").length==3){
 					mcp=jt.getText().split(";")[2];
 					filler.fill(mcp);
@@ -272,6 +281,10 @@ public class PatientSearchView extends JPanel implements ActionListener{
 //			}
 			else {
 				updateModel(cb.getEditor().getItem().toString());
+				//limit the length
+				if(str.length()>30){
+					str = str.substring(0, 30);
+				}
 				cbe.setItem(str);
 				jtf.setCaretPosition(currPos);
 			}
