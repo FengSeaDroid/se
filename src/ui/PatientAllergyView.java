@@ -32,22 +32,20 @@ public class PatientAllergyView extends JPanel implements ActionListener {
 		super.setLayout(new MigLayout("","0[]0[]0","0[]0[]0"));
 		this.setPreferredSize(new Dimension(MainWindow.d.width/3,MainWindow.d.height/2));
 		innerPanels = MousePanel.fillerWithScroll(MainWindow.d.width/3-80,MainWindow.d.height/2-150);
-		this.add(innerPanels[0],"wrap");
-		saveAllergyButton = new EnterButton("Save Allergy");
-		//saveAllergyButton.setPreferredSize(new Dimension((int) (MainWindow.d.width*0.75/4),20));
-		saveAllergyButton.addActionListener(this);
-		this.add(saveAllergyButton,"left");
-		this.setBorder(BorderFactory.createTitledBorder("Patient Allergy"));
-
+		this.add(innerPanels[0],"wrap,span");
+		
 		addAllergyButton=new EnterButton("Add Allergy");
 		//addAllergyButton.setPreferredSize(new Dimension((int) (MainWindow.d.width*0.75/4),20));
 		addAllergyButton.addActionListener(this);
-		this.add(addAllergyButton,"right");
+		this.add(addAllergyButton,"right,width :220:");
 		this.setBorder(BorderFactory.createTitledBorder("Patient Allergy"));
-
-
-
-
+		
+		saveAllergyButton = new EnterButton("Save Allergy");
+		//saveAllergyButton.setPreferredSize(new Dimension((int) (MainWindow.d.width*0.75/4),20));
+		saveAllergyButton.addActionListener(this);
+		this.add(saveAllergyButton,"left,wrap,width :220:");
+		
+		this.setBorder(BorderFactory.createTitledBorder("Patient Allergy"));
 
 		// save the command mapping for space
 		Object spaceMap = saveAllergyButton.getInputMap().get(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0, true));
