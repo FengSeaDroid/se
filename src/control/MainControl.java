@@ -255,5 +255,7 @@ public class MainControl {
 		MainControl.getMainControl().setPhysicianID("1");
 		MainControl.getMainControl().locum="0";
 		MainControl.getMainControl().setPhysicianPassword("111");
+		MainControl.getMainControl().setPhysicianPin("111");
+
 	}
 }

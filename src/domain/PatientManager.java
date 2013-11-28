@@ -185,17 +185,26 @@ public class PatientManager {
 			System.out.println("prescription spec number is :"+drugs.size());
 
 			for (String s : drugs) {
+				s=s.trim();
 				String[] medicine=s.split(" ");
 				String spec ="";
+				
 				if (medicine.length<2){
-					throw new IllegalArgumentException("Drug specification not exists.");
+					System.out.println("prescriptiob details not addes"+maxID+" "+medicine[0]);
+
+					dbconnection.manipulateData("insert into prescription_spec(prescription_id,medicine_name,medicine_spec) "
+							+ "values ('"+maxID+"','"+medicine[0]+"','"+null+"')");
+					
+					//throw new IllegalArgumentException("Drug specification not exists.");
 				}
+				else if(medicine.length>=2){
+					
 				for (int i=1;i<medicine.length;i++){
 					spec = spec + medicine[i];
 				}
 				System.out.println("prescriptiob details to add"+maxID+" "+medicine[0]+spec);
 				dbconnection.manipulateData("insert into prescription_spec(prescription_id,medicine_name,medicine_spec) values ('"+maxID+"','"+medicine[0]+"','"+spec+"')");
-
+				}
 			}
 
 		}
