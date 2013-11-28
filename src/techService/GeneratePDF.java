@@ -67,11 +67,14 @@ public class GeneratePDF {
 	 * to generate the PDF report
 	 */
 	public static void generateReport(String refillParam) throws Exception{
+		
 		refill=refillParam;
 		document= new Document();
-		document.setPageSize(PageSize.A5 );
+		document.setPageSize(PageSize.NOTE);
+		
 		PdfWriter pdfReader=PdfWriter.getInstance(document, new FileOutputStream(File));
 		pdfReader.setViewerPreferences(PdfWriter.FitWindow);
+
 		document.open();
 		//addMetaData(document);
 		generatePrescriptionInformarmation();
@@ -211,7 +214,7 @@ public class GeneratePDF {
 		Image image = Image.getInstance("text.jpg");
 		image.setAlignment(Element.ALIGN_RIGHT);
 		//image.setAbsolutePosition(500f, 650f);
-		image.scaleAbsolute(100f, 50f);
+		image.scaleAbsolute(80f, 40f);
 
 		document.add(image);
 	}
@@ -227,7 +230,8 @@ public class GeneratePDF {
 	}
 	
 	private static void createRefill() throws DocumentException{
-		Paragraph refillParagraph=new Paragraph("Refill: "+refill,tableFont);
+		Paragraph refillParagraph=new Paragraph("Refill: "+refill,new Font(Font.FontFamily.TIMES_ROMAN, 12,Font.UNDERLINE));
+		//addEmptyLine(refillParagraph,3);
 		refillParagraph.setAlignment(Element.ALIGN_LEFT);
 		refillParagraph.setIndentationLeft(5);
 		document.add(refillParagraph);
