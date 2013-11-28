@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.StringTokenizer;
 
@@ -123,12 +124,21 @@ public class PrescriptionHistoryView extends JPanel implements MouseListener {
 					for (int i=0;i<selection.length;i++){
 						int a=selection[i];
 						String drugName=(String) historyTable.getModel().getValueAt(a, 1);
-					
-						for(String drugLine:clickedPrescription.getDrugLines()){
-							String[] drug=drugLine.split(" ");
-							if(drug[0].equals(drugName))
-							{
-								MainWindow.drugLineView.populate(drugLine,true);
+						String time=(String) historyTable.getModel().getValueAt(a, 0);
+						System.out.println("***"+drugName);
+						System.out.println("***"+time);
+						
+						Iterator<Prescription> iter=prescriptionHistory.iterator();
+						while (iter.hasNext()) {
+							Prescription pres = (Prescription) iter.next();
+							if(pres.getIssueDate()==time){
+								for(String drugLine:pres.getDrugLines()){
+									String[] drug=drugLine.split(" ");
+									if(drug[0].equals(drugName))
+									{
+										MainWindow.drugLineView.populate(drugLine,true);
+									}
+								}
 							}
 						}
 					}
