@@ -194,7 +194,7 @@ public class VanillaPanel extends JPanel implements KeyListener  {
 		jt.setText(s);
 		jt.setEnabled(edible);
 		jt.setDisabledTextColor(Color.BLACK);
-		jt.setDocument(new JTextFieldLimit(20));
+//		jt.setDocument(new JTextFieldLimit(20));
 		return drug;
 	}
 	

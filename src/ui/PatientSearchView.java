@@ -255,9 +255,9 @@ public class PatientSearchView extends JPanel implements ActionListener{
 			if(e.getKeyChar() == KeyEvent.CHAR_UNDEFINED){
 				if(e.getKeyCode() != KeyEvent.VK_ENTER ){
 					//limit the length
-					if(str.length()>30){
-						str = str.substring(0, 30);
-					}
+//					if(str.length()>30){
+//						str = str.substring(0, 30);
+//					}
 
 					cbe.setItem(str);
 					jtf.setCaretPosition(currPos);
@@ -282,9 +282,9 @@ public class PatientSearchView extends JPanel implements ActionListener{
 			else {
 				updateModel(cb.getEditor().getItem().toString());
 				//limit the length
-				if(str.length()>30){
-					str = str.substring(0, 30);
-				}
+//				if(str.length()>30){
+//					str = str.substring(0, 30);
+//				}
 				cbe.setItem(str);
 				jtf.setCaretPosition(currPos);
 			}

@@ -97,7 +97,7 @@ public class SuggestionPanel extends VanillaPanel {
 		jt.setText(s);
 		jt.setEnabled(edible);
 		jt.setDisabledTextColor(Color.BLACK);
-		jt.setDocument(new JTextFieldLimit(70));
+//		jt.setDocument(new JTextFieldLimit(70));
 		jt.getDocument().addDocumentListener(new DocumentListener(){
 
 			@Override

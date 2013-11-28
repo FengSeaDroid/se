@@ -33,7 +33,7 @@ public class HistoryWindow extends JPanel {
 		drugLineView = new NewDrugLineView();
 		//Disable patient search view
 		patientSearchView.setEdible(false);
-		drugLineView.setEdible(false);
+		drugLineView.disable();
 
 		this.add(clinicInfoView,"cell 0 0, center, wrap");
 		this.add(patientSearchView, "cell 0 1, center, wrap");
