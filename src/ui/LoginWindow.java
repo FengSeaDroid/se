@@ -93,7 +93,7 @@ public class LoginWindow extends JFrame implements ActionListener,FocusListener{
 		//String physician_id=MainControl.getMainControl().getPhysicianID();
 		//System.out.println("physician id is"+physician_id);
 		//physician table (physician_id	name	username	password	signature)
-		ResultSet userpassResult=PatientManager.getPatientManager().getDBConnection().execQuery("select username,password,physician_id,locum from physician");
+		ResultSet userpassResult=PatientManager.getPatientManager().getDBConnection().execQuery("select username,password,physician_id,locum,pin from physician");
 
 		while (userpassResult.next()){
 			if(userpassResult.getString("username").equals(this.getUsername())){
@@ -107,16 +107,17 @@ public class LoginWindow extends JFrame implements ActionListener,FocusListener{
 					MainControl.getMainControl().setLocum(userpassResult.getString("Locum"));
 					MainControl.getMainControl().setPhysicianUserName(this.getUsername());
 					MainControl.getMainControl().setPhysicianPassword(this.getPassword());
+					MainControl.getMainControl().setPhysicianPin(userpassResult.getString("pin"));
 					System.out.println("physician ID is"+userpassResult.getString("physician_id"));
 					return true;
 				}
 				else{
 					System.out.println("Wrong Password");
-					msgLabel.setText("Wrong Password");
+					msgLabel.setText("Invalid User and/or Password");
 				}
 			}
 			else{
-				msgLabel.setText("Wrong UserName");
+				msgLabel.setText("Invalid User and/or Password");
 				System.out.println("Wrong UserName");
 				System.out.println("User from textField"+userpassResult.getString("username"));
 				System.out.println("User from textField"+this.getUsername());

@@ -47,7 +47,7 @@ public class GeneratePDF {
 
 	private static String temp_file = MainControl.getMainControl().getPrescription().getEffectiveDate()+".pdf";
 	private static String File=temp_file.replaceAll(":", "-");
-	private static String refill;
+	private static String refill=MainControl.getMainControl().getPrescription().getRefill();
 	private static Font titleFont = new Font(Font.FontFamily.TIMES_ROMAN, 16,
 			Font.BOLD);
 	private static Font rxFont = new Font(Font.FontFamily.TIMES_ROMAN, 20,
@@ -66,9 +66,8 @@ public class GeneratePDF {
 	 * the only public method that can be called\
 	 * to generate the PDF report
 	 */
-	public static void generateReport(String refillParam) throws Exception{
+	public static void generateReport() throws Exception{
 		
-		refill=refillParam;
 		document= new Document();
 		document.setPageSize(PageSize.NOTE);
 		

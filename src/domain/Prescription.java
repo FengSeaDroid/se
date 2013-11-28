@@ -95,6 +95,16 @@ public class Prescription {
 		if (this.isActive() == false) throw new IllegalStateException();
 		this.effectiveDate = effectiveDate;
 	}
+	
+	private String refill;
+
+	public String getRefill() {
+		return refill;
+	}
+
+	public void setRefill(String refill) {
+		this.refill = refill;
+	}
 
 	private Set<String> drugLines;
 
@@ -111,10 +121,10 @@ public class Prescription {
 		this.drugLines.add(drugLine);
 	}
 	
-	public void save(String refill) throws IllegalStateException{
+	public void save() throws IllegalStateException{
 		if (this.isActive() == false) throw new IllegalStateException();
 		this.achieve();
 		this.issue();
-		MainControl.getMainControl().getPatientManager().savePrescription(this,refill);
+		MainControl.getMainControl().getPatientManager().savePrescription(this);
 	}
 }
