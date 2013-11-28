@@ -69,10 +69,9 @@ public class PatientSearchView extends JPanel implements ActionListener{
 			}
 		});
 		nameField.setRenderer(new ComboBoxRenderer());
-//		ImageIcon icon = new ImageIcon("wavy.png", "wavy-line border icon"); //56x20
-//		Border border = BorderFactory.createMatteBorder(0,0,3,0, icon);
-//		nameField.setBorder(border);
-		((JComponent) nameField.getEditor().getEditorComponent()).setBorder(BorderFactory.createEmptyBorder(2,10, 2, 2));
+		JTextField jt = (JTextField) nameField.getEditor().getEditorComponent();
+		jt.setBorder(BorderFactory.createEmptyBorder(2,10, 2, 2));
+		jt.setDocument(new JTextFieldLimit(30));
 		//create the model
 		SearchNameModel sbm = new SearchNameModel(this,nameField,MainControl.getMainControl().getPatientManager().getPatientList());
 		//set the model on the combobox
