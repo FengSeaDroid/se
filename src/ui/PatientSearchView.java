@@ -121,9 +121,12 @@ public class PatientSearchView extends JPanel implements ActionListener{
 	}
 
 	public void fill(String mcp){
+		if (this==MainWindow.patientSearch){
+			MainWindow.clear();
+		}
 //		MainWindow.clear();
 		Patient patient = MainControl.getMainControl().lookupPatient(mcp);
-		this.clear();
+//		this.clear();
 //		System.out.println("it should be cleared");
 		if (patient != null){
 			this.searchFail.setText("");
