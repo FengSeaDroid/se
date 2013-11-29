@@ -45,8 +45,8 @@ import domain.Prescription;
  */
 public class GeneratePDF {
 
-	private static String temp_file = MainControl.getMainControl().getPrescription().getEffectiveDate()+".pdf";
-	private static String File=temp_file.replaceAll(":", "-");
+	private static String temp_file;
+	private static String File;
 	private static String refill=MainControl.getMainControl().getPrescription().getRefill();
 	private static Font titleFont = new Font(Font.FontFamily.TIMES_ROMAN, 16,
 			Font.BOLD);
@@ -68,9 +68,12 @@ public class GeneratePDF {
 	 */
 	public static void generateReport() throws Exception{
 		
+		temp_file = MainControl.getMainControl().getPrescription().getIssueDate()+".pdf";
+		System.out.println("Temp file naame is" +MainControl.getMainControl().getPrescription().getIssueDate()+".pdf");
+		File=temp_file.replaceAll(":", "-");
 		document= new Document();
 		document.setPageSize(PageSize.NOTE);
-		
+		System.out.println("Effective date is PDF= "+File);
 		PdfWriter pdfReader=PdfWriter.getInstance(document, new FileOutputStream(File));
 		pdfReader.setViewerPreferences(PdfWriter.FitWindow);
 
@@ -112,7 +115,7 @@ public class GeneratePDF {
 		// We add one empty line
 		addEmptyLine(prescriptionParagraph, 1);
 		// Lets write a big header
-		Paragraph prescriptionTitle=new Paragraph("Gerard Farrell\n Clinic Name \n Clinic Address\n ClinicTell", titleFont);
+		Paragraph prescriptionTitle=new Paragraph(""+MainControl.getMainControl().getPhysicianName()+"\n Clinic Name \n Clinic Address\n ClinicTell", titleFont);
 		addEmptyLine(prescriptionTitle, 2);
 
 		prescriptionTitle.setAlignment(Element.ALIGN_CENTER);
@@ -140,6 +143,7 @@ public class GeneratePDF {
 			Paragraph drugline=new Paragraph(s);
 			drugline.setIndentationLeft(100);
 			grugInformation.add(drugline);
+			System.out.println("Drug line to be added in the PDF "+s);
 
 		}
 		addEmptyLine(grugInformation,1);
