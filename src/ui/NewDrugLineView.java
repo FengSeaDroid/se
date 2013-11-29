@@ -54,9 +54,9 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 
 	public NewDrugLineView() {
 		super(new MigLayout("wrap 3","0[grow]0[grow]0[grow]0","0[]0[]0[]0[]0"));
-		innerPanels = SuggestionPanel.fillerWithScroll(MainWindow.d.width*2/3-80, MainWindow.d.height*2/5);
+		innerPanels = SuggestionPanel.fillerWithScroll(MainWindow.d.width*2/3-80, MainWindow.d.height*3/7);
 		innerPanels[0].setBorder(BorderFactory.createTitledBorder(""));
-		this.add(innerPanels[0],"wrap");
+		this.add(innerPanels[0],"wrap,grow");
 		
 		dateView = sigAndDate();
 		buttonView = buttonView();
@@ -80,7 +80,8 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 		for (MouseListener ml:effectiveDate.getMouseListeners()){
 			effectiveDate.removeMouseListener(ml);
 		}
-//		dateChooser.disable();
+		this.effectiveDate.setEnabled(false);
+		this.refill.setEnabled(false);
 		
 
 	}

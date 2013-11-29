@@ -44,8 +44,9 @@ public class SuggestionPanel extends VanillaPanel {
 		panels[1] = new SuggestionPanel(width);
 		JScrollPane scroll = new JScrollPane(panels[1]);
 		scroll.setBorder(null);
-		scroll.setPreferredSize(new Dimension(width,height));
+		scroll.setPreferredSize(new Dimension(width-20,height-140));
 		panels[0].add(scroll);
+		panels[0].setPreferredSize(new Dimension(width,height));
 		return panels;
 	}
 	
