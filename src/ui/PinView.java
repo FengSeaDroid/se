@@ -24,15 +24,16 @@ public class PinView extends JFrame implements ActionListener,FocusListener {
 	private JLabel pinLabel=new JLabel("Please type in your pin number: ");
 	private JPasswordField pinPasswordField=new JPasswordField(20);
 	private JLabel msgLabel=new JLabel();
-	private String refill;
+	private final NewDrugLineView drugLineView;
+//	private String refill;
 
-	public PinView(String refill) {
+	public PinView(final NewDrugLineView dlv) {
 
 		super("Print Authentication Window");
 		this.setSize(260, 100);
 		
-		this.refill=refill;
-		
+//		this.refill=refill;
+		this.drugLineView = dlv;
 		pinPasswordField.setDocument(new JTextFieldLimit(10));
 
 		pinPanel.setLayout (new MigLayout()); 
@@ -72,6 +73,13 @@ public class PinView extends JFrame implements ActionListener,FocusListener {
 
 		this.add(pinPanel);
 		this.setVisible(true);
+		
+		this.addWindowListener(new java.awt.event.WindowAdapter() {
+		    @Override
+		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+		       drugLineView.isPinShown = false;
+		    }
+		});
 	}
 
 
@@ -82,8 +90,10 @@ public class PinView extends JFrame implements ActionListener,FocusListener {
 			{
 				//Print report method for report
 				try {
-					MainControl.getMainControl().print(MainWindow.drugLineView.pull(), MainWindow.drugLineView.getEffectiveDate(),refill);
-					MainWindow.clear();
+//					MainControl.getMainControl().print(MainWindow.drugLineView.pull(), MainWindow.drugLineView.getEffectiveDate(),refill);
+//					MainWindow.clear();
+					this.drugLineView.print();
+					this.drugLineView.isPinShown=false;
 					this.dispose();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
@@ -97,6 +107,7 @@ public class PinView extends JFrame implements ActionListener,FocusListener {
 			}
 		}
 		if(e.getSource()==cancelButton){
+			this.drugLineView.isPinShown=false;
 			this.dispose();
 		}
 	}

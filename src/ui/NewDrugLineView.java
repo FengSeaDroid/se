@@ -54,7 +54,7 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 
 	public NewDrugLineView() {
 		super(new MigLayout("wrap 3","0[grow]0[grow]0[grow]0","0[]0[]0[]0[]0"));
-				innerPanels = SuggestionPanel.fillerWithScroll(MainWindow.d.width*2/3-80, MainWindow.d.height*2/5);
+		innerPanels = SuggestionPanel.fillerWithScroll(MainWindow.d.width*2/3-80, MainWindow.d.height*2/5);
 		innerPanels[0].setBorder(BorderFactory.createTitledBorder(""));
 		this.add(innerPanels[0],"wrap");
 		
@@ -173,6 +173,16 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 		return printView;
 	
 	}
+	
+	/*
+	 * 
+	 */
+	protected void print() throws Exception{
+		MainControl.getMainControl().print(MainWindow.drugLineView.pull(), MainWindow.drugLineView.getEffectiveDate(),MainWindow.drugLineView.getRefill());
+		MainWindow.clear();
+	}
+	
+	protected boolean isPinShown = false;
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -184,8 +194,9 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 			{
 				//Call print PDF directly without showing the pin
 				try {
-					MainControl.getMainControl().print(MainWindow.drugLineView.pull(), MainWindow.drugLineView.getEffectiveDate(),MainWindow.drugLineView.getRefill());
-					MainWindow.clear();
+//					MainControl.getMainControl().print(MainWindow.drugLineView.pull(), MainWindow.drugLineView.getEffectiveDate(),MainWindow.drugLineView.getRefill());
+//					MainWindow.clear();
+					print();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -193,8 +204,10 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 			}
 			else
 			{
-				new PinView(this.getRefill());
-	
+				if (this.isPinShown == false){
+					this.isPinShown = true;
+					new PinView(this);
+				}
 			}
 		}
 	}
