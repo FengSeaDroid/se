@@ -57,8 +57,8 @@ public class GeneratePDF {
 
 	private static Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12,
 			Font.BOLD);
-	private static Patient patient=MainControl.getMainControl().getCurrentPatient();
-	private static Prescription prescription=MainControl.getMainControl().getPrescription();
+	private static Patient patient;
+	private static Prescription prescription;
 	private static Document document;
 
 
@@ -71,6 +71,8 @@ public class GeneratePDF {
 		temp_file = MainControl.getMainControl().getPrescription().getIssueDate()+".pdf";
 		System.out.println("Temp file naame is" +MainControl.getMainControl().getPrescription().getIssueDate()+".pdf");
 		File=temp_file.replaceAll(":", "-");
+		prescription=MainControl.getMainControl().getPrescription();
+		patient=MainControl.getMainControl().getCurrentPatient();
 		document= new Document();
 		document.setPageSize(PageSize.NOTE);
 		System.out.println("Effective date is PDF= "+File);
