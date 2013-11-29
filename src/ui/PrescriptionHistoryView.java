@@ -105,17 +105,18 @@ public class PrescriptionHistoryView extends JPanel implements MouseListener {
 
 			for(Prescription p: prescriptionHistory)
 			{
-				if(p.getIssueDate() == date)
+				if(p.getIssueDate().equals(date))
 				{
 					prescriptionRenew.add(p);
 					clickedPrescription = p;
-					System.out.println(p.getIssueDate());
+					System.out.println("Thats the first click prescription"+clickedPrescription.getIssueDate());
 				}
 			}
 
 			JPopupMenu popupMenu = new JPopupMenu();
 
 			JMenuItem renewDrug=new JMenuItem("Renew Drug");
+			popupMenu.add(renewDrug);
 			renewDrug.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mousePressed(MouseEvent e) {
@@ -131,7 +132,7 @@ public class PrescriptionHistoryView extends JPanel implements MouseListener {
 						Iterator<Prescription> iter=prescriptionHistory.iterator();
 						while (iter.hasNext()) {
 							Prescription pres = (Prescription) iter.next();
-							if(pres.getIssueDate()==time){
+							if(pres.getIssueDate().equals(time)){
 								for(String drugLine:pres.getDrugLines()){
 									String[] drug=drugLine.split(" ");
 									if(drug[0].equals(drugName))
@@ -142,23 +143,16 @@ public class PrescriptionHistoryView extends JPanel implements MouseListener {
 							}
 						}
 					}
-					//
-/*					String drugName = (String)historyTable.getModel().getValueAt(indexOfSelectedRow, 1);
-					for(String drugLine:clickedPrescription.getDrugLines()){
-						String[] drug=drugLine.split(" ");
-						if(drug[0].equals(drugName))
-						{
-							MainWindow.drugLineView.populate(drugLine,true);
-						}
-					}*/
 				}
 			});
-			popupMenu.add(renewDrug);
 
 			JMenuItem renewPrescription=new JMenuItem("Renew Prescription");
+			popupMenu.add(renewPrescription);
+
 			renewPrescription.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mousePressed(MouseEvent e) {
+					    
 					System.out.println("Renew Prescription");
 					for(String p: clickedPrescription.getDrugLines())
 					{
@@ -167,7 +161,6 @@ public class PrescriptionHistoryView extends JPanel implements MouseListener {
 					}
 				}
 			});
-			popupMenu.add(renewPrescription);
 
 			JMenuItem viewPrescription=new JMenuItem("View Prescription");
 			viewPrescription.addMouseListener(new MouseAdapter() {
@@ -177,6 +170,7 @@ public class PrescriptionHistoryView extends JPanel implements MouseListener {
 					JFrame historyFrame = new JFrame("Prescription History");
 					// HistoryFrame .getContentPane().add(new HistoryWindow(temp.getPhysician(),temp.getIssueDate()), BorderLayout.CENTER);
 					historyFrame.getContentPane().add(new HistoryWindow(clickedPrescription), BorderLayout.CENTER);
+					System.out.println("The clicked prescription date is: "+clickedPrescription.getEffectiveDate());
 					historyFrame.pack(); 
 					historyFrame.setVisible(true);
 					historyFrame.setSize(new Dimension(MainWindow.d.width*2/3,MainWindow.d.height*2/3));
