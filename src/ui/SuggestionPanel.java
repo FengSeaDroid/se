@@ -125,7 +125,10 @@ public class SuggestionPanel extends VanillaPanel {
 	 */
 	public void allergyTest(final JTextField eventField){
 		FirableBox tempBox = (FirableBox)eventField.getParent();
-		String input = eventField.getText();
+		String input = eventField.getText().replaceAll("^\\s+", "");
+		if (input.trim().length()==0){
+			return;
+		}
 		if (input.charAt(input.length()-1) == ' '){
 			input = input + "!";
 		}
@@ -260,7 +263,8 @@ public class SuggestionPanel extends VanillaPanel {
 			//lets find any items which start with the string the user typed, and add it to the popup list
 			//here you would usually get your items from a database, or some other storage...
 			for(String s:db)
-				if(s.startsWith(in))
+				//trim for space
+				if(s.startsWith(in.trim()))
 					data.add(s);
 
 			super.fireContentsChanged(this, 0, data.size());
@@ -316,7 +320,7 @@ public class SuggestionPanel extends VanillaPanel {
 //					cbe.setItem(s+" ");
 //				}
 			}
-			else if (cb.getEditor().getItem().toString().length()>4){//this part is to test if length is 5
+			else if (cb.getEditor().getItem().toString().trim().length()>4){//this part is to test if length is 5
 				updateModel(cb.getEditor().getItem().toString());
 				cbe.setItem(str);
 				jtf.setCaretPosition(currPos);

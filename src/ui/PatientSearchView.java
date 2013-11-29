@@ -214,7 +214,8 @@ public class PatientSearchView extends JPanel implements ActionListener{
 			//lets find any items which start with the string the user typed, and add it to the popup list
 			//here you would usually get your items from a database, or some other storage...
 			for(String s:db)
-				if(s.startsWith(in))
+				//trim for space
+				if(s.startsWith(in.trim())&&!in.trim().equals(""))
 					data.add(s);
 
 			super.fireContentsChanged(this, 0, data.size());
