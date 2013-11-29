@@ -8,15 +8,9 @@ import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.*;
-
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.plaf.basic.BasicComboBoxUI;
-
 import control.MainControl;
-import ui.PatientSearchView.ComboBoxRenderer;
 
 
 /**
@@ -97,25 +91,6 @@ public class SuggestionPanel extends VanillaPanel {
 		jt.setText(s);
 		jt.setEnabled(edible);
 		jt.setDisabledTextColor(Color.BLACK);
-//		jt.setDocument(new JTextFieldLimit(70));
-		jt.getDocument().addDocumentListener(new DocumentListener(){
-
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void insertUpdate(DocumentEvent e) {
-				allergyTest(jt);
-			}
-
-			@Override
-			public void removeUpdate(DocumentEvent e) {
-//				allergyTest(jt);
-			}
-		});
 		return drug;
 	}
 
@@ -124,7 +99,7 @@ public class SuggestionPanel extends VanillaPanel {
 	 * and testing for formulary
 	 */
 	public void allergyTest(final JTextField eventField){
-		FirableBox tempBox = (FirableBox)eventField.getParent();
+		final FirableBox tempBox = (FirableBox)eventField.getParent();
 		String input = eventField.getText().replaceAll("^\\s+", "");
 		if (input.trim().length()==0){
 			return;
@@ -138,8 +113,13 @@ public class SuggestionPanel extends VanillaPanel {
 				//testing here, all lower case so case insensitive
 				if (s.toLowerCase().equals(drugSpec[0].toLowerCase())){
 					tempBox.setFired(true);
-
-					new AlertPopup(s,eventField,tempBox);
+					
+					SwingUtilities.invokeLater(new Runnable() {  
+		                public void run() {  
+		                	new AlertPopup(s,eventField,tempBox); 
+		                }  
+		            });  
+//					new AlertPopup(s,eventField,tempBox);
 					break;
 				}
 			}
@@ -154,20 +134,16 @@ public class SuggestionPanel extends VanillaPanel {
 				String[] formularyEntry = s.split(" ");
 				if (formularyEntry[0].toLowerCase().equals(drugSpec[0].toLowerCase())){
 					tempBox.setBorder(BorderFactory.createMatteBorder(0,0,1,0,new Color(214,217,223)));
-//					tempBox.setBorder(BorderFactory.createEmptyBorder());
 					break;
 				}
 				else{
 					ImageIcon icon = new ImageIcon("wavy.png", "wavy-line border icon"); //56x20
 					tempBox.setBorder(BorderFactory.createMatteBorder(0,0,1,0,icon));
-//					tempBox.setBorder(BorderFactory.createEmptyBorder());
 				}
 			}
 		}
 		else {
-//			tempBox.setBorder(BorderFactory.createEmptyBorder());
 			tempBox.setBorder(BorderFactory.createMatteBorder(0,0,1,0,new Color(214,217,223)));
-//			
 		}
 	}
 	
@@ -179,33 +155,12 @@ public class SuggestionPanel extends VanillaPanel {
 		super.populate(s, edible);
 		if (edible == true){
 			for (JComboBox b : this.boxList){
-//				System.out.println(((FirableBox) b).isFired());
 				allergyTest((JTextField) b.getEditor().getEditorComponent());
 			}
 			//if edible give a new line
 			enterPress(this.boxList.size()-1,((JTextField) this.boxList.get(this.boxList.size()-1).getEditor().getEditorComponent()).getText().length());			
 		}
 	}
-//
-//	@Override
-//	public void changedUpdate(DocumentEvent arg0) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//
-//	@Override
-//	public void insertUpdate(DocumentEvent arg0) {
-//		JTextField jt = (JTextField)arg0.getSource();
-//		allergyTest(jt);
-//		
-//	}
-//
-//	@Override
-//	public void removeUpdate(DocumentEvent arg0) {
-//		JTextField jt = (JTextField)arg0.getSource();
-//		allergyTest(jt);
-//		
-//	}
 
 //	/**
 //	 * test if the drug is allergy agent when keyboard input.
@@ -215,21 +170,6 @@ public class SuggestionPanel extends VanillaPanel {
 //		super.keyPressed(e);
 //		JTextField jt = (JTextField)e.getSource();
 //		allergyTest(jt);
-////		FirableBox tempBox = (FirableBox)jt.getParent();
-////		//		int i = this.boxList.indexOf(tempBox);
-////		//		int pos = jt.getCaretPosition();
-////		String[] drugSpec = jt.getText().split(" ");
-////		if (drugSpec.length>1 && !tempBox.isFired()){
-////			for (String s: MainWindow.patientAllergy.pull()){
-////				if (s.equals(drugSpec[0])){
-////					new AlertPopup(s);
-////					tempBox.setFired(true);
-////				}
-////			}
-////		}
-////		if (drugSpec.length<=1 && tempBox.isFired()){
-////			tempBox.setFired(false);
-////		}
 //	}
 
 	public class SearchBoxModel extends AbstractListModel
@@ -250,12 +190,6 @@ public class SuggestionPanel extends VanillaPanel {
 
 			//set up our "database" of items - in practice you will usuallu have a proper db.
 			db.addAll(textList);
-			//	        db.add("test 12 mg");
-			//	        db.add("test 22 mg");
-			//	        db.add("test 32 mg");
-			//	        db.add("safwan");
-			//	        db.add("safwan 2 mg");
-			//	        db.add("safwan 32 mg");
 		}
 
 		public void updateModel(String in){
@@ -301,6 +235,9 @@ public class SuggestionPanel extends VanillaPanel {
 			String str = cbe.getItem().toString();
 			JTextField jtf = (JTextField)cbe.getEditorComponent();
 			currPos = jtf.getCaretPosition();
+			
+			//allergy and formulary test
+			allergyTest(jtf);
 
 			if(e.getKeyChar() == KeyEvent.CHAR_UNDEFINED)
 			{

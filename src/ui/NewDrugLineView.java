@@ -282,6 +282,6 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 		public void removeUpdate(DocumentEvent e) {
 			dateMessage.setText(" ");
 		}
-		
-	}
+	}//inner class
+
 }

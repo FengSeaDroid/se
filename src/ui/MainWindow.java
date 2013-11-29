@@ -21,6 +21,11 @@ public class MainWindow extends JPanel {
 	static Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 	
 	/**
+	 * static mainWindow
+	 */
+	static JFrame mainFrame;
+	
+	/**
 	 *  Static jpanels for the views to be shown here.
 	 */
 	static ClinicInfoView clinicInfo;
@@ -53,7 +58,7 @@ public class MainWindow extends JPanel {
      */
     public static void createAndShowGUI() {
         //Create and set up the window.
-        JFrame mainFrame = new JFrame("Electronic Prescription System");
+        mainFrame = new JFrame("Electronic Prescription System");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         //Add content to the window.

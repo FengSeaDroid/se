@@ -1,7 +1,4 @@
 package ui;
-
-
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -11,17 +8,20 @@ import javax.swing.*;
 
 import net.miginfocom.swing.MigLayout;
 
-public class AlertPopup extends JFrame implements ActionListener, KeyListener{
+@SuppressWarnings("serial")
+public class AlertPopup extends JDialog implements ActionListener, KeyListener{
 
 	private final JTextField evFld;
 	private final SuggestionPanel.FirableBox evBox;
 	private final JButton delete;
 	private final JButton ignore;
 	
-	public AlertPopup(String s, JTextField eventField, SuggestionPanel.FirableBox eventBox){
+	public AlertPopup(String s, final JTextField eventField, SuggestionPanel.FirableBox eventBox){
+		super(MainWindow.mainFrame,"Alert",true);
 		super.setLayout(new MigLayout());
 		
 		this.evFld = eventField;
+		evFld.putClientProperty("test", 1);
 		this.evBox = eventBox;
 		
 		this.setSize(250,130);
@@ -39,6 +39,7 @@ public class AlertPopup extends JFrame implements ActionListener, KeyListener{
 		this.add(delete);
 		this.add(ignore);
 		this.pack();
+		this.setAlwaysOnTop(true);
 		this.setVisible(true);
 		delete.requestFocus();
 	}
@@ -95,5 +96,4 @@ public class AlertPopup extends JFrame implements ActionListener, KeyListener{
 			AlertPopup.this.dispose();
 		}
 	}//inner class
-	
 }
