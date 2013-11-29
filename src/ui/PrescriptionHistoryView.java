@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.PopupMenu;
@@ -16,13 +17,18 @@ import java.util.StringTokenizer;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.RowSorterEvent;
+import javax.swing.event.RowSorterListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 import net.miginfocom.swing.MigLayout;
 import control.MainControl;
@@ -48,7 +54,20 @@ public class PrescriptionHistoryView extends JPanel implements MouseListener {
 		historyTable = new JTable(model);
 		historyTable.getColumnModel().getColumn(1).setPreferredWidth(100);
 		historyTable.setAutoCreateRowSorter(true);
-	
+
+		//setrenderer here
+		historyTable.setDefaultRenderer(Object.class, new historyTableCellRenderer());
+/*		historyTable.getRowSorter().addRowSorterListener(new RowSorterListener() {
+			
+			@Override
+			public void sorterChanged(RowSorterEvent arg0) {
+				// TODO Auto-generated method stub
+				historyTable.revalidate();
+				historyTable.repaint();
+			}
+		}); */
+		//
+
 		JScrollPane scrollPane = new JScrollPane(historyTable); 
 		scrollPane.setPreferredSize(new Dimension(MainWindow.d.width/3-80,MainWindow.d.height/2-90));
 		this.add(scrollPane);
@@ -87,16 +106,16 @@ public class PrescriptionHistoryView extends JPanel implements MouseListener {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		
+
 		if (e.getModifiers() == MouseEvent.BUTTON3_MASK){
 			patient = MainControl.getMainControl().getCurrentPatient();
-//			System.out.println("Right Click pressed");
+			//			System.out.println("Right Click pressed");
 
 			//get the table component where the right click of the mouse been made
 			final JTable target = (JTable)e.getSource();
 			int selectedRow = target.getSelectedRow();
 			final int indexOfSelectedRow = target.rowAtPoint(e.getPoint());
-//			System.out.println("selected index is"+indexOfSelectedRow);
+			//			System.out.println("selected index is"+indexOfSelectedRow);
 			target.setRowSelectionInterval(indexOfSelectedRow, indexOfSelectedRow);
 			selectedRow = target.getSelectedRow();
 			selectedRow = historyTable.convertRowIndexToModel(selectedRow);
@@ -109,7 +128,7 @@ public class PrescriptionHistoryView extends JPanel implements MouseListener {
 				{
 					prescriptionRenew.add(p);
 					clickedPrescription = p;
-//					System.out.println("Thats the first click prescription"+clickedPrescription.getIssueDate());
+					//					System.out.println("Thats the first click prescription"+clickedPrescription.getIssueDate());
 				}
 			}
 
@@ -128,7 +147,7 @@ public class PrescriptionHistoryView extends JPanel implements MouseListener {
 						String time=(String) historyTable.getModel().getValueAt(a, 0);
 						System.out.println("***"+drugName);
 						System.out.println("***"+time);
-						
+
 						Iterator<Prescription> iter=prescriptionHistory.iterator();
 						while (iter.hasNext()) {
 							Prescription pres = (Prescription) iter.next();
@@ -152,24 +171,24 @@ public class PrescriptionHistoryView extends JPanel implements MouseListener {
 			renewPrescription.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mousePressed(MouseEvent e) {
-			
+
 					int[] selection = historyTable.getSelectedRows();
 					for (int i=0;i<selection.length;i++){
 						int a=selection[i];
-						
+
 						String time=(String) historyTable.getModel().getValueAt(a, 0);
-						
+
 						Iterator<Prescription> iter=prescriptionHistory.iterator();
 						while (iter.hasNext()) {
 							Prescription pres = (Prescription) iter.next();
 							if(pres.getIssueDate().equals(time)){
 								Iterator<String> inneriter=pres.getDrugLines().iterator();
 								while(inneriter.hasNext())
-								MainWindow.drugLineView.populate(inneriter.next(),true);
+									MainWindow.drugLineView.populate(inneriter.next(),true);
 							}
 						}
 					}	
-/*					
+					/*					
 //					System.out.println("Renew Prescription");
 					for(String p: clickedPrescription.getDrugLines())
 					{
@@ -187,14 +206,14 @@ public class PrescriptionHistoryView extends JPanel implements MouseListener {
 					JFrame historyFrame = new JFrame("Prescription History");
 					// HistoryFrame .getContentPane().add(new HistoryWindow(temp.getPhysician(),temp.getIssueDate()), BorderLayout.CENTER);
 					historyFrame.getContentPane().add(new HistoryWindow(clickedPrescription), BorderLayout.CENTER);
-//					System.out.println("The clicked prescription date is: "+clickedPrescription.getEffectiveDate());
+					//					System.out.println("The clicked prescription date is: "+clickedPrescription.getEffectiveDate());
 					historyFrame.pack(); 
 					historyFrame.setVisible(true);
 					historyFrame.setResizable(false);
 					historyFrame.setSize(new Dimension(MainWindow.d.width*2/3,MainWindow.d.height-50));
-					
+
 					historyFrame.setLocation(MainWindow.d.width*1/7, 30);
-					
+
 				}
 			});
 			popupMenu.add(viewPrescription);
@@ -218,5 +237,70 @@ public class PrescriptionHistoryView extends JPanel implements MouseListener {
 	public void mouseExited(MouseEvent e) {
 
 	}
+
+	class historyTableCellRenderer implements TableCellRenderer{
+
+		public final DefaultTableCellRenderer DEFAULT_RENDERER = new DefaultTableCellRenderer();
+
+		@Override
+		public Component getTableCellRendererComponent(JTable table,
+				Object value, boolean isSelected, boolean hasFocus, int row,
+				int column) {
+			// TODO Auto-generated method stub
+			Component renderer = DEFAULT_RENDERER.getTableCellRendererComponent(
+					table, value, isSelected, hasFocus, row, column);
+			//	((JLabel)renderer).setOpaque(true);
+
+			Color foreground = null, background=null;
+
+			int rowcount=historyTable.getModel().getRowCount();
+
+			if(rowcount>0){
+
+				Set<Integer> intsetA = new HashSet<Integer>();
+				Set<Integer> intsetB = new HashSet<Integer>();
+
+				//two flags to decide how to group time
+				String timeflag=(String) historyTable.getModel().getValueAt(0, 0);
+				int flag=0;
+
+				for (int i = 0; i < rowcount; i++) {
+					String timethisrow=(String) historyTable.getModel().getValueAt(i, 0);
+
+					if (timethisrow.equals(timeflag)) {
+						timeflag=timethisrow;
+					}
+					else{
+						timeflag=timethisrow;
+						flag=flag+1;
+					}
+
+					if(flag%2==0){
+						intsetA.add(i);}
+					else{intsetB.add(i);}
+				}
+
+				if (intsetA.contains(row)) {
+					foreground = Color.blue;
+					background = Color.white;
+				} 
+				if(intsetB.contains(row)) 
+				{
+					foreground = Color.white;
+					background = Color.blue;
+				}
+				else{
+					//do nothing but skip	
+				}
+
+				renderer.setForeground(foreground);
+				renderer.setBackground(background);
+
+			}
+			return renderer;
+		}
+
+	}
+
 }
 
