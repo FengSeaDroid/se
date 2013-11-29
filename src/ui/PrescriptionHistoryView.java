@@ -90,13 +90,13 @@ public class PrescriptionHistoryView extends JPanel implements MouseListener {
 		
 		if (e.getModifiers() == MouseEvent.BUTTON3_MASK){
 			patient = MainControl.getMainControl().getCurrentPatient();
-			System.out.println("Right Click pressed");
+//			System.out.println("Right Click pressed");
 
 			//get the table component where the right click of the mouse been made
 			final JTable target = (JTable)e.getSource();
 			int selectedRow = target.getSelectedRow();
 			final int indexOfSelectedRow = target.rowAtPoint(e.getPoint());
-			System.out.println("selected index is"+indexOfSelectedRow);
+//			System.out.println("selected index is"+indexOfSelectedRow);
 			target.setRowSelectionInterval(indexOfSelectedRow, indexOfSelectedRow);
 			selectedRow = target.getSelectedRow();
 			selectedRow = historyTable.convertRowIndexToModel(selectedRow);
@@ -109,7 +109,7 @@ public class PrescriptionHistoryView extends JPanel implements MouseListener {
 				{
 					prescriptionRenew.add(p);
 					clickedPrescription = p;
-					System.out.println("Thats the first click prescription"+clickedPrescription.getIssueDate());
+//					System.out.println("Thats the first click prescription"+clickedPrescription.getIssueDate());
 				}
 			}
 
@@ -153,11 +153,11 @@ public class PrescriptionHistoryView extends JPanel implements MouseListener {
 				@Override
 				public void mousePressed(MouseEvent e) {
 					    
-					System.out.println("Renew Prescription");
+//					System.out.println("Renew Prescription");
 					for(String p: clickedPrescription.getDrugLines())
 					{
 						MainWindow.drugLineView.populate(p,true);
-						System.out.println("Renew Prescription Drug"+p);
+//						System.out.println("Renew Prescription Drug"+p);
 					}
 				}
 			});
@@ -170,11 +170,14 @@ public class PrescriptionHistoryView extends JPanel implements MouseListener {
 					JFrame historyFrame = new JFrame("Prescription History");
 					// HistoryFrame .getContentPane().add(new HistoryWindow(temp.getPhysician(),temp.getIssueDate()), BorderLayout.CENTER);
 					historyFrame.getContentPane().add(new HistoryWindow(clickedPrescription), BorderLayout.CENTER);
-					System.out.println("The clicked prescription date is: "+clickedPrescription.getEffectiveDate());
+//					System.out.println("The clicked prescription date is: "+clickedPrescription.getEffectiveDate());
 					historyFrame.pack(); 
 					historyFrame.setVisible(true);
-					historyFrame.setSize(new Dimension(MainWindow.d.width*2/3,MainWindow.d.height-100));
+					historyFrame.setResizable(false);
+					historyFrame.setSize(new Dimension(MainWindow.d.width*2/3,MainWindow.d.height-50));
+					
 					historyFrame.setLocation(MainWindow.d.width*1/7, 30);
+					
 				}
 			});
 			popupMenu.add(viewPrescription);
