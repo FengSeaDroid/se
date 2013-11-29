@@ -152,13 +152,30 @@ public class PrescriptionHistoryView extends JPanel implements MouseListener {
 			renewPrescription.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mousePressed(MouseEvent e) {
-					    
+			
+					int[] selection = historyTable.getSelectedRows();
+					for (int i=0;i<selection.length;i++){
+						int a=selection[i];
+						
+						String time=(String) historyTable.getModel().getValueAt(a, 0);
+						
+						Iterator<Prescription> iter=prescriptionHistory.iterator();
+						while (iter.hasNext()) {
+							Prescription pres = (Prescription) iter.next();
+							if(pres.getIssueDate().equals(time)){
+								Iterator<String> inneriter=pres.getDrugLines().iterator();
+								while(inneriter.hasNext())
+								MainWindow.drugLineView.populate(inneriter.next(),true);
+							}
+						}
+					}	
+/*					
 //					System.out.println("Renew Prescription");
 					for(String p: clickedPrescription.getDrugLines())
 					{
 						MainWindow.drugLineView.populate(p,true);
 //						System.out.println("Renew Prescription Drug"+p);
-					}
+					}*/
 				}
 			});
 
