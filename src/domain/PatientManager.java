@@ -200,7 +200,7 @@ public class PatientManager {
 				else if(medicine.length>=2){
 					
 				for (int i=1;i<medicine.length;i++){
-					spec = spec + medicine[i];
+					spec = spec +" "+ medicine[i];
 				}
 				System.out.println("prescriptiob details to add"+maxID+" "+medicine[0]+spec);
 				dbconnection.manipulateData("insert into prescription_spec(prescription_id,medicine_name,medicine_spec) values ('"+maxID+"','"+medicine[0]+"','"+spec+"')");
