@@ -27,10 +27,10 @@ import control.MainControl;
 
 @SuppressWarnings("serial")
 public class NewDrugLineView extends JPanel implements ActionListener, FocusListener{
-	
+
 	private JPanel buttonView;
 	private JPanel dateView;
-	
+
 	private JTextField effectiveDate;
 	public String getEffectiveDate(){
 		if (effectiveDate.getText().equals("")||effectiveDate.getText().equals(new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()))){
@@ -40,16 +40,16 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 			return effectiveDate.getText();
 		}
 	}
-	
+
 	public void setEffectiveDate(String s){
 		this.effectiveDate.setText(s);
 	}
-	
+
 	private JLabel printMessage;
 	private JLabel dateMessage;
 	private JTextField refill;
 	private DateChooser dateChooser;
-	
+
 	private JPanel[] innerPanels;
 
 	public NewDrugLineView() {
@@ -57,17 +57,17 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 		innerPanels = SuggestionPanel.fillerWithScroll(MainWindow.d.width*2/3-80, MainWindow.d.height*3/7);
 		innerPanels[0].setBorder(BorderFactory.createTitledBorder(""));
 		this.add(innerPanels[0],"wrap,grow");
-		
+
 		dateView = sigAndDate();
 		buttonView = buttonView();
-		
+
 		refill.setDocument(new JTextFieldLimit(3));
-//		effectiveDate.setDocument(new JTextFieldLimit(12));
-				
+		//		effectiveDate.setDocument(new JTextFieldLimit(12));
+
 		this.add(dateView,"wrap");
 		this.add(buttonView,"wrap,span 3,center");
 	}
-	
+
 	/**
 	 * 
 	 * @param v
@@ -82,7 +82,7 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 		}
 		this.effectiveDate.setEnabled(false);
 		this.refill.setEnabled(false);
-		
+
 
 	}
 
@@ -93,7 +93,7 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 		}
 		((VanillaPanel) this.innerPanels[1]).populate(stringSet,edible);
 	}
-	
+
 	public Set<String> pull(){
 		return new HashSet<String>(((VanillaPanel) innerPanels[1]).pull());
 	}
@@ -110,10 +110,10 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 		refill=new JTextField(3);
 		refillPanel.add(refill,"align left");
 		jp.add(refillPanel,"align left");
-		
+
 		JPanel effectiveDatePanel = new JPanel(new MigLayout("wrap 2","[]","[][]"));
 		effectiveDatePanel.add(new JLabel("Effective Date:  "),"align left");
-		
+
 		effectiveDate=new JTextField(10);
 		String date = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
 		TextPrompt effectiveDatePrompt =new TextPrompt(date,effectiveDate);
@@ -124,7 +124,7 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 		DateListener dateListener = new DateListener();
 		effectiveDate.getDocument().addDocumentListener(dateListener);
 		effectiveDate.addFocusListener(dateListener);
-//		effectiveDate.setName("effectiveDateView");
+		//		effectiveDate.setName("effectiveDateView");
 		//datechooser here
 		dateChooser = DateChooser.getInstance("yyyy-MM-dd");
 		dateChooser.register(effectiveDate);
@@ -166,15 +166,15 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 		printMessage = new JLabel(" ");
 		printMessage.setForeground(Color.RED);
 		printView.add(printMessage,"wrap,center");
-		
+
 		JButton printButton = new EnterButton("Print");
 		printButton.addActionListener(this);
 		printButton.addFocusListener(this);
 		printView.add(printButton,"center");
 		return printView;
-	
+
 	}
-	
+
 	/*
 	 * 
 	 */
@@ -182,7 +182,7 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 		MainControl.getMainControl().print(MainWindow.drugLineView.pull(), MainWindow.drugLineView.getEffectiveDate(),MainWindow.drugLineView.getRefill());
 		MainWindow.clear();
 	}
-	
+
 	protected boolean isPinShown = false;
 
 	@Override
@@ -195,8 +195,8 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 			{
 				//Call print PDF directly without showing the pin
 				try {
-//					MainControl.getMainControl().print(MainWindow.drugLineView.pull(), MainWindow.drugLineView.getEffectiveDate(),MainWindow.drugLineView.getRefill());
-//					MainWindow.clear();
+					//					MainControl.getMainControl().print(MainWindow.drugLineView.pull(), MainWindow.drugLineView.getEffectiveDate(),MainWindow.drugLineView.getRefill());
+					//					MainWindow.clear();
 					print();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
@@ -220,18 +220,18 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 	@Override
 	public void focusGained(FocusEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void focusLost(FocusEvent e) {
 		this.printMessage.setText(" ");
 	}
-	
+
 	class DateListener implements DocumentListener, FocusListener {
-		
+
 		private boolean dateFlag;
-		
+
 		public DateListener(){
 			this.dateFlag = false;
 		}
@@ -239,7 +239,7 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 		@Override
 		public void focusGained(FocusEvent arg0) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
@@ -252,7 +252,7 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 		@Override
 		public void changedUpdate(DocumentEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
@@ -266,17 +266,15 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 					if (inputDate.before(currentDate)){
 						dateMessage.setText("Date should not be earlier than today.");
 					}
-					else {
-						this.dateFlag = true;
-					}
 				} catch (ParseException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
-
 			}
-//			System.out.println(effectiveDate.getText().length());
+			else {
+				this.dateFlag = true;
+			}
+			//			System.out.println(effectiveDate.getText().length());
 		}
 
 		@Override

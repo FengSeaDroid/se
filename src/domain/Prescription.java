@@ -1,13 +1,16 @@
 package domain;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import control.MainControl;
 
-public class Prescription {
+public class Prescription implements Comparable<Prescription> {
 	
 	/**
 	 * create Prescription object which is in achieved state.
@@ -138,5 +141,24 @@ public class Prescription {
 		this.achieve();
 		this.issue();
 		MainControl.getMainControl().getPatientManager().savePrescription(this);
+	}
+
+	@Override
+	public int compareTo(Prescription o) {
+		Date ownerDate = null;
+		Date oDate = null;
+		try {
+			ownerDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).parse(this.getIssueDate());
+			oDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).parse(o.getIssueDate());
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (ownerDate == null || oDate == null)
+			throw new IllegalArgumentException();
+		if(ownerDate.after(oDate))
+			return -1;
+		else 
+			return 1;
 	}
 }

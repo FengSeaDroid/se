@@ -11,6 +11,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -18,6 +19,7 @@ import java.util.StringTokenizer;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicComboBoxUI;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.text.JTextComponent;
 
 import control.MainControl;
@@ -29,7 +31,7 @@ import net.miginfocom.swing.MigLayout;
 //public class PatientSearchView extends JPanel implements ActionListener, PatientSearchView.Filler{
 public class PatientSearchView extends JPanel implements ActionListener{
 
-	private Set<Prescription> prescriptionHistory = new HashSet<Prescription>();
+//	private Set<Prescription> prescriptionHistory = new HashSet<Prescription>();
 	private Set<String> allergy = new HashSet<String>();
 	private JComboBox nameField = new JComboBox();
 
@@ -143,16 +145,15 @@ public class PatientSearchView extends JPanel implements ActionListener{
 			if (this == MainWindow.patientSearch){
 				MainWindow.patientAllergy.populate(allergy, false);	
 				//populate the history table
-				this.prescriptionHistory = patient.getPrescriptionHistory();
-				List <String> drugsInHistory = new ArrayList<String>();
-				for(Prescription p: prescriptionHistory)
-	
-				{
-					for(String s:p.getDrugLines()) {
-						drugsInHistory.add(s);
+//				this.prescriptionHistory = patient.getPrescriptionHistory();
+				List <Prescription> preList = new ArrayList <Prescription>(patient.getPrescriptionHistory());
+				Collections.sort(preList);
+				for (int i = 0; i < preList.size(); i++){
+					for(String s:preList.get(i).getDrugLines()) {
+//						drugsInHistory.add(s);
 						StringTokenizer st = new StringTokenizer(s, " "); 
 						String key = st.nextToken(); 
-						String[] data = {p.getIssueDate(),key};
+						String[] data = {preList.get(i).getIssueDate(),key};
 						MainWindow.patientPrescriptionHistory.getModel().addRow(data);
 					}
 				}
@@ -176,7 +177,7 @@ public class PatientSearchView extends JPanel implements ActionListener{
 		this.weight.setText("");
 		this.address.setText("");
 		this.tel.setText("");
-		this.prescriptionHistory.clear();
+//		this.prescriptionHistory.clear();
 		this.allergy.clear();
 	}
 	
