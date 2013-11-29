@@ -53,7 +53,7 @@ public class PrescriptionHistoryView extends JPanel implements MouseListener {
 		this.setBorder(BorderFactory.createTitledBorder("Patient History Prescription"));
 		historyTable = new JTable(model);
 		historyTable.getColumnModel().getColumn(1).setPreferredWidth(100);
-		historyTable.setAutoCreateRowSorter(true);
+		historyTable.setAutoCreateRowSorter(false);
 
 		//setrenderer here
 		historyTable.setDefaultRenderer(Object.class, new historyTableCellRenderer());
@@ -249,7 +249,7 @@ public class PrescriptionHistoryView extends JPanel implements MouseListener {
 			// TODO Auto-generated method stub
 			Component renderer = DEFAULT_RENDERER.getTableCellRendererComponent(
 					table, value, isSelected, hasFocus, row, column);
-			//	((JLabel)renderer).setOpaque(true);
+		//		((JLabel)renderer).setOpaque(true);
 
 			Color foreground = null, background=null;
 
@@ -280,17 +280,19 @@ public class PrescriptionHistoryView extends JPanel implements MouseListener {
 					else{intsetB.add(i);}
 				}
 
+
+				
 				if (intsetA.contains(row)) {
-					foreground = Color.blue;
+					foreground = Color.gray;
 					background = Color.white;
 				} 
 				if(intsetB.contains(row)) 
 				{
 					foreground = Color.white;
-					background = Color.blue;
+					background = Color.gray;
 				}
 				else{
-					//do nothing but skip	
+					//do nothing but skip
 				}
 
 				renderer.setForeground(foreground);
