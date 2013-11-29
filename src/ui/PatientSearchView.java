@@ -103,7 +103,7 @@ public class PatientSearchView extends JPanel implements ActionListener{
 		this.add(dobLabel,"cell 0 3,align right");
 		this.add(DOB, "cell 1 3");
 
-		JLabel label_2 = new JLabel("Wieght: ");
+		JLabel label_2 = new JLabel("Weight: ");
 		this.add(label_2,"cell 2 3,align right");
 		add(weight, "cell 3 3");
 		
