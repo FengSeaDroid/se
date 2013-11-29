@@ -47,7 +47,7 @@ public class GeneratePDF {
 
 	private static String temp_file;
 	private static String File;
-	private static String refill=MainControl.getMainControl().getPrescription().getRefill();
+	private static String refill;
 	private static Font titleFont = new Font(Font.FontFamily.TIMES_ROMAN, 16,
 			Font.BOLD);
 	private static Font rxFont = new Font(Font.FontFamily.TIMES_ROMAN, 20,
@@ -73,6 +73,7 @@ public class GeneratePDF {
 		File=temp_file.replaceAll(":", "-");
 		prescription=MainControl.getMainControl().getPrescription();
 		patient=MainControl.getMainControl().getCurrentPatient();
+		refill=MainControl.getMainControl().getPrescription().getRefill();
 		document= new Document();
 		document.setPageSize(PageSize.NOTE);
 		System.out.println("Effective date is PDF= "+File);
