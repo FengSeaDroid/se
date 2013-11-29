@@ -30,12 +30,8 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 	
 	private JPanel buttonView;
 	private JPanel dateView;
-	private JTextField effectiveDate;
-	private JLabel printMessage;
-	private JLabel dateMessage;
-	private JTextField refill;
-	private DateChooser dateChooser;
 	
+	private JTextField effectiveDate;
 	public String getEffectiveDate(){
 		if (effectiveDate.getText().equals("")||effectiveDate.getText().equals(new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()))){
 			return new SimpleDateFormat("yyyy-MM-dd HH:mm").format(Calendar.getInstance().getTime());
@@ -44,6 +40,16 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 			return effectiveDate.getText();
 		}
 	}
+	
+	public void setEffectiveDate(String s){
+		this.effectiveDate.setText(s);
+	}
+	
+	private JLabel printMessage;
+	private JLabel dateMessage;
+	private JTextField refill;
+	private DateChooser dateChooser;
+	
 	private JPanel[] innerPanels;
 
 	public NewDrugLineView() {
@@ -56,7 +62,7 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 		buttonView = buttonView();
 		
 		refill.setDocument(new JTextFieldLimit(3));
-		effectiveDate.setDocument(new JTextFieldLimit(12));
+//		effectiveDate.setDocument(new JTextFieldLimit(12));
 				
 		this.add(dateView,"wrap");
 		this.add(buttonView,"wrap,span 3,center");
@@ -141,7 +147,12 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 	}
 
 	public String getRefill() {
-		return this.refill.getText();
+		if (this.refill.getText().equals("")){
+			return "0";
+		}
+		else{
+			return this.refill.getText();
+		}
 	}
 
 	public void setRefill(String refill) {
@@ -173,7 +184,7 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 			{
 				//Call print PDF directly without showing the pin
 				try {
-					MainControl.getMainControl().print(MainWindow.drugLineView.pull(), MainWindow.drugLineView.getEffectiveDate(),this.getRefill());
+					MainControl.getMainControl().print(MainWindow.drugLineView.pull(), MainWindow.drugLineView.getEffectiveDate(),MainWindow.drugLineView.getRefill());
 					MainWindow.clear();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block

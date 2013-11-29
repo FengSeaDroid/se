@@ -35,6 +35,13 @@ public class HistoryWindow extends JPanel {
 		patientSearchView.setEdible(false);
 		drugLineView.disable();
 
+		drugLineView.setEffectiveDate(currentPrescription.getEffectiveDate());
+		if (currentPrescription.getRefill().equals("")){
+			drugLineView.setRefill("0");
+		}
+		else{
+			drugLineView.setRefill(currentPrescription.getRefill());
+		}
 		this.add(clinicInfoView,"cell 0 0, center, wrap");
 		this.add(patientSearchView, "cell 0 1, center, wrap");
 		this.add(drugLineView, "cell 0 2,  center, wrap");

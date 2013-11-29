@@ -133,7 +133,7 @@ public class PatientSearchView extends JPanel implements ActionListener{
 			this.nameField.getEditor().setItem(patient.getName());
 			this.mcpField.setText(patient.getMCP());
 			this.DOB.setText(patient.getDateOfBirth());
-			this.weight.setText(patient.getWeight());
+			this.weight.setText(patient.getWeight()+" Kg");
 			this.address.setText(patient.getAddress());
 			this.tel.setText(patient.getTel());
 			this.allergy = patient.getAllergy();

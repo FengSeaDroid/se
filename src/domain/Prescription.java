@@ -18,13 +18,19 @@ public class Prescription {
 	 * @param drugLines
 	 * @param activeState
 	 */
-	public Prescription(/*Patient p,*/ String physician, String issueDate, String effectiveDate, Set<String> drugLines){
+	public Prescription(/*Patient p,*/ String physician, String issueDate, String effectiveDate, Set<String> drugLines, String refill){
 		//this.setOwner(p);
 		this.physician=physician;
 		this.issueDate=issueDate;
 		this.effectiveDate=effectiveDate;
 		this.setDrugLines(drugLines);
 		this.active = false;
+		if (refill != null){
+			this.refill = refill;
+		}
+		else {
+			this.refill = "0";
+		}
 	}
 	
 	/**
@@ -99,7 +105,13 @@ public class Prescription {
 	private String refill;
 
 	public String getRefill() {
-		return refill;
+		if (this.refill.trim().equals("")){
+			return "0";
+		}
+		else{
+			return refill;
+		}
+		
 	}
 
 	public void setRefill(String refill) {
