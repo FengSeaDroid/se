@@ -114,7 +114,7 @@ public class PatientManager {
 	public Set<Prescription> getPrescriptionHistory(String patientID){
 		try{
 
-			ResultSet prescriptionResult=dbconnection.execQuery("select ph.name,pr.prescription_id,pr.issue_date,pr.effective_date from prescription pr,physician ph"+
+			ResultSet prescriptionResult=dbconnection.execQuery("select ph.name,pr.prescription_id,pr.issue_date,pr.effective_date,pr.refill from prescription pr,physician ph"+
 					" where pr.patient_id="+patientID+" and pr.physician_id=ph.physician_id");
 
 			Set<Prescription> prescriptionSet=new HashSet<Prescription>();
@@ -133,7 +133,7 @@ public class PatientManager {
 					drugLine.add(prescriptionSpecResult.getString("medicine_name")+" "+prescriptionSpecResult.getString("medicine_spec")); 
 				}
 				Prescription prescription=new Prescription(prescriptionResult.getString(1),prescriptionResult.getString("issue_date")
-						,prescriptionResult.getString("effective_date"),drugLine);
+						,prescriptionResult.getString("effective_date"),drugLine,prescriptionResult.getString("refill"));
 
 				prescriptionSet.add(prescription);
 

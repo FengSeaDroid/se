@@ -22,7 +22,7 @@ public class PatientManagerTest {
 	@Before
 	public void setUp() throws Exception {
 		String[] sa = {"drug1 222 mg","drug2 333 mg","drug3 444 mg"};
-		testP = new Prescription("physician","5555-55-55","5555-55-55",new HashSet<String>(Arrays.asList(sa)));
+		testP = new Prescription("physician","5555-55-55","5555-55-55",new HashSet<String>(Arrays.asList(sa)),"11");
 		MainControl.getMainControl().setCurrentPatient(MainControl.getMainControl().getPatientManager().lookupPatient("321"));
 
 	}
