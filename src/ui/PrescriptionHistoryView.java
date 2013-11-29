@@ -173,7 +173,7 @@ public class PrescriptionHistoryView extends JPanel implements MouseListener {
 					System.out.println("The clicked prescription date is: "+clickedPrescription.getEffectiveDate());
 					historyFrame.pack(); 
 					historyFrame.setVisible(true);
-					historyFrame.setSize(new Dimension(MainWindow.d.width*2/3,MainWindow.d.height*2/3));
+					historyFrame.setSize(new Dimension(MainWindow.d.width*2/3,MainWindow.d.height-100));
 					historyFrame.setLocation(MainWindow.d.width*1/7, 30);
 				}
 			});
