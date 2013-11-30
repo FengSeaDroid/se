@@ -4,28 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.PopupMenu;
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.StringTokenizer;
 
-import javax.swing.BorderFactory;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.event.RowSorterEvent;
-import javax.swing.event.RowSorterListener;
+import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -56,17 +42,7 @@ public class PrescriptionHistoryView extends JPanel implements MouseListener {
 		historyTable.setAutoCreateRowSorter(false);
 
 		//setrenderer here
-		historyTable.setDefaultRenderer(Object.class, new historyTableCellRenderer());
-/*		historyTable.getRowSorter().addRowSorterListener(new RowSorterListener() {
-			
-			@Override
-			public void sorterChanged(RowSorterEvent arg0) {
-				// TODO Auto-generated method stub
-				historyTable.revalidate();
-				historyTable.repaint();
-			}
-		}); */
-		//
+		historyTable.setDefaultRenderer(Object.class, new HistoryTableCellRenderer());
 
 		JScrollPane scrollPane = new JScrollPane(historyTable); 
 		scrollPane.setPreferredSize(new Dimension(MainWindow.d.width/3-80,MainWindow.d.height/2-90));
@@ -79,6 +55,10 @@ public class PrescriptionHistoryView extends JPanel implements MouseListener {
 	Set<Prescription> prescriptionRenew = new HashSet<Prescription>();
 
 	private JTable historyTable;
+	
+	public JTable getTable(){
+		return this.historyTable;
+	}
 	private static String[] columnNames = {"Date","Medication"};
 	private static Object[][] data ={{" "}};
 	private Patient patient;
@@ -238,71 +218,47 @@ public class PrescriptionHistoryView extends JPanel implements MouseListener {
 
 	}
 
-	class historyTableCellRenderer implements TableCellRenderer{
-
-		public final DefaultTableCellRenderer DEFAULT_RENDERER = new DefaultTableCellRenderer();
-
+	/*
+	 * inner class
+	 */
+	@SuppressWarnings("serial")
+	public class HistoryTableCellRenderer extends DefaultTableCellRenderer{
+		
+		private Set<Integer> flagSet;
+		
+		public void add(Integer i){
+			flagSet.add(i);
+		}
+		
+		public HistoryTableCellRenderer(){
+			flagSet = new HashSet<Integer>();
+		}
+		
 		@Override
 		public Component getTableCellRendererComponent(JTable table,
 				Object value, boolean isSelected, boolean hasFocus, int row,
 				int column) {
-			// TODO Auto-generated method stub
-			Component renderer = DEFAULT_RENDERER.getTableCellRendererComponent(
-					table, value, isSelected, hasFocus, row, column);
-		//		((JLabel)renderer).setOpaque(true);
+			
+			Component renderer = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-			Color foreground = null, background=null;
+			Color foreground, background;
 
-			int rowcount=historyTable.getModel().getRowCount();
-
-			if(rowcount>0){
-
-				Set<Integer> intsetA = new HashSet<Integer>();
-				Set<Integer> intsetB = new HashSet<Integer>();
-
-				//two flags to decide how to group time
-				String timeflag=(String) historyTable.getModel().getValueAt(0, 0);
-				int flag=0;
-
-				for (int i = 0; i < rowcount; i++) {
-					String timethisrow=(String) historyTable.getModel().getValueAt(i, 0);
-
-					if (timethisrow.equals(timeflag)) {
-						timeflag=timethisrow;
-					}
-					else{
-						timeflag=timethisrow;
-						flag=flag+1;
-					}
-
-					if(flag%2==0){
-						intsetA.add(i);}
-					else{intsetB.add(i);}
-				}
-
-
-				
-				if (intsetA.contains(row)) {
-					foreground = Color.gray;
-					background = Color.white;
-				} 
-				if(intsetB.contains(row)) 
-				{
-					foreground = Color.white;
-					background = Color.gray;
-				}
-				else{
-					//do nothing but skip
-				}
-
-				renderer.setForeground(foreground);
-				renderer.setBackground(background);
-
+			if (!flagSet.contains(new Integer(row))) {
+				foreground = Color.BLACK;
+				background = Color.WHITE;
+			} 
+			else{
+				foreground = Color.WHITE;
+				background = Color.decode("#A0522D");
 			}
+			if (isSelected || hasFocus){
+				foreground = Color.WHITE;
+				background = Color.decode("#335b8e");
+			}
+			renderer.setForeground(foreground);
+			renderer.setBackground(background);
 			return renderer;
 		}
-
 	}
 
 }
-

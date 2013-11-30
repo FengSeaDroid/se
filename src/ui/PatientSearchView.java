@@ -22,6 +22,7 @@ import javax.swing.plaf.basic.BasicComboBoxUI;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.JTextComponent;
 
+import ui.PrescriptionHistoryView.HistoryTableCellRenderer;
 import control.MainControl;
 import domain.Patient;
 import domain.Prescription;
@@ -148,6 +149,7 @@ public class PatientSearchView extends JPanel implements ActionListener{
 //				this.prescriptionHistory = patient.getPrescriptionHistory();
 				List <Prescription> preList = new ArrayList <Prescription>(patient.getPrescriptionHistory());
 				Collections.sort(preList);
+				boolean flag = false;
 				for (int i = 0; i < preList.size(); i++){
 					for(String s:preList.get(i).getDrugLines()) {
 //						drugsInHistory.add(s);
@@ -155,7 +157,11 @@ public class PatientSearchView extends JPanel implements ActionListener{
 						String key = st.nextToken(); 
 						String[] data = {preList.get(i).getIssueDate(),key};
 						MainWindow.patientPrescriptionHistory.getModel().addRow(data);
+						if (flag == true){
+						((HistoryTableCellRenderer) MainWindow.patientPrescriptionHistory.getTable().getDefaultRenderer(Object.class)).add(new Integer(MainWindow.patientPrescriptionHistory.getTable().getRowCount()-1));
+						}
 					}
+					flag = !flag;
 				}
 				//to give the focus
 				MainWindow.drugLineView.clear();
