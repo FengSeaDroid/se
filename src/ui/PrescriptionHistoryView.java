@@ -30,6 +30,7 @@ import domain.Prescription;
  * 2-renew drugline 
  * 3-view prescription
  */
+@SuppressWarnings("serial")
 public class PrescriptionHistoryView extends JPanel implements MouseListener {
 
 
@@ -93,11 +94,11 @@ public class PrescriptionHistoryView extends JPanel implements MouseListener {
 
 			//get the table component where the right click of the mouse been made
 			final JTable target = (JTable)e.getSource();
-			int selectedRow = target.getSelectedRow();
+//			int selectedRow = target.getSelectedRow();
 			final int indexOfSelectedRow = target.rowAtPoint(e.getPoint());
 			//			System.out.println("selected index is"+indexOfSelectedRow);
 			target.setRowSelectionInterval(indexOfSelectedRow, indexOfSelectedRow);
-			selectedRow = target.getSelectedRow();
+			int selectedRow = target.getSelectedRow();
 			selectedRow = historyTable.convertRowIndexToModel(selectedRow);
 			String date = (String)historyTable.getModel().getValueAt(selectedRow, 0);
 			prescriptionHistory = patient.getPrescriptionHistory();
