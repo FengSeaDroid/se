@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -50,6 +51,10 @@ public class PrescriptionHistoryView extends JPanel implements MouseListener {
 		this.add(scrollPane);
 		this.setPreferredSize(new Dimension(MainWindow.d.width/3,MainWindow.d.height/2+10));
 		historyTable.addMouseListener(this);
+		//delete useless listeners
+		for (MouseMotionListener mml :historyTable.getMouseMotionListeners()){
+			historyTable.removeMouseMotionListener(mml);
+		}
 	}
 
 	Set<Prescription> prescriptionHistory = new HashSet<Prescription>();
