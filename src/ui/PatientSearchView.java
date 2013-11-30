@@ -155,7 +155,7 @@ public class PatientSearchView extends JPanel implements ActionListener{
 //						drugsInHistory.add(s);
 						StringTokenizer st = new StringTokenizer(s, " "); 
 						String key = st.nextToken(); 
-						String[] data = {preList.get(i).getIssueDate(),key};
+						String[] data = {preList.get(i).getIssueDate().substring(0, 10),key};
 						MainWindow.patientPrescriptionHistory.getModel().addRow(data);
 						if (flag == true){
 						((HistoryTableCellRenderer) MainWindow.patientPrescriptionHistory.getTable().getDefaultRenderer(Object.class)).add(new Integer(MainWindow.patientPrescriptionHistory.getTable().getRowCount()-1));

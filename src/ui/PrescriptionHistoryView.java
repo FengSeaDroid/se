@@ -59,7 +59,7 @@ public class PrescriptionHistoryView extends JPanel implements MouseListener {
 	public JTable getTable(){
 		return this.historyTable;
 	}
-	private static String[] columnNames = {"Date","Medication"};
+	private static String[] columnNames = {"Issue Date","Medication"};
 	private static Object[][] data ={{" "}};
 	private Patient patient;
 	private Prescription clickedPrescription;
@@ -249,7 +249,7 @@ public class PrescriptionHistoryView extends JPanel implements MouseListener {
 			} 
 			else{
 				foreground = Color.WHITE;
-				background = Color.decode("#A0522D");
+				background = Color.decode("#909090");
 			}
 			if (isSelected || hasFocus){
 				foreground = Color.WHITE;
