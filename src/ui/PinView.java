@@ -30,7 +30,7 @@ public class PinView extends JFrame implements ActionListener,FocusListener {
 	public PinView(final NewDrugLineView dlv) {
 
 		super("Print Authentication Window");
-		this.setSize(260, 100);
+		this.setSize(260, 110);
 		
 //		this.refill=refill;
 		this.drugLineView = dlv;
@@ -45,17 +45,18 @@ public class PinView extends JFrame implements ActionListener,FocusListener {
 		pinPanel.add(pinPasswordField,"wrap");	
 		pinPasswordField.addActionListener(this);
 
-
 		printButton=new JButton("Print");
 		pinPanel.add(printButton,"right,,width :80:");
 		printButton.addActionListener(this);
 
 		cancelButton=new JButton("Cancel");
-		pinPanel.add(cancelButton,"right,,width :80:");
+		pinPanel.add(cancelButton,"wrap,right,,width :80:");
 		cancelButton.addActionListener(this);
 		
 		pinPanel.add(msgLabel,"span");
 		msgLabel.setForeground(Color.red);
+		
+		
 
 //		no close the whole program Safwan the terrorist!!!
 //		Safwan Alquraan close JFrame
