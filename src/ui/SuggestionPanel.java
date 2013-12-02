@@ -101,7 +101,7 @@ public class SuggestionPanel extends VanillaPanel {
 	 */
 	public void allergyTest(final JTextField eventField){
 		final FirableBox tempBox = (FirableBox)eventField.getParent();
-		String input = eventField.getText().replaceAll("^\\s+", "");
+		String input = eventField.getText().replaceAll("^\\s+", "").replaceAll("[,./-]", " ");
 		if (input.trim().length()==0){
 			return;
 		}
