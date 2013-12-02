@@ -215,6 +215,8 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 
 	public void clear() {
 		((VanillaPanel) this.innerPanels[1]).clear();
+		this.refill.setText("");
+		this.effectiveDate.setText("");
 	}
 
 	@Override
@@ -265,6 +267,8 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 					currentDate=Calendar.getInstance().getTime();
 					if (inputDate.before(currentDate)){
 						dateMessage.setText("Date should not be earlier than today.");
+					}else{
+						this.dateFlag = true;
 					}
 				} catch (ParseException e1) {
 					// TODO Auto-generated catch block
@@ -272,7 +276,7 @@ public class NewDrugLineView extends JPanel implements ActionListener, FocusList
 				}
 			}
 			else {
-				this.dateFlag = true;
+				this.dateFlag = false;
 			}
 			//			System.out.println(effectiveDate.getText().length());
 		}

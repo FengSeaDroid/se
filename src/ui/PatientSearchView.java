@@ -160,7 +160,7 @@ public class PatientSearchView extends JPanel implements ActionListener{
 						if (flag == true){
 						((HistoryTableCellRenderer) MainWindow.patientPrescriptionHistory.getTable().getDefaultRenderer(Object.class)).add(new Integer(MainWindow.patientPrescriptionHistory.getTable().getRowCount()-1));
 						}
-					}
+					}//loop through the drugs of a prescription
 					flag = !flag;
 				}
 				//to give the focus
