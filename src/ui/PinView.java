@@ -18,43 +18,46 @@ import net.miginfocom.swing.MigLayout;
 
 public class PinView extends JFrame implements ActionListener,FocusListener {
 
-	private JPanel pinPanel=new JPanel(new MigLayout("wrap 3","[grow][grow][grow]","[][][][]"));
+	private JPanel pinPanel;
 	private JButton printButton;
 	private JButton cancelButton;
-	private JLabel pinLabel=new JLabel("Please type in your pin number: ");
-	private JPasswordField pinPasswordField=new JPasswordField(20);
-	private JLabel msgLabel=new JLabel();
+	private JLabel pinLabel;
+	private JPasswordField pinPasswordField;
+	private JLabel msgLabel;
 	private final NewDrugLineView drugLineView;
 //	private String refill;
 
 	public PinView(final NewDrugLineView dlv) {
-
 		super("Print Authentication Window");
-		this.setSize(260, 110);
+		pinPanel = new JPanel();
+		pinLabel = new JLabel("Enter Your Pin: ");
+		pinPasswordField=new JPasswordField(20);
+		this.setSize(240, 110);
 		
 //		this.refill=refill;
 		this.drugLineView = dlv;
 		pinPasswordField.setDocument(new JTextFieldLimit(10));
 
-		pinPanel.setLayout (new MigLayout()); 
+		pinPanel.setLayout (new MigLayout("","[][][]","")); 
 		pinPanel.add(pinLabel,"right");
 
 		pinPasswordField=new JPasswordField(10);
 		//pinPanel.add(pinPasswordField);
 		//pinPasswordField.setSize(100, 100);
-		pinPanel.add(pinPasswordField,"wrap");	
+		pinPanel.add(pinPasswordField,"span 2,wrap");	
 		pinPasswordField.addActionListener(this);
+		
+		msgLabel = new JLabel("");
+		pinPanel.add(msgLabel,"cell 0 1");
+		msgLabel.setForeground(Color.red);
 
 		printButton=new JButton("Print");
-		pinPanel.add(printButton,"right,,width :80:");
+		pinPanel.add(printButton,"right,,width :50:");
 		printButton.addActionListener(this);
 
 		cancelButton=new JButton("Cancel");
-		pinPanel.add(cancelButton,"wrap,right,,width :80:");
+		pinPanel.add(cancelButton,"right,,width :50:");
 		cancelButton.addActionListener(this);
-		
-		pinPanel.add(msgLabel,"span");
-		msgLabel.setForeground(Color.red);
 		
 		
 
