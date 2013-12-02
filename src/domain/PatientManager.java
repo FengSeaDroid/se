@@ -1,11 +1,7 @@
 package domain;
-import java.awt.Image;
 import java.sql.ResultSet;
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 
 import techService.DBConnection;
 import control.MainControl;
@@ -31,7 +27,7 @@ public class PatientManager {
 			//Connection to University DB server
 //			dbconnection=new DBConnection("jdbc:mysql://mysql.cs.mun.ca:3306/cs6713","cs6713","3176sc!");
 			//local connection to my DB server
-			dbconnection=new DBConnection("jdbc:mysql://localhost:3306/cs6713","root","");
+			dbconnection=new DBConnection("jdbc:mysql://localhost:3306/test","root","");
 		}
 		catch ( Exception e ) {
 			System.out.println(e.getMessage());

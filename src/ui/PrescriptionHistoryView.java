@@ -84,6 +84,7 @@ public class PrescriptionHistoryView extends JPanel implements MouseListener {
 
 	public void clear() {
 		getModel().setRowCount(0);
+		((HistoryTableCellRenderer) getTable().getDefaultRenderer(Object.class)).clear();
 	}
 
 	@Override
@@ -265,6 +266,10 @@ public class PrescriptionHistoryView extends JPanel implements MouseListener {
 
 		public void add(Integer i){
 			flagSet.add(i);
+		}
+		
+		public void clear(){
+			flagSet.clear();
 		}
 
 		public HistoryTableCellRenderer(){

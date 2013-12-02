@@ -150,9 +150,9 @@ public class PatientSearchView extends JPanel implements ActionListener{
 				List <Prescription> preList = new ArrayList <Prescription>(patient.getPrescriptionHistory());
 				Collections.sort(preList);
 				boolean flag = false;
+				MainWindow.patientPrescriptionHistory.getModel().setRowCount(0);
 				for (int i = 0; i < preList.size(); i++){
 					for(String s:preList.get(i).getDrugLines()) {
-//						drugsInHistory.add(s);
 						StringTokenizer st = new StringTokenizer(s, " "); 
 						String key = st.nextToken(); 
 						String[] data = {preList.get(i).getIssueDate(),key};
@@ -161,7 +161,7 @@ public class PatientSearchView extends JPanel implements ActionListener{
 						((HistoryTableCellRenderer) MainWindow.patientPrescriptionHistory.getTable().getDefaultRenderer(Object.class)).add(new Integer(MainWindow.patientPrescriptionHistory.getTable().getRowCount()-1));
 						}
 					}//loop through the drugs of a prescription
-					flag = !flag;
+					flag = !flag;//alternate the rendering
 				}
 				//to give the focus
 				MainWindow.drugLineView.clear();
