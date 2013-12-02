@@ -277,4 +277,40 @@ public class PatientManager {
 
 		}
 	}
+	
+	public boolean checkUserPassLocumPin(String username,String pssword) throws Exception{
+		ResultSet userpassResult=PatientManager.getPatientManager().getDBConnection().execQuery("select name,username,password,physician_id,locum,pin from physician");
+
+		while (userpassResult.next()){
+			System.out.println("userName:"+userpassResult.getString("username")+" PAssword:"+userpassResult.getString("password"));
+			if(userpassResult.getString("username").equals(username)){
+				System.out.println("Correct UserName");
+				System.out.println("User from textField"+userpassResult.getString("username"));
+//				System.out.println("User from textField"+this.getUsername());
+				if(userpassResult.getString("password").equals(pssword)){
+					System.out.println("Correct Password");
+					//this.setVisible(false);
+					MainControl.getMainControl().setPhysicianID(userpassResult.getString("physician_id"));
+					MainControl.getMainControl().setLocum(userpassResult.getString("Locum"));
+					MainControl.getMainControl().setPhysicianUserName(userpassResult.getString("username"));
+					MainControl.getMainControl().setPhysicianPassword(userpassResult.getString("password"));
+					MainControl.getMainControl().setPhysicianName(userpassResult.getString("name"));
+					MainControl.getMainControl().setPhysicianPin(userpassResult.getString("pin"));
+					System.out.println("physician ID is"+userpassResult.getString("physician_id"));
+					return true;
+				}
+				else{
+					System.out.println("Wrong Password");
+//					msgLabel.setText("Invalid User and/or Password");
+				}
+			}
+			else{
+//				msgLabel.setText("Invalid User and/or Password");
+				System.out.println("Wrong UserName");
+//				System.out.println("User from textField"+userpassResult.getString("username"));
+//				System.out.println("User from textField"+this.getUsername());
+			}
+		}
+		return false;
+	}
 }

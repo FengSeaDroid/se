@@ -93,58 +93,65 @@ public class LoginWindow extends JFrame implements ActionListener,FocusListener{
 	}
 
 
-	public boolean checkUserPass() throws Exception{
+	public boolean checkUserPassLocumPin() throws Exception{
+		
+		return MainControl.getMainControl().getPatientManager().checkUserPassLocumPin(usernameTextField.getText(),passwordTextField.getText());
+			
+		}
 
 		//String physician_id=MainControl.getMainControl().getPhysicianID();
 		//System.out.println("physician id is"+physician_id);
 		//physician table (physician_id	name	username	password	signature)
-		ResultSet userpassResult=PatientManager.getPatientManager().getDBConnection().execQuery("select name,username,password,physician_id,locum,pin from physician");
-
-		while (userpassResult.next()){
-			if(userpassResult.getString("username").equals(this.getUsername())){
-				System.out.println("Correct UserName");
-				System.out.println("User from textField"+userpassResult.getString("username"));
-				System.out.println("User from textField"+this.getUsername());
-				if(userpassResult.getString("password").equals(this.getPassword())){
-					System.out.println("Correct Password");
-					this.setVisible(false);
-					MainControl.getMainControl().setPhysicianID(userpassResult.getString("physician_id"));
-					MainControl.getMainControl().setLocum(userpassResult.getString("Locum"));
-					MainControl.getMainControl().setPhysicianUserName(this.getUsername());
-					MainControl.getMainControl().setPhysicianPassword(this.getPassword());
-					MainControl.getMainControl().setPhysicianName(userpassResult.getString("name"));
-					MainControl.getMainControl().setPhysicianPin(userpassResult.getString("pin"));
-					System.out.println("physician ID is"+userpassResult.getString("physician_id"));
-					return true;
-				}
-				else{
-					System.out.println("Wrong Password");
-					msgLabel.setText("Invalid User and/or Password");
-				}
-			}
-			else{
-				msgLabel.setText("Invalid User and/or Password");
-				System.out.println("Wrong UserName");
-				System.out.println("User from textField"+userpassResult.getString("username"));
-				System.out.println("User from textField"+this.getUsername());
-			}
-
-		}
-
-		return false;
-	}
+//		ResultSet userpassResult=PatientManager.getPatientManager().getDBConnection().execQuery("select name,username,password,physician_id,locum,pin from physician");
+//
+//		while (userpassResult.next()){
+//			if(userpassResult.getString("username").equals(this.getUsername())){
+//				System.out.println("Correct UserName");
+//				System.out.println("User from textField"+userpassResult.getString("username"));
+//				System.out.println("User from textField"+this.getUsername());
+//				if(userpassResult.getString("password").equals(this.getPassword())){
+//					System.out.println("Correct Password");
+//					this.setVisible(false);
+//					MainControl.getMainControl().setPhysicianID(userpassResult.getString("physician_id"));
+//					MainControl.getMainControl().setLocum(userpassResult.getString("Locum"));
+//					MainControl.getMainControl().setPhysicianUserName(this.getUsername());
+//					MainControl.getMainControl().setPhysicianPassword(this.getPassword());
+//					MainControl.getMainControl().setPhysicianName(userpassResult.getString("name"));
+//					MainControl.getMainControl().setPhysicianPin(userpassResult.getString("pin"));
+//					System.out.println("physician ID is"+userpassResult.getString("physician_id"));
+//					return true;
+//				}
+//				else{
+//					System.out.println("Wrong Password");
+//					msgLabel.setText("Invalid User and/or Password");
+//				}
+//			}
+//			else{
+//				msgLabel.setText("Invalid User and/or Password");
+//				System.out.println("Wrong UserName");
+//				System.out.println("User from textField"+userpassResult.getString("username"));
+//				System.out.println("User from textField"+this.getUsername());
+//			}
+//
+////		}
+//
+//		return false;
+//	}
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource()==connectButton || e.getSource()==usernameTextField || e.getSource()==passwordTextField){
 			try {
-				if(this.checkUserPass()){
+				if(this.checkUserPassLocumPin()){
 					System.out.println("correct everything");
 					MainWindow.createAndShowGUI();
+					this.dispose();
 
 				}
 				else{
 					this.setUsernameTextField("");
 					this.setPasswordTextField("");
+					msgLabel.setText("Invalid User and/or Password");
+
 				}
 			} catch (Exception e1) {
 				e1.printStackTrace();

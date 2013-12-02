@@ -33,7 +33,7 @@ public class MainControl {
 		this.setClinicName("Eastern Clinic");
 		this.setClinicTel("749-3322");
 		this.setPhysicianName("Gerard Farrell");
-		this.setClinicAddress("123 Elithebeth Ave");
+		this.setClinicAddress("123 Elizabeth Ave");
 		//		this.setClinicInfo("Eastern Clinic","749-3322","Gerard Farrell");
 	}
 
