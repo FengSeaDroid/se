@@ -1,0 +1,1 @@
+java.exe -Dfile.encoding=GBK -classpath "bin;miglayout15-swing.jar;mysql-connector-java-5.1.18-bin.jar;itextpdf-5.4.5.jar;org.hamcrest.core_1.3.0.v201303031735.jar;junit.jar" ui.LoginWindow

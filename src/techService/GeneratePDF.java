@@ -6,33 +6,20 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.Date;
-import java.util.Set;
-
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 
-import com.itextpdf.awt.geom.Rectangle;
 import com.itextpdf.text.Image;
-import com.itextpdf.text.Anchor;
-import com.itextpdf.text.BadElementException;
-import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Chapter;
+//import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
-import com.itextpdf.text.List;
-import com.itextpdf.text.ListItem;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.Section;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
+//import com.itextpdf.text.Phrase;
+//import com.itextpdf.text.pdf.PdfPCell;
+//import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.text.pdf.codec.Base64.InputStream;
 
 import control.MainControl;
 import domain.Patient;
@@ -50,9 +37,6 @@ public class GeneratePDF {
 	private static String refill;
 	private static Font titleFont = new Font(Font.FontFamily.TIMES_ROMAN, 16,
 			Font.BOLD);
-	private static Font rxFont = new Font(Font.FontFamily.TIMES_ROMAN, 20,
-			Font.NORMAL, BaseColor.BLACK);
-	private static Font tableHeaderFont = new Font(Font.FontFamily.TIMES_ROMAN, 12);
 	private static Font tableFont = new Font(Font.FontFamily.TIMES_ROMAN, 12);
 
 	private static Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12,
@@ -166,43 +150,43 @@ public class GeneratePDF {
 		image.scaleAbsolute(100f, 75f);
 		document.add(image);
 	}
-
-	/**
-	 * @throws DocumentException
-	 * create the drug line as table with 2 columns
-	 * drug name and drug specefication
-	 */
-	private static void createTable() throws DocumentException {
-
-		Paragraph tableParagraph=new Paragraph();
-		PdfPTable table = new PdfPTable(2);
-
-		PdfPCell c1 = new PdfPCell(new Phrase("Drug Name"));
-		c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-		c1.setBorderColor(BaseColor.WHITE);
-		table.addCell(c1);
-
-		c1 = new PdfPCell(new Phrase("Drug Specification"));
-		c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-		table.addCell(c1);
-
-		table.setHeaderRows(1);
-
-		for (String s : prescription.getDrugLines()) {
-			String[] medicine=s.split(" ");
-			Phrase medicineCell = new Phrase(medicine[0].toString(), tableFont);
-			table.addCell(medicineCell);
-			String medicine_spec="";
-			for(int i=1; i<medicine.length;i++)
-			{
-				medicine_spec=medicine_spec+" "+medicine[i];
-			}
-			Phrase medicineSpecCell = new Phrase(medicine_spec.toString(), tableFont);
-			table.addCell(medicineSpecCell);
-		}
-		tableParagraph.add(table);
-		document.add(tableParagraph);
-	}
+//
+//	/**
+//	 * @throws DocumentException
+//	 * create the drug line as table with 2 columns
+//	 * drug name and drug specefication
+//	 */
+//	private static void createTable() throws DocumentException {
+//
+//		Paragraph tableParagraph=new Paragraph();
+//		PdfPTable table = new PdfPTable(2);
+//
+//		PdfPCell c1 = new PdfPCell(new Phrase("Drug Name"));
+//		c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+//		c1.setBorderColor(BaseColor.WHITE);
+//		table.addCell(c1);
+//
+//		c1 = new PdfPCell(new Phrase("Drug Specification"));
+//		c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+//		table.addCell(c1);
+//
+//		table.setHeaderRows(1);
+//
+//		for (String s : prescription.getDrugLines()) {
+//			String[] medicine=s.split(" ");
+//			Phrase medicineCell = new Phrase(medicine[0].toString(), tableFont);
+//			table.addCell(medicineCell);
+//			String medicine_spec="";
+//			for(int i=1; i<medicine.length;i++)
+//			{
+//				medicine_spec=medicine_spec+" "+medicine[i];
+//			}
+//			Phrase medicineSpecCell = new Phrase(medicine_spec.toString(), tableFont);
+//			table.addCell(medicineSpecCell);
+//		}
+//		tableParagraph.add(table);
+//		document.add(tableParagraph);
+//	}
 
 	/**
 	 * @throws DocumentException
